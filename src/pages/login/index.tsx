@@ -46,16 +46,6 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberValue, setRemember] = useState(false);
 
-  // const handleClick = async () => {
-  //   const res = await API.get('/api/jwt', {
-  //     params: { loginid: idValue, passwd: pwValue }
-  //   });
-  //   if (res.data.code === 'ok' && res.status === 200) {
-  //     // axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;
-  //     router('/todo', { replace: true });
-  //   }
-  // };
-
   const handleClickShowPassword = () => {
     setShowPassword((show) => !show);
   };
