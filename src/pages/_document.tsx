@@ -7,7 +7,6 @@ import Document, {
   DocumentProps,
   DocumentContext
 } from 'next/document';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import createEmotionServer from '@emotion/server/create-instance';
 import { AppType } from 'next/app';
 import theme, { roboto } from '@/styles/theme.ts';
