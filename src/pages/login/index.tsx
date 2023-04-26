@@ -41,17 +41,13 @@ const StyledContent = styled('div')(({ theme }) => ({
 export default function Login() {
   const router = useRouter();
 
-  const [idValue, setId] = useState('');
-  const [pwValue, setPw] = useState('');
+  const [id, setId] = useState('');
+  const [pw, setPw] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberValue, setRemember] = useState(false);
+  const [remember, setRemember] = useState(false);
 
   const handleClickShowPassword = () => {
-    setShowPassword((show) => !show);
-  };
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
+    setShowPassword((item) => !item);
   };
 
   const saveUserId = (e) => {
@@ -63,7 +59,7 @@ export default function Login() {
   };
 
   const saveRemeber = () => {
-    setRemember((remeber) => !remeber);
+    setRemember((item) => !item);
   };
 
   const moveSignup = () => {
@@ -94,7 +90,7 @@ export default function Login() {
               <TextField
                 name="ID"
                 label="ID"
-                value={idValue}
+                value={id}
                 onChange={saveUserId}
               />
 
@@ -104,7 +100,7 @@ export default function Login() {
                 </InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
-                  value={pwValue}
+                  value={pw}
                   onChange={saveUserPw}
                   type={showPassword ? 'text' : 'password'}
                   endAdornment={
@@ -112,7 +108,6 @@ export default function Login() {
                       <IconButton
                         aria-label="toggle password visibility"
                         onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
                         edge="end"
                       >
                         {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -132,7 +127,7 @@ export default function Login() {
               <Checkbox
                 name="remember"
                 label="Remember me"
-                checked={rememberValue}
+                checked={remember}
                 onChange={saveRemeber}
               />
             </Stack>

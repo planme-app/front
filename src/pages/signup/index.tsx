@@ -28,12 +28,12 @@ const StyledContent = styled('div')(({ theme }) => ({
   padding: theme.spacing(12, 0)
 }));
 
-export default function Login() {
-  const [idValue, setId] = useState('');
-  const [pwValue, setPw] = useState('');
-  const [checkPwValue, setCheckPw] = useState('');
-  const [nameValue, setName] = useState('');
-  const [emailValue, setEmail] = useState('');
+export default function Signup() {
+  const [id, setId] = useState('');
+  const [pw, setPw] = useState('');
+  const [checkPw, setCheckPw] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
   const saveUserId = (e) => {
     setId(e.target.value);
@@ -79,35 +79,35 @@ export default function Login() {
               <TextField
                 name="ID"
                 label="ID"
-                value={idValue}
+                value={id}
                 onChange={saveUserId}
               />
 
               <TextField
                 name="Password"
                 label="Password"
-                value={pwValue}
+                value={pw}
                 onChange={saveUserPw}
               />
 
               <TextField
                 name="CheckPassword"
                 label="CheckPassword"
-                value={checkPwValue}
+                value={checkPw}
                 onChange={saveUserCheckPw}
               />
 
               <TextField
                 name="Name"
                 label="Name"
-                value={nameValue}
+                value={name}
                 onChange={saveUserName}
               />
 
               <TextField
                 name="Email"
                 label="Eamil"
-                value={emailValue}
+                value={email}
                 onChange={saveUserEmail}
               />
             </Stack>
