@@ -1,6 +1,19 @@
 {
-  "extends": ["next/core-web-vitals", "airbnb-base", "prettier"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": ".",
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "extends": [
+    "next",
+    "airbnb-typescript",
+    "prettier",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": ["prettier", "@typescript-eslint"],
   "rules": {
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+    "prettier/prettier": "error"
   }
 }
