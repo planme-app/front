@@ -9,8 +9,8 @@ import Document, {
 } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import { AppType } from 'next/app';
-import theme, { roboto } from '@/styles/theme.ts';
-import createEmotionCache from '@/styles/createEmotionCache.ts';
+import theme, { roboto } from 'styles/theme';
+import createEmotionCache from 'styles/createEmotionCache';
 import { MyAppProps } from './_app.tsx';
 
 interface MyDocumentProps extends DocumentProps {
