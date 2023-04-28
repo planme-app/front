@@ -8,10 +8,9 @@ generator client {
 }
 
 model user_tb {
-  u_userid        String      @id
-  u_loginid       String      @unique
-  u_passwd        String
-  u_email         String      @unique
-  u_name          String
-  u_date          DateTime
+  user_id    String   @id @default(uuid()) @db.VarChar(36)
+  passwd     String
+  email      String   @unique
+  name       String
+  created_at DateTime @default(now())
 }
