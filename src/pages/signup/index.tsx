@@ -13,6 +13,8 @@ import {
   confirmPw
 } from '@/controllers/domain/User';
 
+import { signup } from '@/controllers/application/User';
+
 export default function Signup() {
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
@@ -33,6 +35,15 @@ export default function Signup() {
 
   const saveUserName = (e: string) => {
     setName(e);
+  };
+
+  const clickSignup = async () => {
+    const res = await signup(email, pw, twoPw, name);
+    if (res.result === true) {
+      console.log(res.message);
+    } else {
+      console.log(res.message);
+    }
   };
 
   return (
@@ -93,7 +104,7 @@ export default function Signup() {
           sx={{ my: 1 }}
         ></Stack>
 
-        <Button variant="contained" size="large">
+        <Button variant="contained" size="large" onClick={clickSignup}>
           Signup
         </Button>
       </LoginBody>
