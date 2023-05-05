@@ -1,3 +1,4 @@
+import React, { PropsWithChildren } from 'react';
 import { Container } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -17,7 +18,7 @@ const StyledContent = styled('div')(({ theme }) => ({
   padding: theme.spacing(12, 0)
 }));
 
-export default function LoginBody({ children }) {
+export default function LoginBody({ children }: PropsWithChildren) {
   return (
     <>
       <StyledRoot>

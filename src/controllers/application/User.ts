@@ -1,5 +1,10 @@
-import { checkEmail, checkName, checkPw, confirmPw } from '../domain/User';
-import { getSingup } from '../services/api';
+import {
+  checkEmail,
+  checkName,
+  checkPw,
+  confirmPw
+} from 'controllers/domain/User';
+import { getSingup } from 'controllers/services/api';
 
 export function signup(email: string, pw: string, twoPw: string, name: string) {
   if (!checkEmail(email)) {

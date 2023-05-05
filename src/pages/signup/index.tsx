@@ -11,9 +11,9 @@ import {
   checkPw,
   checkName,
   confirmPw
-} from '@/controllers/domain/User';
+} from 'controllers/domain/User';
 
-import { signup } from '@/controllers/application/User';
+import { signup } from 'controllers/application/User';
 
 export default function Signup() {
   const [email, setEmail] = useState('');
@@ -39,7 +39,7 @@ export default function Signup() {
 
   const clickSignup = async () => {
     const res = await signup(email, pw, twoPw, name);
-    if (res.result === true) {
+    if (res.result) {
       console.log(res.message);
     } else {
       console.log(res.message);
@@ -67,6 +67,7 @@ export default function Signup() {
         <Stack spacing={3}>
           <TextField
             name="Email"
+            password={false}
             tftype={checkEmail(email)}
             message="error"
             value={email}
@@ -90,6 +91,7 @@ export default function Signup() {
           />
           <TextField
             name="Name"
+            password={false}
             tftype={checkName(name)}
             message="error"
             value={name}
