@@ -2,18 +2,14 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 
 import { Typography, Divider, Stack, Button } from '@mui/material';
-
 import LoginBody from 'components/atoms/LoginBody';
-import TextField from 'components/atoms/TextField';
-
-import {
-  checkEmail,
-  checkPw,
-  checkName,
-  confirmPw
-} from 'controllers/domain/User';
-
 import { signup } from 'controllers/application/User';
+import { SignupCard } from 'components/organisms/SignupCard';
+
+export interface TextFieldProps {
+  value: string;
+  onChange: (params: string) => void;
+}
 
 export default function Signup() {
   const [email, setEmail] = useState('');
@@ -46,6 +42,25 @@ export default function Signup() {
     }
   };
 
+  const TextFieldArrayProps: TextFieldProps[] = [
+    {
+      value: email,
+      onChange: saveUserEmail
+    },
+    {
+      value: pw,
+      onChange: saveUserPw
+    },
+    {
+      value: twoPw,
+      onChange: saveUserCheckPw
+    },
+    {
+      value: name,
+      onChange: saveUserName
+    }
+  ];
+
   return (
     <>
       <Head>
@@ -63,42 +78,7 @@ export default function Signup() {
         </Stack>
 
         <Divider sx={{ my: 3 }}></Divider>
-
-        <Stack spacing={3}>
-          <TextField
-            name="Email"
-            password={false}
-            tftype={checkEmail(email)}
-            message="error"
-            value={email}
-            onChange={saveUserEmail}
-          />
-          <TextField
-            name="Password"
-            password={true}
-            tftype={checkPw(pw)}
-            message="error"
-            value={pw}
-            onChange={saveUserPw}
-          />
-          <TextField
-            name="CheckPassword"
-            password={true}
-            tftype={confirmPw(pw, twoPw)}
-            message="error"
-            value={twoPw}
-            onChange={saveUserCheckPw}
-          />
-          <TextField
-            name="Name"
-            password={false}
-            tftype={checkName(name)}
-            message="error"
-            value={name}
-            onChange={saveUserName}
-          />
-        </Stack>
-
+        <SignupCard {...TextFieldArrayProps}></SignupCard>
         <Stack
           direction="row"
           alignItems="center"
