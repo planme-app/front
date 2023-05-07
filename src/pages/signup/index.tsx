@@ -5,6 +5,12 @@ import { Typography, Divider, Stack, Button } from '@mui/material';
 import LoginBody from 'components/atoms/LoginBody';
 import { signup } from 'controllers/application/User';
 import { SignupCard } from 'components/organisms/SignupCard';
+import {
+  checkEmail,
+  checkPw,
+  confirmPw,
+  checkName
+} from '@/controllers/domain/User';
 
 export interface TextFieldProps {
   email: {
@@ -100,7 +106,17 @@ export default function Signup() {
           sx={{ my: 1 }}
         ></Stack>
 
-        <Button variant="contained" size="large" onClick={clickSignup}>
+        <Button
+          disabled={
+            !checkEmail(email) ||
+            !checkPw(pw) ||
+            !confirmPw(pw, twoPw) ||
+            !checkName(name)
+          }
+          variant="contained"
+          size="large"
+          onClick={clickSignup}
+        >
           Signup
         </Button>
       </LoginBody>
