@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 
 import { Typography, Divider, Stack, Button } from '@mui/material';
@@ -32,6 +33,8 @@ export interface TextFieldProps {
 }
 
 export default function Signup() {
+  const router = useRouter();
+
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
   const [twoPw, setTwoPw] = useState('');
@@ -56,9 +59,9 @@ export default function Signup() {
   const clickSignup = async () => {
     const res = await signup(email, pw, twoPw, name);
     if (res.result) {
-      console.log(res.message);
+      router.push('/signup/complete');
     } else {
-      console.log(res.message);
+      console.log('error');
     }
   };
 
