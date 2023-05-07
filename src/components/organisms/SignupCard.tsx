@@ -8,43 +8,41 @@ import {
   checkName
 } from 'controllers/domain/User';
 
-export function SignupCard(props: TextFieldProps[]) {
+export function SignupCard({ data }: { data: TextFieldProps }) {
   return (
-    <>
-      <Stack spacing={3}>
-        <TextField
-          name="Email"
-          password={false}
-          tftype={checkEmail(props[0].value)}
-          message="error"
-          value={props[0].value}
-          onChange={props[0].onChange}
-        />
-        <TextField
-          name="Password"
-          password={true}
-          tftype={checkPw(props[1].value)}
-          message="error"
-          value={props[1].value}
-          onChange={props[1].onChange}
-        />
-        <TextField
-          name="CheckPassword"
-          password={true}
-          tftype={confirmPw(props[1].value, props[2].value)}
-          message="error"
-          value={props[2].value}
-          onChange={props[2].onChange}
-        />
-        <TextField
-          name="Name"
-          password={false}
-          tftype={checkName(props[3].value)}
-          message="error"
-          value={props[3].value}
-          onChange={props[3].onChange}
-        />
-      </Stack>
-    </>
+    <Stack spacing={3}>
+      <TextField
+        name="Email"
+        password={false}
+        tftype={checkEmail(data.email.value)}
+        message="error"
+        value={data.email.value}
+        change={data.email.onChange}
+      />
+      <TextField
+        name="Password"
+        password={true}
+        tftype={checkPw(data.pw.value)}
+        message="error"
+        value={data.pw.value}
+        change={data.pw.onChange}
+      />
+      <TextField
+        name="CheckPassword"
+        password={true}
+        tftype={confirmPw(data.checkPw.value, data.checkPw.value)}
+        message="error"
+        value={data.checkPw.value}
+        change={data.checkPw.onChange}
+      />
+      <TextField
+        name="Name"
+        password={false}
+        tftype={checkName(data.name.value)}
+        message="error"
+        value={data.name.value}
+        change={data.name.onChange}
+      />
+    </Stack>
   );
 }

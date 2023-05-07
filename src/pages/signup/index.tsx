@@ -7,8 +7,22 @@ import { signup } from 'controllers/application/User';
 import { SignupCard } from 'components/organisms/SignupCard';
 
 export interface TextFieldProps {
-  value: string;
-  onChange: (params: string) => void;
+  email: {
+    value: string;
+    onChange: (params: string) => void;
+  };
+  pw: {
+    value: string;
+    onChange: (params: string) => void;
+  };
+  checkPw: {
+    value: string;
+    onChange: (params: string) => void;
+  };
+  name: {
+    value: string;
+    onChange: (params: string) => void;
+  };
 }
 
 export default function Signup() {
@@ -42,24 +56,24 @@ export default function Signup() {
     }
   };
 
-  const TextFieldArrayProps: TextFieldProps[] = [
-    {
+  const TextFieldArrayProps: TextFieldProps = {
+    email: {
       value: email,
       onChange: saveUserEmail
     },
-    {
+    pw: {
       value: pw,
       onChange: saveUserPw
     },
-    {
+    checkPw: {
       value: twoPw,
       onChange: saveUserCheckPw
     },
-    {
+    name: {
       value: name,
       onChange: saveUserName
     }
-  ];
+  };
 
   return (
     <>
@@ -78,7 +92,7 @@ export default function Signup() {
         </Stack>
 
         <Divider sx={{ my: 3 }}></Divider>
-        <SignupCard {...TextFieldArrayProps}></SignupCard>
+        <SignupCard data={TextFieldArrayProps}></SignupCard>
         <Stack
           direction="row"
           alignItems="center"

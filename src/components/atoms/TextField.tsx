@@ -1,7 +1,14 @@
 import { TextField } from '@mui/material';
 
-export default function TextFiled(props: {
-  onChange: (arg0: string) => void;
+export default function TextFiled({
+  value,
+  tftype,
+  password,
+  name,
+  message,
+  change
+}: {
+  change: (arg0: string) => void;
   value: string;
   tftype: boolean;
   password: boolean;
@@ -9,22 +16,20 @@ export default function TextFiled(props: {
   message: string;
 }) {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    props.onChange(e.target.value);
+    change(e.target.value);
   };
 
   return (
     <TextField
-      color={props.value.length != 0 && props.tftype ? 'success' : 'primary'}
-      focused={props.value.length != 0 && props.tftype ? true : false}
-      type={props.password ? 'password' : ''}
-      error={props.value.length != 0 && !props.tftype}
-      name={props.name}
-      label={props.name}
-      value={props.value}
+      color={value.length != 0 && tftype ? 'success' : 'primary'}
+      focused={value.length != 0 && tftype ? true : false}
+      type={password ? 'password' : ''}
+      error={value.length != 0 && !tftype}
+      name={name}
+      label={name}
+      value={value}
       onChange={onChange}
-      helperText={
-        props.value.length != 0 && !props.tftype ? props.message : ' '
-      }
+      helperText={value.length != 0 && !tftype ? message : ' '}
     />
   );
 }
