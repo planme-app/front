@@ -21,7 +21,7 @@ export function checkPw(pw: string): boolean {
 }
 
 export function checkName(name: string): boolean {
-  const nameRule = /^[가-힣]*$/;
+  const nameRule = /^[가-힣]{2,6}$/;
   return nameRule.test(name);
 }
 

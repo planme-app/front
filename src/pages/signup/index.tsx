@@ -1,23 +1,47 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 
 import { Typography, Divider, Stack, Button } from '@mui/material';
-
 import LoginBody from 'components/atoms/LoginBody';
-import TextField from 'components/atoms/TextField';
-
+import { signup } from 'controllers/application/User';
+import { SignupCard } from 'components/organisms/SignupCard';
 import {
   checkEmail,
   checkPw,
-  checkName,
-  confirmPw
-} from '@/controllers/domain/User';
+  confirmPw,
+  checkName
+} from 'controllers/domain/User';
+import ModalAtom from 'components/atoms/ModalAtom';
+
+export interface TextFieldProps {
+  email: {
+    value: string;
+    onChange: (params: string) => void;
+  };
+  pw: {
+    value: string;
+    onChange: (params: string) => void;
+  };
+  checkPw: {
+    value: string;
+    onChange: (params: string) => void;
+  };
+  name: {
+    value: string;
+    onChange: (params: string) => void;
+  };
+}
 
 export default function Signup() {
+  const router = useRouter();
+
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
   const [twoPw, setTwoPw] = useState('');
   const [name, setName] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [message, setMessage] = useState('');
 
   const saveUserEmail = (e: string) => {
     setEmail(e);
@@ -33,6 +57,38 @@ export default function Signup() {
 
   const saveUserName = (e: string) => {
     setName(e);
+  };
+
+  const handleOpen = () => setModalOpen(true);
+  const handleClose = () => setModalOpen(false);
+
+  const clickSignup = async () => {
+    const res = await signup(email, pw, twoPw, name);
+    if (res.result) {
+      router.push('/signup/complete');
+    } else {
+      setMessage(res.message);
+      handleOpen();
+    }
+  };
+
+  const TextFieldArrayProps: TextFieldProps = {
+    email: {
+      value: email,
+      onChange: saveUserEmail
+    },
+    pw: {
+      value: pw,
+      onChange: saveUserPw
+    },
+    checkPw: {
+      value: twoPw,
+      onChange: saveUserCheckPw
+    },
+    name: {
+      value: name,
+      onChange: saveUserName
+    }
   };
 
   return (
@@ -52,40 +108,7 @@ export default function Signup() {
         </Stack>
 
         <Divider sx={{ my: 3 }}></Divider>
-
-        <Stack spacing={3}>
-          <TextField
-            name="Email"
-            tftype={checkEmail(email)}
-            message="error"
-            value={email}
-            onChange={saveUserEmail}
-          />
-          <TextField
-            name="Password"
-            password={true}
-            tftype={checkPw(pw)}
-            message="error"
-            value={pw}
-            onChange={saveUserPw}
-          />
-          <TextField
-            name="CheckPassword"
-            password={true}
-            tftype={confirmPw(pw, twoPw)}
-            message="error"
-            value={twoPw}
-            onChange={saveUserCheckPw}
-          />
-          <TextField
-            name="Name"
-            tftype={checkName(name)}
-            message="error"
-            value={name}
-            onChange={saveUserName}
-          />
-        </Stack>
-
+        <SignupCard data={TextFieldArrayProps}></SignupCard>
         <Stack
           direction="row"
           alignItems="center"
@@ -93,10 +116,26 @@ export default function Signup() {
           sx={{ my: 1 }}
         ></Stack>
 
-        <Button variant="contained" size="large">
+        <Button
+          disabled={
+            !checkEmail(email) ||
+            !checkPw(pw) ||
+            !confirmPw(pw, twoPw) ||
+            !checkName(name)
+          }
+          variant="contained"
+          size="large"
+          onClick={clickSignup}
+        >
           Signup
         </Button>
       </LoginBody>
+      <ModalAtom
+        open={modalOpen}
+        handleClose={handleClose}
+        title={'error'}
+        message={message}
+      />
     </>
   );
 }

@@ -32,11 +32,11 @@ export default function Login() {
     setShowPassword((item) => !item);
   };
 
-  const saveUserId = (e) => {
+  const saveUserId = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
   };
 
-  const saveUserPw = (e) => {
+  const saveUserPw = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPw(e.target.value);
   };
 
@@ -99,12 +99,7 @@ export default function Login() {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Checkbox
-            name="remember"
-            label="Remember me"
-            checked={remember}
-            onChange={saveRemeber}
-          />
+          <Checkbox checked={remember} onChange={saveRemeber} />
         </Stack>
 
         <Button variant="contained" size="large">
