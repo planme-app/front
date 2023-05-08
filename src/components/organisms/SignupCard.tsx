@@ -15,7 +15,7 @@ export function SignupCard({ data }: { data: TextFieldProps }) {
         name="Email"
         password={false}
         tftype={checkEmail(data.email.value)}
-        message="error"
+        message="이메일 형식에 맞게 작성해주세요."
         value={data.email.value}
         change={data.email.onChange}
       />
@@ -23,7 +23,7 @@ export function SignupCard({ data }: { data: TextFieldProps }) {
         name="Password"
         password={true}
         tftype={checkPw(data.pw.value)}
-        message="error"
+        message="비밀전호(영문+숫자+특수기호, 8~20자)"
         value={data.pw.value}
         change={data.pw.onChange}
       />
@@ -31,7 +31,7 @@ export function SignupCard({ data }: { data: TextFieldProps }) {
         name="CheckPassword"
         password={true}
         tftype={confirmPw(data.checkPw.value, data.checkPw.value)}
-        message="error"
+        message="비밀번호가 맞지않습니다."
         value={data.checkPw.value}
         change={data.checkPw.onChange}
       />
@@ -39,7 +39,7 @@ export function SignupCard({ data }: { data: TextFieldProps }) {
         name="Name"
         password={false}
         tftype={checkName(data.name.value)}
-        message="error"
+        message="이름에 맞게 작성해주세요."
         value={data.name.value}
         change={data.name.onChange}
       />

@@ -11,7 +11,8 @@ import {
   checkPw,
   confirmPw,
   checkName
-} from '@/controllers/domain/User';
+} from 'controllers/domain/User';
+import ModalAtom from 'components/atoms/ModalAtom';
 
 export interface TextFieldProps {
   email: {
@@ -39,6 +40,8 @@ export default function Signup() {
   const [pw, setPw] = useState('');
   const [twoPw, setTwoPw] = useState('');
   const [name, setName] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [message, setMessage] = useState('');
 
   const saveUserEmail = (e: string) => {
     setEmail(e);
@@ -56,12 +59,16 @@ export default function Signup() {
     setName(e);
   };
 
+  const handleOpen = () => setModalOpen(true);
+  const handleClose = () => setModalOpen(false);
+
   const clickSignup = async () => {
     const res = await signup(email, pw, twoPw, name);
     if (res.result) {
       router.push('/signup/complete');
     } else {
-      console.log('error');
+      setMessage(res.message);
+      handleOpen();
     }
   };
 
@@ -123,6 +130,12 @@ export default function Signup() {
           Signup
         </Button>
       </LoginBody>
+      <ModalAtom
+        open={modalOpen}
+        handleClose={handleClose}
+        title={'error'}
+        message={message}
+      />
     </>
   );
 }

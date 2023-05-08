@@ -19,7 +19,7 @@ export async function getSingup(
     if (res.status == 201) {
       return { result: true, message: '회원가입을 완료하였습니다.' };
     } else {
-      return { result: false, message: 'error 입니다.' };
+      return { result: false, message: res.data.error };
     }
   } catch (err) {
     return { result: false, message: 'error 입니다.' };
