@@ -6,18 +6,17 @@ import { PrismaUserRepository } from 'repositories/PrismaUserRepository';
 const prisma = new PrismaClient();
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === 'POST') {
-    const { email, name, passwd } = req.body;
+  if (req.method === 'GET') {
+    const { email } = req.query;
 
     const userRepository = new PrismaUserRepository(prisma);
     const userService = new UserUseCase(userRepository);
     try {
-      const isAvailableEmail = await !userService.checkEmail(email);
-      if (isAvailableEmail) {
-        const newUser = await userService.signup({ passwd, email, name });
-        res.status(201).json({ user: newUser });
+      if (email && typeof email === 'string') {
+        const isAvailable = await userService.checkEmail(email);
+        res.status(200).json({ isAvailable });
       } else {
-        res.status(409).json({ error: 'User with this email already exists' });
+        res.status(400).json({ error: 'Email is required' });
       }
     } catch (error) {
       if (error instanceof Error) {
