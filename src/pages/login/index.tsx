@@ -5,7 +5,6 @@ import Image from 'next/image';
 
 import {
   Link,
-  Typography,
   Divider,
   Stack,
   TextField,
@@ -28,8 +27,6 @@ export default function Login() {
   const [pw, setPw] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(false);
-
-  console.log(id);
 
   const handleClickShowPassword = () => {
     setShowPassword((item) => !item);

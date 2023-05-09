@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
 
-import { Typography, Divider, Stack, Button } from '@mui/material';
+import { Divider, Stack, Button } from '@mui/material';
 import LoginBody from 'components/atoms/LoginBody';
 import { signup } from 'controllers/application/User';
 import { SignupCard } from 'components/organisms/SignupCard';
