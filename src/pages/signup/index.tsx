@@ -103,7 +103,7 @@ export default function Signup() {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Image src="/logo.png" width={305} height={35} alt="logo"></Image>
+          <Image src="/logo2.png" width={305} height={35} alt="logo"></Image>
         </Stack>
 
         <Divider sx={{ my: 3 }}></Divider>
