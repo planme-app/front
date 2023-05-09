@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { User } from 'models/User';
+import { User, SignUpRequest } from 'models/User';
 import { UserRepository } from 'repositories/UserRepository';
 
 export class PrismaUserRepository implements UserRepository {
@@ -12,7 +12,7 @@ export class PrismaUserRepository implements UserRepository {
     return user;
   }
 
-  async createUser(user: Omit<User, 'user_id' | 'created_at'>): Promise<User> {
+  async createUser(user: SignUpRequest): Promise<User> {
     const createdUser = await this.prisma.user_tb.create({ data: user });
     return createdUser;
   }

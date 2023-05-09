@@ -1,10 +1,10 @@
-import { User } from 'models/User';
+import { User, SignInRequest, SignUpRequest } from 'models/User';
 import { UserRepository } from 'repositories/UserRepository';
 
 export class UserUseCase {
   constructor(private userRepository: UserRepository) {}
 
-  async signup(user: Omit<User, 'user_id' | 'created_at'>): Promise<User> {
+  async signup(user: SignUpRequest): Promise<User> {
     const existingUser = await this.userRepository.getUserByEmail(user.email);
     if (existingUser) {
       throw new Error('User with this email already exists');
