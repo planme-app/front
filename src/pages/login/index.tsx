@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Image from 'next/image';
 
 import {
   Link,
-  Typography,
   Divider,
   Stack,
   TextField,
@@ -59,9 +59,7 @@ export default function Login() {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Typography variant="h4" gutterBottom>
-            Self Management
-          </Typography>
+          <Image src="/logo2.png" width={305} height={35} alt="logo"></Image>
         </Stack>
 
         <Divider sx={{ my: 3 }}></Divider>
