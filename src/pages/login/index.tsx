@@ -48,6 +48,8 @@ export default function Login() {
     router.push('/signup');
   };
 
+  const handleLogin = async () => {};
+
   return (
     <>
       <Head>
@@ -100,7 +102,7 @@ export default function Login() {
           <Checkbox checked={remember} onChange={saveRemeber} />
         </Stack>
 
-        <Button variant="contained" size="large">
+        <Button variant="contained" size="large" onClick={handleLogin}>
           Login
         </Button>
         <Stack
