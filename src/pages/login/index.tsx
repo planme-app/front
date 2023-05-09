@@ -29,6 +29,8 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(false);
 
+  console.log(id);
+
   const handleClickShowPassword = () => {
     setShowPassword((item) => !item);
   };
@@ -60,7 +62,7 @@ export default function Login() {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Image src="/logo.png" width={270} height={35} alt="logo"></Image>
+          <Image src="/logo2.png" width={305} height={35} alt="logo"></Image>
         </Stack>
 
         <Divider sx={{ my: 3 }}></Divider>
