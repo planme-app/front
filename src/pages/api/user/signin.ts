@@ -24,7 +24,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const signInUser = await userService.signin({ email, passwd });
       if (signInUser) {
         const accessToken = userService.generateToken(signInUser);
-        res.status(200).json({ accessToken, user: signInUser });
+        res.status(200).json({
+          accessToken,
+          user: {
+            id: signInUser.user_id,
+            email: signInUser.email,
+            username: signInUser.name
+          }
+        });
       } else {
         res.status(401).json({ error: 'Invalid email or password' });
       }
