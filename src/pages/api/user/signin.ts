@@ -7,22 +7,33 @@ const prisma = new PrismaClient();
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
-    const { email, name, passwd } = req.body;
+    const { email, passwd } = req.body;
+
+    if (email === '') {
+      res.status(400).json({ error: 'Email is required' });
+      return;
+    } else if (passwd === '') {
+      res.status(400).json({ error: 'Password is required' });
+      return;
+    }
 
     const userRepository = new PrismaUserRepository(prisma);
     const userService = new UserUseCase(userRepository);
+
     try {
-      const isExistingEmail = await userService.checkEmail(email);
-      if (!isExistingEmail) {
-        const hashedPassword = await userService.encryptPassword(passwd);
-        const newUser = await userService.signup({
-          email,
-          name,
-          passwd: hashedPassword
+      const signInUser = await userService.signin({ email, passwd });
+      if (signInUser) {
+        const accessToken = userService.generateToken(signInUser);
+        res.status(200).json({
+          accessToken,
+          user: {
+            id: signInUser.user_id,
+            email: signInUser.email,
+            username: signInUser.name
+          }
         });
-        res.status(201).json({ user: newUser });
       } else {
-        res.status(409).json({ error: 'User with this email already exists' });
+        res.status(401).json({ error: 'Invalid email or password' });
       }
     } catch (error) {
       if (error instanceof Error) {
