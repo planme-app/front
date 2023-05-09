@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Provider } from 'mobx-react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { ThemeProvider } from '@mui/material/styles';
