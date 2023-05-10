@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
+import { loginApi } from 'controllers/services/loginApi';
 
 import {
   Link,
@@ -48,7 +49,21 @@ export default function Login() {
     router.push('/signup');
   };
 
-  const handleLogin = async () => {};
+  const handleLogin = async () => {
+    try {
+      const result = await loginApi(id, pw);
+      const accessToken = result?.accessToken;
+      if (accessToken) {
+        localStorage.setItem('Authorization', accessToken);
+        router.push('/');
+      } else {
+        console.log('Access token not found', result, result.data);
+      }
+    } catch (error) {
+      console.error(error);
+      console.log('Login failed');
+    }
+  };
 
   return (
     <>
