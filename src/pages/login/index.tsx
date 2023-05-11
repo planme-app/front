@@ -54,7 +54,7 @@ export default function Login() {
       const result = await loginApi(id, pw);
       const accessToken = result?.accessToken;
       if (accessToken) {
-        localStorage.setItem('Authorization', `bearer ${accessToken}`);
+        localStorage.setItem('Authorization', accessToken);
         router.push('/');
       } else {
         console.log('Access token not found', result, result.data);
