@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
 import { loginApi } from 'controllers/services/api';
+import ModalAtom from 'components/atoms/ModalAtom';
 
 import {
   Link,
@@ -28,6 +29,8 @@ export default function Login() {
   const [pw, setPw] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [message, setMessage] = useState('');
 
   const handleClickShowPassword = () => {
     setShowPassword((item) => !item);
@@ -49,14 +52,18 @@ export default function Login() {
     router.push('/signup');
   };
 
+  const handleOpen = () => setModalOpen(true);
+  const handleClose = () => setModalOpen(false);
+
   const handleLogin = async () => {
     try {
       const result = await loginApi(id, pw);
-      const accessToken = result?.accessToken;
-      if (accessToken) {
+
+      if (result.accessToken) {
         router.push('/');
       } else {
-        console.log('Access token not found', result?.message.response.status);
+        setMessage(result?.message);
+        handleOpen();
       }
     } catch (error) {
       console.error(error);
@@ -132,6 +139,12 @@ export default function Login() {
           <Link variant="subtitle2">비밀번호 찾기</Link>
         </Stack>
       </LoginBody>
+      <ModalAtom
+        open={modalOpen}
+        handleClose={handleClose}
+        title={'error'}
+        message={message}
+      />
     </>
   );
 }
