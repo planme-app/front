@@ -24,7 +24,7 @@ export interface TextFieldProps {
     value: string;
     onChange: (params: string) => void;
   };
-  checkPw: {
+  twoPw: {
     value: string;
     onChange: (params: string) => void;
   };
@@ -63,7 +63,7 @@ export default function Signup() {
   const handleOpen = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
 
-  const clickSignup = async () => {
+  const doSignup = async () => {
     const res = await signup(email, pw, twoPw, name);
     if (res.result) {
       router.push('/signup/complete');
@@ -82,7 +82,7 @@ export default function Signup() {
       value: pw,
       onChange: saveUserPw
     },
-    checkPw: {
+    twoPw: {
       value: twoPw,
       onChange: saveUserCheckPw
     },
@@ -117,14 +117,16 @@ export default function Signup() {
 
         <Button
           disabled={
-            !checkEmail(email) ||
-            !checkPw(pw) ||
-            !confirmPw(pw, twoPw) ||
-            !checkName(name)
+            !(
+              checkEmail(email) &&
+              checkPw(pw) &&
+              confirmPw(pw, twoPw) &&
+              checkName(name)
+            )
           }
           variant="contained"
           size="large"
-          onClick={clickSignup}
+          onClick={doSignup}
         >
           Signup
         </Button>
