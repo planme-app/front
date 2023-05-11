@@ -20,12 +20,10 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 export default function LoginBody({ children }: PropsWithChildren) {
   return (
-    <>
-      <StyledRoot>
-        <Container maxWidth="sm">
-          <StyledContent>{children}</StyledContent>
-        </Container>
-      </StyledRoot>
-    </>
+    <StyledRoot>
+      <Container maxWidth="sm">
+        <StyledContent>{children}</StyledContent>
+      </Container>
+    </StyledRoot>
   );
 }
