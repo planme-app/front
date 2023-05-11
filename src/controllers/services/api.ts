@@ -28,19 +28,20 @@ export async function getSingup(
   }
 }
 
-export const loginApi = async (email: string, password: string) => {
+export const loginApi = async (email: string, passwd: string) => {
   try {
     const res = await axios.post(URL_LOGIN, {
       email,
-      password
+      passwd
     });
-    console.log(res);
-    if (res.data.status == 201) {
+    if (res.status == 200) {
+      const accessToken = res.data.accessToken;
+      localStorage.setItem('Authorization', `Bearer ${accessToken}`);
       return res.data;
     } else {
       return { result: false, message: res.data.error };
     }
   } catch (error) {
-    return { result: false, message: 'error 입니다.' };
+    return { result: false, message: error };
   }
 };

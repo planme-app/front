@@ -54,10 +54,9 @@ export default function Login() {
       const result = await loginApi(id, pw);
       const accessToken = result?.accessToken;
       if (accessToken) {
-        localStorage.setItem('Authorization', accessToken);
         router.push('/');
       } else {
-        console.log('Access token not found', result, result.data);
+        console.log('Access token not found', result?.message.response.status);
       }
     } catch (error) {
       console.error(error);
