@@ -38,17 +38,16 @@ export const loginApi = async (email: string, passwd: string) => {
       const accessToken = res.data.accessToken;
       localStorage.setItem('Authorization', `Bearer ${accessToken}`);
       return res.data;
+    } else {
+      return {
+        result: false,
+        message: `HTTP 상태 코드: ${res.status}`
+      };
     }
   } catch (error) {
     if (error instanceof AxiosError && error.response) {
       const status = error.response.status;
-
-      if (status == 400) {
-        return {
-          result: false,
-          message: '이메일 또는 비밀번호가 누락 되었습니다.'
-        };
-      } else if (status == 401) {
+      if (status == 401) {
         return {
           result: false,
           message: '이메일 또는 비밀번호가 잘못 입력 되었습니다.'
@@ -59,6 +58,11 @@ export const loginApi = async (email: string, passwd: string) => {
           message: `알 수 없는 에러가 발생했습니다. (HTTP 상태 코드: ${status})`
         };
       }
+    } else {
+      return {
+        result: false,
+        message: `알 수 없는 에러가 발생했습니다. 잠시 후 다시 시도해주세요.`
+      };
     }
   }
 };

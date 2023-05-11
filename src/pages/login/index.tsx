@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { loginApi } from 'controllers/services/api';
 import ModalAtom from 'components/atoms/ModalAtom';
 
+import { checkEmail, checkPw } from 'controllers/domain/User';
 import {
   Link,
   Divider,
@@ -57,17 +58,23 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const result = await loginApi(id, pw);
-
-      if (result.accessToken) {
-        router.push('/');
+      if (checkEmail(id) && checkPw(pw)) {
+        const result = await loginApi(id, pw);
+        if (result.accessToken) {
+          router.push('/');
+          return;
+        } else {
+          setMessage(result?.message);
+        }
       } else {
-        setMessage(result?.message);
-        handleOpen();
+        setMessage('이메일 또는 비밀번호를 형식에 맞게 입력해주세요');
       }
     } catch (error) {
       console.error(error);
-      console.log('Login failed');
+      setMessage('로그인에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    }
+    if (message) {
+      handleOpen();
     }
   };
 
