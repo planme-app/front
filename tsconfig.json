@@ -25,9 +25,7 @@
       "repositories/*": ["src/backend/repositories/*"],
       "services/*": ["src/backend/services/*"],
       "stores/*": ["src/stores*"]
-    },
-    "experimentalDecorators": true,
-    "useDefineForClassFields": true
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
