@@ -17,7 +17,8 @@ import {
   InputAdornment,
   IconButton,
   Checkbox,
-  Button
+  Button,
+  Typography
 } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -86,13 +87,20 @@ export default function Login() {
       <LoginBody>
         <Stack
           direction="column"
-          alignItems="center"
+          alignItems="flex-start"
           justifyContent="space-between"
         >
-          <Image src="/logo2.png" width={305} height={35} alt="logo"></Image>
+          <Typography
+            variant="h3"
+            fontWeight={300}
+            color={'#556cd6'}
+            gutterBottom
+          >
+            Log in
+          </Typography>
         </Stack>
 
-        <Divider sx={{ my: 3 }}></Divider>
+        <Divider sx={{ mb: 5 }}></Divider>
 
         <Stack spacing={3}>
           <TextField name="ID" label="ID" value={id} onChange={saveUserId} />
