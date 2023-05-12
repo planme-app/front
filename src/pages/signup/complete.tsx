@@ -8,7 +8,7 @@ import LoginBody from 'components/atoms/LoginBody';
 export default function Complete() {
   const router = useRouter();
 
-  const clickButton = () => {
+  const moveLogin = () => {
     router.push('/login');
   };
 
@@ -44,7 +44,7 @@ export default function Complete() {
           sx={{ my: 6 }}
         ></Stack>
 
-        <Button variant="contained" size="large" onClick={clickButton}>
+        <Button variant="contained" size="large" onClick={moveLogin}>
           확인
         </Button>
       </LoginBody>

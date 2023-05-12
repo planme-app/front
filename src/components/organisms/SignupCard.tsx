@@ -9,39 +9,41 @@ import {
 } from 'controllers/domain/User';
 
 export function SignupCard({ data }: { data: TextFieldProps }) {
+  const { email, pw, twoPw, name } = data;
+
   return (
     <Stack spacing={3}>
       <TextField
         name="Email"
         password={false}
-        tftype={checkEmail(data.email.value)}
+        isForm={checkEmail(email.value)}
         message="이메일 형식에 맞게 작성해주세요."
-        value={data.email.value}
-        change={data.email.onChange}
+        value={email.value}
+        change={email.onChange}
       />
       <TextField
         name="Password"
         password={true}
-        tftype={checkPw(data.pw.value)}
+        isForm={checkPw(pw.value)}
         message="비밀전호(영문+숫자+특수기호, 8~20자)"
-        value={data.pw.value}
-        change={data.pw.onChange}
+        value={pw.value}
+        change={pw.onChange}
       />
       <TextField
         name="CheckPassword"
         password={true}
-        tftype={confirmPw(data.checkPw.value, data.checkPw.value)}
+        isForm={confirmPw(pw.value, twoPw.value)}
         message="비밀번호가 맞지않습니다."
-        value={data.checkPw.value}
-        change={data.checkPw.onChange}
+        value={twoPw.value}
+        change={twoPw.onChange}
       />
       <TextField
         name="Name"
         password={false}
-        tftype={checkName(data.name.value)}
+        isForm={checkName(name.value)}
         message="이름에 맞게 작성해주세요."
-        value={data.name.value}
-        change={data.name.onChange}
+        value={name.value}
+        change={name.onChange}
       />
     </Stack>
   );

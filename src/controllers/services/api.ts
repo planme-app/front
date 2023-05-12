@@ -6,6 +6,11 @@ const URL_SIGNUP = `${API_BASE_URL}/api/user/signup`;
 
 const URL_LOGIN = `${API_BASE_URL}/api/user/signin`;
 
+enum MessageObj {
+  success = '회원가입을 완료하였습니다.',
+  error = 'error 입니다.'
+}
+
 export async function getSingup(
   email: string,
   pw: string,
@@ -18,8 +23,8 @@ export async function getSingup(
       passwd: pw,
       name: name
     });
-    if (res.status == 201) {
-      return { result: true, message: '회원가입을 완료하였습니다.' };
+    if (res.status === 201) {
+      return { result: true, message: MessageObj.success };
     } else {
       return { result: false, message: res.data.error };
     }

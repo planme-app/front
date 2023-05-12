@@ -11,7 +11,7 @@ export function checkPw(pw: string): boolean {
 
   if (pw.length < 8 || pw.length > 20) {
     return false;
-  } else if (pw.search(/\s/) != -1) {
+  } else if (pw.search(/\s/) !== -1) {
     return false;
   } else if (num < 0 || eng < 0 || spe < 0) {
     return false;
