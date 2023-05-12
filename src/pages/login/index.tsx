@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
+import { loginApi } from 'controllers/services/api';
+import ModalAtom from 'components/atoms/ModalAtom';
 
+import { checkEmail, checkPw } from 'controllers/domain/User';
 import {
   Link,
   Divider,
@@ -27,6 +30,8 @@ export default function Login() {
   const [pw, setPw] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [message, setMessage] = useState('');
 
   const handleClickShowPassword = () => {
     setShowPassword((item) => !item);
@@ -46,6 +51,31 @@ export default function Login() {
 
   const moveSignup = () => {
     router.push('/signup');
+  };
+
+  const handleOpen = () => setModalOpen(true);
+  const handleClose = () => setModalOpen(false);
+
+  const handleLogin = async () => {
+    try {
+      if (checkEmail(id) && checkPw(pw)) {
+        const result = await loginApi(id, pw);
+        if (result.accessToken) {
+          router.push('/');
+          return;
+        } else {
+          setMessage(result?.message);
+        }
+      } else {
+        setMessage('이메일 또는 비밀번호를 형식에 맞게 입력해주세요');
+      }
+    } catch (error) {
+      console.error(error);
+      setMessage('로그인에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    }
+    if (message) {
+      handleOpen();
+    }
   };
 
   return (
@@ -100,7 +130,7 @@ export default function Login() {
           <Checkbox checked={remember} onChange={saveRemeber} />
         </Stack>
 
-        <Button variant="contained" size="large">
+        <Button variant="contained" size="large" onClick={handleLogin}>
           Login
         </Button>
         <Stack
@@ -116,6 +146,12 @@ export default function Login() {
           <Link variant="subtitle2">비밀번호 찾기</Link>
         </Stack>
       </LoginBody>
+      <ModalAtom
+        open={modalOpen}
+        handleClose={handleClose}
+        title={'error'}
+        message={message}
+      />
     </>
   );
 }
