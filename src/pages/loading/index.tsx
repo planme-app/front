@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { ThreeDots } from 'react-loader-spinner';
+import { ThreeDots, Oval } from 'react-loader-spinner';
 import Head from 'next/head';
 import Image from 'next/image';
 import { Typography, Stack } from '@mui/material';
@@ -31,9 +31,19 @@ export default function Loading() {
           sx={{ my: 6 }}
         >
           <Image src="/logo2.png" width={265} height={35} alt="logo"></Image>
-          <ThreeDots height="70" width="40" color="gray" ariaLabel="loading" />
+          <Oval
+            height={30}
+            width={30}
+            color="#556cd6"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+            ariaLabel="oval-loading"
+            secondaryColor="#556cd6"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
           <Typography
-            mt={'-25px'}
             variant="body2"
             fontWeight={800}
             color={'gray'}
