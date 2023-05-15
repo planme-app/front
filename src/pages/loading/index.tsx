@@ -21,7 +21,7 @@ export default function Loading() {
   return (
     <>
       <Head>
-        <title>complete</title>
+        <title>loading...</title>
       </Head>
       <LoginBody>
         <Stack
