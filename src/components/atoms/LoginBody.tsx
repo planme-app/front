@@ -2,27 +2,44 @@ import React, { PropsWithChildren } from 'react';
 import { Container } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
+interface StyledContentProps {
+  flexDirection?: 'row' | 'column';
+  minHeight?: string;
+  backgroundColor?: string;
+}
+
+interface LoginBodyProps {
+  flexDirection?: 'row' | 'column';
+  minHeight?: string;
+  backgroundColor?: string;
+}
+
 const StyledRoot = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
     display: 'flex'
   }
 }));
 
-const StyledContent = styled('div')(({ theme }) => ({
-  maxWidth: 480,
-  margin: 'auto',
-  minHeight: '100vh',
-  display: 'flex',
-  justifyContent: 'center',
-  flexDirection: 'column',
-  padding: theme.spacing(12, 0)
-}));
+const StyledContent = styled('div')<StyledContentProps>(
+  ({ theme, flexDirection = 'column' }) => ({
+    maxWidth: 480,
+    margin: 'auto',
+    minHeight: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: flexDirection,
+    padding: theme.spacing(12, 0)
+  })
+);
 
-export default function LoginBody({ children }: PropsWithChildren) {
+export default function LoginBody({
+  children,
+  flexDirection
+}: PropsWithChildren<LoginBodyProps>) {
   return (
     <StyledRoot>
       <Container maxWidth="sm">
-        <StyledContent>{children}</StyledContent>
+        <StyledContent flexDirection={flexDirection}>{children}</StyledContent>
       </Container>
     </StyledRoot>
   );
