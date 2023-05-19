@@ -7,10 +7,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum RoutineType {
+  time
+  count
+  bool
+}
+
 model user {
-  user_id    String   @id @default(uuid())
-  email      String   @unique
+  user_id    String    @id @default(uuid())
+  email      String    @unique
   passwd     String
   name       String
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
+  routine    routine[]
+}
+
+model routine {
+  routine_id          String      @id @default(uuid())
+  user_id             String
+  user                user        @relation(fields: [user_id], references: [user_id])
+  title               String
+  type                RoutineType
+  is_repeat           Boolean
+  days_of_week_binary Int
+  created_at          DateTime    @default(now())
+  deleted_at          DateTime?
 }
