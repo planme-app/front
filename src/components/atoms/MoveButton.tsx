@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export function MoveLeftButton() {
   return (
-    <Box sx={{ '& button': { m: 1 } }}>
+    <Box>
       <Button size="small">
         <Image src="/moveLeft.png" width={20} height={20} alt="moveButton" />
       </Button>
@@ -14,8 +14,8 @@ export function MoveLeftButton() {
 
 export function MoveRightButton() {
   return (
-    <Box sx={{ '& button': { m: 1 } }}>
-      <Button size="large">
+    <Box>
+      <Button size="small">
         <Image src="/moveRight.png" width={20} height={20} alt="moveButton" />
       </Button>
     </Box>

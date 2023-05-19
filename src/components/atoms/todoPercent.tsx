@@ -24,7 +24,7 @@ function CircularProgressWithLabel(
       <CustomCircularProgress
         variant="determinate"
         size={props.size || 30}
-        thickness={4.5}
+        thickness={props.size && props.size > 250 ? 3.5 : 4.5}
         {...props}
       />
       <Box

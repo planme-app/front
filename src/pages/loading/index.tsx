@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { ThreeDots, Oval } from 'react-loader-spinner';
+import { Oval } from 'react-loader-spinner';
 import Head from 'next/head';
 import Image from 'next/image';
 import { Typography, Stack } from '@mui/material';
