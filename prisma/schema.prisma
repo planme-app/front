@@ -23,13 +23,47 @@ model user {
 }
 
 model routine {
-  routine_id          String      @id @default(uuid())
+  routine_id          String             @id @default(uuid())
   user_id             String
-  user                user        @relation(fields: [user_id], references: [user_id])
+  user                user               @relation(fields: [user_id], references: [user_id])
   title               String
   type                RoutineType
   is_repeat           Boolean
   days_of_week_binary Int
-  created_at          DateTime    @default(now())
+  created_at          DateTime           @default(now())
   deleted_at          DateTime?
+  routine_instance    routine_instance[]
+}
+
+model routine_instance {
+  routine_instance_id    String                   @id @default(uuid())
+  routine_id             String
+  routine                routine                  @relation(fields: [routine_id], references: [routine_id])
+  count_routine_instance count_routine_instance[]
+  time_routine_instance  time_routine_instance[]
+  bool_routine_instance  bool_routine_instance[]
+}
+
+model count_routine_instance {
+  count_routine_instance_id String           @id @default(uuid())
+  routine_instance_id       String
+  routine_instance          routine_instance @relation(fields: [routine_instance_id], references: [routine_instance_id])
+  goal                      Int
+  progress                  Int
+}
+
+model time_routine_instance {
+  time_routine_instance_id String           @id @default(uuid())
+  routine_instance_id      String
+  routine_instance         routine_instance @relation(fields: [routine_instance_id], references: [routine_instance_id])
+  goal                     Int
+  progress                 Int
+}
+
+model bool_routine_instance {
+  bool_routine_instance_id String           @id @default(uuid())
+  routine_instance_id      String
+  routine_instance         routine_instance @relation(fields: [routine_instance_id], references: [routine_instance_id])
+  goal                     Boolean
+  progress                 Boolean
 }
