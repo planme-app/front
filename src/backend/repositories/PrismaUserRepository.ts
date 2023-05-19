@@ -6,14 +6,14 @@ export class PrismaUserRepository implements UserRepository {
   constructor(private prisma: PrismaClient) {}
 
   async getUserByEmail(email: string): Promise<User | null> {
-    const user = await this.prisma.user_tb.findUnique({
+    const user = await this.prisma.user.findUnique({
       where: { email }
     });
     return user;
   }
 
   async createUser(user: SignUpRequest): Promise<User> {
-    const createdUser = await this.prisma.user_tb.create({ data: user });
+    const createdUser = await this.prisma.user.create({ data: user });
     return createdUser;
   }
 }
