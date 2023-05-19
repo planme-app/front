@@ -1,8 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
 import { Stack } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import LoginBody from 'components/atoms/LoginBody';
-import Header from 'components/organisms/Header';
+import DoHeader from 'components/organisms/DoHeader';
 import TodoPercent from 'components/atoms/TodoPercent';
 import { StartStopButton, ResetDeleteButton } from 'components/atoms/DoButton';
 
@@ -13,7 +14,7 @@ export default function Do() {
         <title>doing...</title>
       </Head>
       <LoginBody>
-        <Header />
+        <DoHeader />
         <Stack
           minHeight={'74vh'}
           direction="column"

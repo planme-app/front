@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Image from 'next/image';
 
 export function StartStopButton() {
   return (
