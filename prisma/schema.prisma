@@ -7,10 +7,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  userId    String   @id @default(uuid())
-  email     String   @unique
-  passwd    String
-  name      String
-  createdAt DateTime @default(now())
+model user {
+  user_id    String   @id @default(uuid())
+  email      String   @unique
+  passwd     String
+  name       String
+  created_at DateTime @default(now())
 }
