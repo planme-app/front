@@ -15,12 +15,7 @@ export default function Do() {
       </Head>
       <LoginBody>
         <DoHeader />
-        <Stack
-          minHeight={'74vh'}
-          direction="column"
-          alignItems="center"
-          sx={{ mt: -4 }}
-        >
+        <Stack minHeight={'74vh'} direction="column" alignItems="center">
           <TodoPercent size={300} />
           <StartStopButton />
           <ResetDeleteButton />
