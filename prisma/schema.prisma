@@ -67,3 +67,11 @@ model bool_routine_instance {
   goal                     Boolean
   progress                 Boolean
 }
+
+model routine_template {
+  routine_template_id String      @id @default(uuid())
+  title               String
+  section             String
+  logo_url            String
+  type                RoutineType
+}
