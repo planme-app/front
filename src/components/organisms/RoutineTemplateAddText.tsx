@@ -34,7 +34,7 @@ export default function RoutineTemplateAddText(
   props: RoutineTemplateAddTextProps
 ) {
   const { name, setName } = props;
-  const nameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
 
@@ -62,7 +62,7 @@ export default function RoutineTemplateAddText(
           <BootstrapInput
             placeholder="습관 이름 입력"
             value={name}
-            onChange={nameChangeHandler}
+            onChange={handleName}
           />
         </FormControl>
       </Box>

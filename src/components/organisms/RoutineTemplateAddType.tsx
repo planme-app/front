@@ -31,7 +31,7 @@ export default function RoutineTemplateAddType(
   const { types, selectedType, setSelectedType } = props;
 
   const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
+  const handleOpen = () => {
     setOpen(true);
   };
 
@@ -54,7 +54,7 @@ export default function RoutineTemplateAddType(
       <ColorButton
         variant="contained"
         endIcon={<ArrowForwardIosIcon sx={{ marginLeft: '200px' }} />}
-        onClick={handleClickOpen}
+        onClick={handleOpen}
       >
         {selectedType}
       </ColorButton>
