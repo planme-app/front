@@ -9,15 +9,15 @@ import Dialog from '@mui/material/Dialog';
 export interface DialogAtomProps {
   items: string[];
   open: boolean;
-  selectedValue: string;
+  selectedItem: string;
   onClose: (value: string) => void;
 }
 
 export default function DialogAtom(props: DialogAtomProps) {
-  const { onClose, selectedValue, open, items } = props;
+  const { onClose, selectedItem, open, items } = props;
 
   const handleClose = () => {
-    onClose(selectedValue);
+    onClose(selectedItem);
   };
 
   const handleListItemClick = (value: string) => {
@@ -30,10 +30,7 @@ export default function DialogAtom(props: DialogAtomProps) {
       <List sx={{ pt: 0 }}>
         {items.map((item) => (
           <ListItem disableGutters key={item}>
-            <ListItemButton
-              onClick={() => handleListItemClick(item)}
-              key={item}
-            >
+            <ListItemButton onClick={() => handleListItemClick(item)}>
               <ListItemText primary={item} />
             </ListItemButton>
           </ListItem>

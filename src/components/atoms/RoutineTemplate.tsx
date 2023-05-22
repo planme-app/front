@@ -8,10 +8,9 @@ export type RoutineTemplateProps = {
   imageSrc: string;
 };
 
-export default function RoutineTemplate({
-  routineName,
-  imageSrc
-}: RoutineTemplateProps) {
+export default function RoutineTemplate(props: RoutineTemplateProps) {
+  const { routineName, imageSrc } = props;
+
   return (
     <Card
       sx={{

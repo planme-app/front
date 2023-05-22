@@ -24,7 +24,7 @@ export interface TextFieldProps {
     value: string;
     onChange: (params: string) => void;
   };
-  checkPw: {
+  twoPw: {
     value: string;
     onChange: (params: string) => void;
   };
@@ -82,7 +82,7 @@ export default function Signup() {
       value: pw,
       onChange: saveUserPw
     },
-    checkPw: {
+    twoPw: {
       value: twoPw,
       onChange: saveUserCheckPw
     },
@@ -107,7 +107,7 @@ export default function Signup() {
         </Stack>
 
         <Divider sx={{ my: 3 }}></Divider>
-        <SignupCard data={TextFieldArrayProps}></SignupCard>
+        <SignupCard props={TextFieldArrayProps}></SignupCard>
         <Stack
           direction="row"
           alignItems="center"

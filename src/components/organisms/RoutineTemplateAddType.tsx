@@ -8,7 +8,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import DialogAtom from 'components/atoms/DialogAtom';
 
 const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
-  color: theme.palette.getContrastText('##1A2027'),
+  color: theme.palette.getContrastText('#999999'),
   boxShadow: 'none',
   backgroundColor: '#F3F6F9',
   fontSize: 16,
@@ -19,11 +19,17 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
   }
 }));
 
-export default function RoutineTemplateAddType(props: {
-  types: Array<string>;
+export interface RoutineTemplateAddTypeProps {
+  types: string[];
   selectedType: string;
-  setSelectedType: (arg0: string) => void;
-}): JSX.Element {
+  setSelectedType: (selectedType: string) => void;
+}
+
+export default function RoutineTemplateAddType(
+  props: RoutineTemplateAddTypeProps
+): JSX.Element {
+  const { types, selectedType, setSelectedType } = props;
+
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,7 +37,7 @@ export default function RoutineTemplateAddType(props: {
 
   const handleClose = (value: string) => {
     setOpen(false);
-    props.setSelectedType(value);
+    setSelectedType(value);
   };
 
   return (
@@ -50,11 +56,11 @@ export default function RoutineTemplateAddType(props: {
         endIcon={<ArrowForwardIosIcon sx={{ marginLeft: '200px' }} />}
         onClick={handleClickOpen}
       >
-        {props.selectedType}
+        {selectedType}
       </ColorButton>
       <DialogAtom
-        items={props.types}
-        selectedValue={props.selectedType}
+        items={types}
+        selectedItem={selectedType}
         open={open}
         onClose={handleClose}
       />

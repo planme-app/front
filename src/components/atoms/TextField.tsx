@@ -1,20 +1,17 @@
 import { TextField } from '@mui/material';
 
-export default function TextFiled({
-  value,
-  tftype,
-  password,
-  name,
-  message,
-  change
-}: {
-  change: (arg0: string) => void;
+export interface TextFieldProps {
+  change: (value: string) => void;
   value: string;
   tftype: boolean;
   password: boolean;
   name: string;
   message: string;
-}) {
+}
+
+export default function TextFiled(props: TextFieldProps) {
+  const { value, tftype, password, name, message, change } = props;
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     change(e.target.value);
   };

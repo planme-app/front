@@ -11,9 +11,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     borderRadius: 4,
     position: 'relative',
     backgroundColor: theme.palette.mode === 'light' ? '#F3F6F9' : '#1A2027',
-    // borderColor: theme.palette.mode === 'light' ? '#E0E3E7' : '#2D3843',
     fontSize: 16,
-    // width: 'auto',
     padding: '10px 10px 10px 50px',
     transition: theme.transitions.create([
       'border-color',
@@ -27,12 +25,17 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   }
 }));
 
-export default function RoutineTemplateAddText(props: {
+export interface RoutineTemplateAddTextProps {
   name: string;
-  setName: (arg0: string) => void;
-}) {
+  setName: (name: string) => void;
+}
+
+export default function RoutineTemplateAddText(
+  props: RoutineTemplateAddTextProps
+) {
+  const { name, setName } = props;
   const nameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    props.setName(e.target.value);
+    setName(e.target.value);
   };
 
   return (
@@ -58,7 +61,7 @@ export default function RoutineTemplateAddText(props: {
         <FormControl variant="standard">
           <BootstrapInput
             placeholder="습관 이름 입력"
-            value={props.name}
+            value={name}
             onChange={nameChangeHandler}
           />
         </FormControl>

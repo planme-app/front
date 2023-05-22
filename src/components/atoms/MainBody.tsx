@@ -18,12 +18,10 @@ const StyledContent = styled('div')(() => ({
 
 export default function MainBody({ children }: PropsWithChildren) {
   return (
-    <>
-      <StyledRoot>
-        <Container maxWidth="sm">
-          <StyledContent sx={{ pt: 6 }}>{children}</StyledContent>
-        </Container>
-      </StyledRoot>
-    </>
+    <StyledRoot>
+      <Container maxWidth="sm">
+        <StyledContent sx={{ pt: 6 }}>{children}</StyledContent>
+      </Container>
+    </StyledRoot>
   );
 }

@@ -15,17 +15,12 @@ const StyledRowScroll = styled('div')(({ theme }) => ({
   padding: theme.spacing(1, 0)
 }));
 
-type RoutineTemplateCardProps = {
-  routineTheme: string;
-  routineList: RoutineTemplateProps[];
-};
-
-function useHorizontalScroll() {
+const useHorizontalScroll = () => {
   const elRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const el = elRef.current;
     if (el) {
-      const onWheel = (e: any) => {
+      const onWheel = (e: WheelEvent) => {
         if (e.deltaY == 0) return;
         e.preventDefault();
         el.scrollTo({
@@ -39,12 +34,16 @@ function useHorizontalScroll() {
   }, []);
 
   return elRef;
+};
+
+export interface RoutineTemplateCardProps {
+  routineTheme: string;
+  routineList: RoutineTemplateProps[];
 }
 
-export default function RoutineTemplateCard({
-  routineTheme,
-  routineList
-}: RoutineTemplateCardProps) {
+export default function RoutineTemplateCard(props: RoutineTemplateCardProps) {
+  const { routineTheme, routineList } = props;
+
   const scrollRef = useHorizontalScroll();
 
   return (
