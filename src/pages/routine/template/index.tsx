@@ -5,7 +5,7 @@ import { Typography } from '@mui/material';
 import MainBody from 'components/atoms/MainBody';
 import RoutineTemplateCard from 'components/organisms/RoutineTemplateCard';
 
-export default function AddPage() {
+export default function RoutineTemplatePage() {
   const routineList = [
     {
       routineName: '팔굽혀',
