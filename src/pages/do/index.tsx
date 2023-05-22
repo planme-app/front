@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import { Stack } from '@mui/material';
 import LoginBody from 'components/atoms/LoginBody';
-import DoHeader from 'components/organisms/DoHeader';
+import Header from 'components/organisms/Header';
 import TodoPercent from 'components/atoms/TodoPercent';
 import { CustomButton } from 'components/atoms/CustomButton';
 
@@ -13,7 +13,7 @@ export default function Do() {
         <title>doing...</title>
       </Head>
       <LoginBody>
-        <DoHeader />
+        <Header />
         <Stack minHeight={'74vh'} direction="column" alignItems="center">
           <TodoPercent size={300} />
           <CustomButton

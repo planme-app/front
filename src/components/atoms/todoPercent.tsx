@@ -5,7 +5,6 @@ import CircularProgress, {
 } from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
 
 function CircularProgressWithLabel(
   props: CircularProgressProps & {

@@ -1,19 +1,39 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Image from 'next/image';
+type Position =
+  | 'static'
+  | 'relative'
+  | 'absolute'
+  | 'sticky'
+  | 'fixed'
+  | 'inherit'
+  | 'initial'
+  | 'revert'
+  | 'unset';
 
 interface CustomButtonProps {
-  type: 'startStop' | 'resetDelete' | 'moveLeft' | 'moveRight' | 'setting';
+  type:
+    | 'startStop'
+    | 'resetDelete'
+    | 'moveLeft'
+    | 'moveRight'
+    | 'setting'
+    | 'logout';
   children?: string;
   display?: string;
+  justifyContent?: string;
   borderRadius?: string;
+  position?: Position;
   backgroundColor?: string;
   mt?: number;
   px?: number;
   height?: string;
+  width?: string;
+  bottom?: string;
   color?: string;
   src?: string;
-  width?: number;
+  imageWidth?: number;
   imageHeight?: number;
   alt?: string;
 }
@@ -22,13 +42,17 @@ export function CustomButton({
   type,
   children,
   display,
+  justifyContent,
   borderRadius,
   backgroundColor,
   mt,
   px,
   height,
-  src,
   width,
+  position,
+  bottom,
+  src,
+  imageWidth,
   imageHeight,
   alt,
   color,
@@ -37,12 +61,21 @@ export function CustomButton({
   return (
     <Box
       display={display}
+      justifyContent={justifyContent}
       borderRadius={borderRadius}
-      sx={{ backgroundColor, mt, px, height }}
+      position={position}
+      sx={{
+        backgroundColor,
+        mt,
+        px,
+        height,
+        width,
+        bottom
+      }}
     >
       <Button size="small" sx={{ color }} {...rest}>
-        {(type === 'moveLeft' || type === 'moveRight') && src && alt ? (
-          <Image src={src} width={width} height={imageHeight} alt={alt} />
+        {src && alt ? (
+          <Image src={src} width={imageWidth} height={imageHeight} alt={alt} />
         ) : (
           children
         )}
