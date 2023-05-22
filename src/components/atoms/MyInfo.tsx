@@ -23,7 +23,7 @@ export default function MyInfo({ title, content }: MyInfoProps) {
           fontWeight: 700
         }}
       >
-        {title ? title : 'EMAIL:'}
+        {title}
       </Typography>
       <Typography
         pl={2}
@@ -35,7 +35,7 @@ export default function MyInfo({ title, content }: MyInfoProps) {
           backgroundColor: 'gray'
         }}
       >
-        {content ? content : 'wpfh188@naver.com'}
+        {content}
       </Typography>
     </Stack>
   );

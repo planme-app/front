@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
 import CircularProgress, {
-  CircularProgressProps
+  CircularProgressProps,
+  circularProgressClasses
 } from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
-
-// 트랙 색상을 변경한 사용자 정의 CircularProgress 컴포넌트
-const CustomCircularProgress = styled(CircularProgress)`
-  & .MuiCircularProgress-circle {
-    stroke-linecap: round;
-  }
-`;
 
 function CircularProgressWithLabel(
   props: CircularProgressProps & {
@@ -21,8 +15,27 @@ function CircularProgressWithLabel(
 ) {
   return (
     <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-      <CustomCircularProgress
+      <CircularProgress
         variant="determinate"
+        sx={{
+          color: (theme) =>
+            theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800]
+        }}
+        size={props.size || 30}
+        thickness={props.size && props.size > 250 ? 3.5 : 4.5}
+        {...props}
+        value={100}
+      />
+      <CircularProgress
+        variant="determinate"
+        disableShrink
+        sx={{
+          position: 'absolute',
+          left: 0,
+          [`& .${circularProgressClasses.circle}`]: {
+            strokeLinecap: 'round'
+          }
+        }}
         size={props.size || 30}
         thickness={props.size && props.size > 250 ? 3.5 : 4.5}
         {...props}

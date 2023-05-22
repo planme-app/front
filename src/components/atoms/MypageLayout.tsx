@@ -7,14 +7,17 @@ interface SlidePanelProps {
 }
 
 const MypageSlideLayout = styled('div')<{ open: boolean }>(({ open }) => ({
-  height: '80vh',
+  maxWidth: 480,
+  height: '90vh',
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'column',
+  margin: 'auto',
   position: 'fixed',
-  transform: open ? 'translateY(0)' : 'translateY(100%)',
+  transform: open ? 'translateY(0)' : 'translateY(102%)',
   left: 0,
   right: 0,
+  bottom: 0,
   zIndex: 1000,
   backgroundColor: '#fff',
   boxShadow: '0 -5px 5px rgba(0, 0, 0, 0.1)',

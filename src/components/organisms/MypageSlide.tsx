@@ -1,23 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MypageLayout from 'components/atoms/MypageLayout';
-import MyInfo, { MyInfoProps } from 'components/atoms/MyInfo';
+import MyInfo from 'components/atoms/MyInfo';
 import { MypageLogoutButton } from 'components/atoms/LogoutButton';
 
-interface MypageSlideProps extends MyInfoProps {
+interface MypageSlideProps {
   open: boolean;
+  email?: string;
+  name?: string;
 }
 
-export default function MypageSlide({
-  open,
-  title,
-  content
-}: MypageSlideProps) {
-  const [nameTitle, SetNameTitle] = useState<string>('NAME:');
-  const [userName, SetUserName] = useState<string>('홍길동');
+export default function MypageSlide({ open, email, name }: MypageSlideProps) {
+  const [infoData, setInfoData] = useState([
+    { title: 'EMAIL:', content: '12345@naver.com' },
+    { title: 'NAME:', content: '홍길동' }
+  ]);
+
+  useEffect(() => {
+    if (email && name) {
+      setInfoData([
+        { ...infoData[0], content: email },
+        { ...infoData[1], content: name }
+      ]);
+    }
+  }, []);
+
   return (
     <MypageLayout open={open}>
-      <MyInfo title={title} content={content} />
-      <MyInfo title={nameTitle} content={userName} />
+      {infoData.map((info, index) => (
+        <MyInfo key={index} title={info.title} content={info.content} />
+      ))}
       <MypageLogoutButton />
     </MypageLayout>
   );
