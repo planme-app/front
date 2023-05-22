@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stack } from '@mui/material';
-import { MoveLeftButton, MoveRightButton } from 'components/atoms/MoveButton';
+import { CustomButton } from 'components/atoms/CustomButton';
 import Days from 'components/atoms/Days';
 
 export default function Header() {
@@ -20,9 +20,21 @@ export default function Header() {
           backgroundColor: '#fff'
         }}
       >
-        <MoveLeftButton />
+        <CustomButton
+          type="moveLeft"
+          src={'/moveLeft.png'}
+          width={20}
+          imageHeight={20}
+          alt="moveButton"
+        />
         <Days />
-        <MoveRightButton />
+        <CustomButton
+          type="moveRight"
+          src={'/moveRight.png'}
+          width={20}
+          imageHeight={20}
+          alt="moveButton"
+        />
       </Stack>
     </>
   );

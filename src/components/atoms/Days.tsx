@@ -6,7 +6,7 @@ export default function Days() {
     <Box
       sx={{
         '& button': { m: 1 },
-        width: '200px',
+        width: '230px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'

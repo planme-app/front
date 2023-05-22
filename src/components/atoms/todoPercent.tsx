@@ -28,7 +28,6 @@ function CircularProgressWithLabel(
       />
       <CircularProgress
         variant="determinate"
-        disableShrink
         sx={{
           position: 'absolute',
           left: 0,

@@ -1,11 +1,10 @@
 import React from 'react';
 import Head from 'next/head';
 import { Stack } from '@mui/material';
-import Typography from '@mui/material/Typography';
 import LoginBody from 'components/atoms/LoginBody';
 import DoHeader from 'components/organisms/DoHeader';
 import TodoPercent from 'components/atoms/TodoPercent';
-import { StartStopButton, ResetDeleteButton } from 'components/atoms/DoButton';
+import { CustomButton } from 'components/atoms/CustomButton';
 
 export default function Do() {
   return (
@@ -17,8 +16,30 @@ export default function Do() {
         <DoHeader />
         <Stack minHeight={'74vh'} direction="column" alignItems="center">
           <TodoPercent size={300} />
-          <StartStopButton />
-          <ResetDeleteButton />
+          <CustomButton
+            type="startStop"
+            display="flex"
+            borderRadius="10px"
+            backgroundColor="#556cd6"
+            mt={15}
+            px={4}
+            height="35px"
+            color="#fff"
+          >
+            일시정지
+          </CustomButton>
+          <CustomButton
+            type="resetDelete"
+            display="flex"
+            borderRadius="10px"
+            backgroundColor="#ACB3BF"
+            mt={4}
+            px={1}
+            height="30px"
+            color="#fff"
+          >
+            Reset
+          </CustomButton>
         </Stack>
       </LoginBody>
     </>

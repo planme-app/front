@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stack } from '@mui/material';
-import { MoveLeftButton, MoveRightButton } from 'components/atoms/MoveButton';
+import { CustomButton } from 'components/atoms/CustomButton';
 import DoTitle from 'components/atoms/DoTitle';
 
 export default function DoHeader() {
@@ -20,9 +20,21 @@ export default function DoHeader() {
           backgroundColor: '#fff'
         }}
       >
-        <MoveLeftButton />
+        <CustomButton
+          type="moveLeft"
+          src={'/moveLeft.png'}
+          width={20}
+          imageHeight={20}
+          alt="moveButton"
+        />
         <DoTitle />
-        <MoveRightButton />
+        <CustomButton
+          type="moveRight"
+          src={'/settingDot.png'}
+          width={20}
+          imageHeight={20}
+          alt="moveButton"
+        />
       </Stack>
     </>
   );
