@@ -11,8 +11,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const userRepository = new PrismaUserRepository(prisma);
     const userService = new UserUseCase(userRepository);
+    console.log(email, name, passwd);
     try {
       const isExistingEmail = await userService.checkEmail(email);
+      console.log(isExistingEmail);
       if (!isExistingEmail) {
         const hashedPassword = await userService.encryptPassword(passwd);
         const newUser = await userService.signup({
