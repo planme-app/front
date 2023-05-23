@@ -16,8 +16,8 @@ interface CustomButtonProps {
   type:
     | 'startStop'
     | 'resetDelete'
-    | 'moveLeft'
-    | 'moveRight'
+    | 'movePrev'
+    | 'moveNext_or_SettingDot'
     | 'setting'
     | 'logout';
   children?: string;

@@ -24,16 +24,16 @@ export default function Header({ doHeader }: HeaderProps) {
         }}
       >
         <CustomButton
-          type="moveLeft"
-          src={'/moveLeft.png'}
+          type="movePrev"
+          src={'/movePrev.png'}
           imageWidth={20}
           imageHeight={20}
           alt="moveButton"
         />
         {doHeader ? <DetailTitle /> : <Days />}
         <CustomButton
-          type="moveRight"
-          src={doHeader ? '/settingDot.png' : '/moveRight.png'}
+          type="moveNext_or_SettingDot"
+          src={doHeader ? '/settingDot.png' : '/moveNext.png'}
           imageWidth={20}
           imageHeight={20}
           alt="moveButton"

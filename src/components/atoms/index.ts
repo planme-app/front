@@ -2,7 +2,6 @@ export { default as CustomButton } from './CustomButton';
 export { default as Days } from './Days';
 export { default as DetailTitle } from './DetailTitle';
 export { default as LoginBody } from './LoginBody';
-export { default as LogoutButton } from './LogoutButton';
 export { default as ModalAtom } from './ModalAtom';
 export { default as MyInfo } from './MyInfo';
 export { default as MypageLayout } from './MypageLayout';
