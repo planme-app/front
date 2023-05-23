@@ -13,7 +13,7 @@ export default function Do() {
         <title>doing...</title>
       </Head>
       <LoginBody>
-        <Header />
+        <Header doHeader={true} />
         <Stack minHeight={'74vh'} direction="column" alignItems="center">
           <TodoPercent size={300} />
           <CustomButton

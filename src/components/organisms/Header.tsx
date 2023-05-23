@@ -5,10 +5,10 @@ import Days from 'components/atoms/Days';
 import DoTitle from 'components/atoms/DoTitle';
 
 export interface HeaderProps {
-  doHeader?: boolean;
+  doHeader: boolean;
 }
 
-export default function Header({ doHeader = false }: HeaderProps) {
+export default function Header({ doHeader }: HeaderProps) {
   return (
     <>
       <Stack

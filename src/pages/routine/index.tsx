@@ -8,14 +8,13 @@ import MypageSlide from 'components/organisms/MypageSlide';
 
 export default function Main() {
   const [mypage, SetMypage] = useState<boolean>(false);
-
   return (
     <>
       <Head>
         <title>main</title>
       </Head>
       <LoginBody>
-        <Header />
+        <Header doHeader={false} />
         <Stack
           minHeight={'74vh'}
           direction="column"
