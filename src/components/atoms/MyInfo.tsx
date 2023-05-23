@@ -32,7 +32,7 @@ export default function MyInfo({ title, content }: MyInfoProps) {
           alignItems: 'center',
           borderRadius: '10px',
           height: '40px',
-          backgroundColor: 'gray'
+          backgroundColor: '#D9D9D9'
         }}
       >
         {content}
