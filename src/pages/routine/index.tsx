@@ -12,7 +12,7 @@ export default function Main() {
         <title>main</title>
       </Head>
       <LoginBody>
-        <Header doHeader={false} />
+        <Header page={'header'} />
         <Stack
           minHeight={'74vh'}
           direction="column"

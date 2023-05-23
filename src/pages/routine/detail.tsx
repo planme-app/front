@@ -15,7 +15,7 @@ export default function Do() {
         <title>doing...</title>
       </Head>
       <LoginBody>
-        <Header doHeader={true} />
+        <Header page={'detail'} />
         <Stack minHeight={'74vh'} direction="column" alignItems="center">
           <RoutinePercent size={300} />
           <CustomButton

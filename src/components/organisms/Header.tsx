@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Stack } from '@mui/material';
 import { CustomButton, Days, DetailTitle } from 'components/atoms/index';
 
 export interface HeaderProps {
-  doHeader: boolean;
+  page: string;
 }
 
-export default function Header({ doHeader }: HeaderProps) {
+export default function Header({ page }: HeaderProps) {
+  const pageType = useMemo(() => {
+    switch (page) {
+      case 'detail':
+        return { title: <DetailTitle />, img: '/settingDot.png' };
+      case 'routineTemplateAddPage':
+        return { title: <span>routineTemplateAdd</span>, img: undefined };
+      default:
+        return { title: <Days />, img: '/moveNext.png' };
+    }
+  }, [page]);
+
   return (
     <>
       <Stack
@@ -30,10 +41,10 @@ export default function Header({ doHeader }: HeaderProps) {
           imageHeight={20}
           alt="moveButton"
         />
-        {doHeader ? <DetailTitle /> : <Days />}
+        {pageType.title}
         <CustomButton
           type="moveNext_or_SettingDot"
-          src={doHeader ? '/settingDot.png' : '/moveNext.png'}
+          src={pageType.img}
           imageWidth={20}
           imageHeight={20}
           alt="moveButton"
