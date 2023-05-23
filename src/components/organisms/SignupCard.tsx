@@ -16,7 +16,7 @@ export function SignupCard({ props }: { props: TextFieldProps }) {
       <TextField
         name="Email"
         password={false}
-        tftype={checkEmail(email.value)}
+        isForm={checkEmail(email.value)}
         message="이메일 형식에 맞게 작성해주세요."
         value={email.value}
         change={email.onChange}
@@ -24,7 +24,7 @@ export function SignupCard({ props }: { props: TextFieldProps }) {
       <TextField
         name="Password"
         password={true}
-        tftype={checkPw(pw.value)}
+        isForm={checkPw(pw.value)}
         message="비밀전호(영문+숫자+특수기호, 8~20자)"
         value={pw.value}
         change={pw.onChange}
@@ -32,7 +32,7 @@ export function SignupCard({ props }: { props: TextFieldProps }) {
       <TextField
         name="CheckPassword"
         password={true}
-        tftype={confirmPw(pw.value, twoPw.value)}
+        isForm={confirmPw(pw.value, twoPw.value)}
         message="비밀번호가 맞지않습니다."
         value={twoPw.value}
         change={twoPw.onChange}
@@ -40,7 +40,7 @@ export function SignupCard({ props }: { props: TextFieldProps }) {
       <TextField
         name="Name"
         password={false}
-        tftype={checkName(name.value)}
+        isForm={checkName(name.value)}
         message="이름에 맞게 작성해주세요."
         value={name.value}
         change={name.onChange}

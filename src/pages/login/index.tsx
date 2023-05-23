@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
+import { loginApi } from 'controllers/services/api';
+import ModalAtom from 'components/atoms/ModalAtom';
 
+import { checkEmail, checkPw } from 'controllers/domain/User';
 import {
   Link,
   Divider,
@@ -14,7 +17,8 @@ import {
   InputAdornment,
   IconButton,
   Checkbox,
-  Button
+  Button,
+  Typography
 } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -27,6 +31,8 @@ export default function Login() {
   const [pw, setPw] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [message, setMessage] = useState('');
 
   const handleClickShowPassword = () => {
     setShowPassword((item) => !item);
@@ -48,6 +54,31 @@ export default function Login() {
     router.push('/signup');
   };
 
+  const handleOpen = () => setModalOpen(true);
+  const handleClose = () => setModalOpen(false);
+
+  const handleLogin = async () => {
+    try {
+      if (checkEmail(id) && checkPw(pw)) {
+        const result = await loginApi(id, pw);
+        if (result.accessToken) {
+          router.push('/');
+          return;
+        } else {
+          setMessage(result?.message);
+        }
+      } else {
+        setMessage('이메일 또는 비밀번호를 형식에 맞게 입력해주세요');
+      }
+    } catch (error) {
+      console.error(error);
+      setMessage('로그인에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    }
+    if (message) {
+      handleOpen();
+    }
+  };
+
   return (
     <>
       <Head>
@@ -56,13 +87,20 @@ export default function Login() {
       <LoginBody>
         <Stack
           direction="column"
-          alignItems="center"
+          alignItems="flex-start"
           justifyContent="space-between"
         >
-          <Image src="/logo2.png" width={305} height={35} alt="logo"></Image>
+          <Typography
+            variant="h3"
+            fontWeight={300}
+            color={'#556cd6'}
+            gutterBottom
+          >
+            Log in
+          </Typography>
         </Stack>
 
-        <Divider sx={{ my: 3 }}></Divider>
+        <Divider sx={{ mb: 5 }}></Divider>
 
         <Stack spacing={3}>
           <TextField name="ID" label="ID" value={id} onChange={saveUserId} />
@@ -100,7 +138,7 @@ export default function Login() {
           <Checkbox checked={remember} onChange={saveRemeber} />
         </Stack>
 
-        <Button variant="contained" size="large">
+        <Button variant="contained" size="large" onClick={handleLogin}>
           Login
         </Button>
         <Stack
@@ -116,6 +154,12 @@ export default function Login() {
           <Link variant="subtitle2">비밀번호 찾기</Link>
         </Stack>
       </LoginBody>
+      <ModalAtom
+        open={modalOpen}
+        handleClose={handleClose}
+        title={'error'}
+        message={message}
+      />
     </>
   );
 }

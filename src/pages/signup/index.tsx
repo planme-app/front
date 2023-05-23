@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import Image from 'next/image';
 
-import { Divider, Stack, Button } from '@mui/material';
+import { Divider, Stack, Button, Typography } from '@mui/material';
 import LoginBody from 'components/atoms/LoginBody';
 import { signup } from 'controllers/application/User';
 import { SignupCard } from 'components/organisms/SignupCard';
@@ -63,7 +62,7 @@ export default function Signup() {
   const handleOpen = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
 
-  const clickSignup = async () => {
+  const doSignup = async () => {
     const res = await signup(email, pw, twoPw, name);
     if (res.result) {
       router.push('/signup/complete');
@@ -100,10 +99,17 @@ export default function Signup() {
       <LoginBody>
         <Stack
           direction="column"
-          alignItems="center"
+          alignItems="flex-start"
           justifyContent="space-between"
         >
-          <Image src="/logo2.png" width={305} height={35} alt="logo"></Image>
+          <Typography
+            variant="h3"
+            fontWeight={300}
+            color={'#556cd6'}
+            gutterBottom
+          >
+            Sign up
+          </Typography>
         </Stack>
 
         <Divider sx={{ my: 3 }}></Divider>
@@ -117,14 +123,16 @@ export default function Signup() {
 
         <Button
           disabled={
-            !checkEmail(email) ||
-            !checkPw(pw) ||
-            !confirmPw(pw, twoPw) ||
-            !checkName(name)
+            !(
+              checkEmail(email) &&
+              checkPw(pw) &&
+              confirmPw(pw, twoPw) &&
+              checkName(name)
+            )
           }
           variant="contained"
           size="large"
-          onClick={clickSignup}
+          onClick={doSignup}
         >
           Signup
         </Button>
