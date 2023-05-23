@@ -38,7 +38,7 @@ interface CustomButtonProps {
   alt?: string;
 }
 
-export function CustomButton({
+export default function CustomButton({
   type,
   children,
   display,

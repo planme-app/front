@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import { Stack } from '@mui/material';
 import LoginBody from 'components/atoms/LoginBody';
-import Header from 'components/organisms/Header';
-import TodoCard from 'components/organisms/TodoCard';
-import MypageSlide from 'components/organisms/MypageSlide';
+import { Header, RoutineCard, MypageSlide } from 'components/organisms/index';
 
 export default function Main() {
   const [mypage, SetMypage] = useState<boolean>(false);
@@ -21,7 +19,7 @@ export default function Main() {
           alignItems="center"
           sx={{ my: 2 }}
         >
-          <TodoCard />
+          <RoutineCard />
         </Stack>
         <MypageSlide open={mypage} />
       </LoginBody>

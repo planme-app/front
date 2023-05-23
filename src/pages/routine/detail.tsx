@@ -1,10 +1,12 @@
 import React from 'react';
 import Head from 'next/head';
 import { Stack } from '@mui/material';
-import LoginBody from 'components/atoms/LoginBody';
-import Header from 'components/organisms/Header';
-import TodoPercent from 'components/atoms/TodoPercent';
-import { CustomButton } from 'components/atoms/CustomButton';
+import { Header } from 'components/organisms/index';
+import {
+  CustomButton,
+  RoutinePercent,
+  LoginBody
+} from 'components/atoms/index';
 
 export default function Do() {
   return (
@@ -15,7 +17,7 @@ export default function Do() {
       <LoginBody>
         <Header doHeader={true} />
         <Stack minHeight={'74vh'} direction="column" alignItems="center">
-          <TodoPercent size={300} />
+          <RoutinePercent size={300} />
           <CustomButton
             type="startStop"
             display="flex"

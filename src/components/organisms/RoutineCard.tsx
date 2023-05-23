@@ -1,10 +1,9 @@
 import React from 'react';
 import { Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import TodoPercent from 'components/atoms/TodoPercent';
-import TodoDate from 'components/atoms/TodoDate';
+import { RoutinePercent, RoutineDate } from 'components/atoms/index';
 
-export default function TodoCard() {
+export default function RoutineCard() {
   return (
     <>
       <Stack
@@ -31,9 +30,9 @@ export default function TodoCard() {
           <Typography fontSize={'18px'} fontWeight={'bold'}>
             팔굽혀 펴기
           </Typography>
-          <TodoDate />
+          <RoutineDate />
         </Stack>
-        <TodoPercent size={70} />
+        <RoutinePercent size={70} />
       </Stack>
     </>
   );

@@ -1,8 +1,6 @@
 import React from 'react';
 import { Stack } from '@mui/material';
-import { CustomButton } from 'components/atoms/CustomButton';
-import Days from 'components/atoms/Days';
-import DoTitle from 'components/atoms/DoTitle';
+import { CustomButton, Days, DetailTitle } from 'components/atoms/index';
 
 export interface HeaderProps {
   doHeader: boolean;
@@ -32,7 +30,7 @@ export default function Header({ doHeader }: HeaderProps) {
           imageHeight={20}
           alt="moveButton"
         />
-        {doHeader ? <DoTitle /> : <Days />}
+        {doHeader ? <DetailTitle /> : <Days />}
         <CustomButton
           type="moveRight"
           src={doHeader ? '/settingDot.png' : '/moveRight.png'}

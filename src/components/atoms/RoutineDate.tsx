@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-export default function TodoDate() {
+export default function RoutineDate() {
   const [days, setDays] = useState<string[]>([
     '일',
     '월',

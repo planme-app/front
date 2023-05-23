@@ -61,7 +61,7 @@ function CircularProgressWithLabel(
   );
 }
 
-export default function TodoPercent({ size }: { size?: number }) {
+export default function RoutinePercent({ size }: { size?: number }) {
   const [progress, setProgress] = useState<number>(40);
 
   return <CircularProgressWithLabel size={size} value={progress} />;

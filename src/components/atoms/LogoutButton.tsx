@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-export function MypageLogoutButton() {
+export default function LogoutButton() {
   return (
     <Box
       display={'flex'}
