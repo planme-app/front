@@ -29,7 +29,7 @@ model routine {
   title               String
   type                RoutineType
   is_repeat           Boolean
-  days_of_week_binary Int
+  days_of_week_binary String
   created_at          DateTime           @default(now())
   deleted_at          DateTime?
   routine_instance    routine_instance[]
