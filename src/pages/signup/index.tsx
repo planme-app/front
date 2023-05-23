@@ -112,8 +112,8 @@ export default function Signup() {
           </Typography>
         </Stack>
 
-        <Divider sx={{ mb: 3 }}></Divider>
-        <SignupCard data={TextFieldArrayProps}></SignupCard>
+        <Divider sx={{ my: 3 }}></Divider>
+        <SignupCard props={TextFieldArrayProps}></SignupCard>
         <Stack
           direction="row"
           alignItems="center"

@@ -14,17 +14,16 @@ const style = {
   p: 4
 };
 
-export default function ModalAtom({
-  open,
-  handleClose,
-  title,
-  message
-}: {
+export interface ModalAtomProps {
   open: boolean;
-  handleClose: (isClose: boolean) => void;
+  handleClose: (isOpen: boolean) => void;
   title: string;
   message: string;
-}) {
+}
+
+export default function ModalAtom(props: ModalAtomProps) {
+  const { open, handleClose, title, message } = props;
+
   return (
     <Modal
       open={open}

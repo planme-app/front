@@ -8,8 +8,8 @@ import {
   checkName
 } from 'controllers/domain/User';
 
-export function SignupCard({ data }: { data: TextFieldProps }) {
-  const { email, pw, twoPw, name } = data;
+export function SignupCard({ props }: { props: TextFieldProps }) {
+  const { email, pw, twoPw, name } = props;
 
   return (
     <Stack spacing={3}>
