@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import { Stack } from '@mui/material';
 import LoginBody from 'components/atoms/LoginBody';
-import { Header, RoutineCard, MypageSlide } from 'components/organisms/index';
+import Header from 'components/organisms/Header';
+import RoutineCard from 'components/organisms/RoutineCard';
+import MypageSlide from 'components/organisms/MypageSlide';
 
 export default function Main() {
   const [mypage, SetMypage] = useState<boolean>(false);

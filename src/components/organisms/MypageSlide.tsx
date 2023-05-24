@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { CustomButton, MyInfo, MypageLayout } from 'components/atoms/index';
+import CustomButton from 'components/atoms/CustomButton';
+import MyInfo from 'components/atoms/MyInfo';
+import MypageLayout from 'components/atoms/MypageLayout';
 
 interface MypageSlideProps {
   open: boolean;

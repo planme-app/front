@@ -1,12 +1,10 @@
 import React from 'react';
 import Head from 'next/head';
 import { Stack } from '@mui/material';
-import { Header } from 'components/organisms/index';
-import {
-  CustomButton,
-  RoutinePercent,
-  LoginBody
-} from 'components/atoms/index';
+import Header from 'components/organisms/Header';
+import CustomButton from 'components/atoms/CustomButton';
+import RoutinePercent from 'components/atoms/RoutinePercent';
+import LoginBody from 'components/atoms/LoginBody';
 
 export default function Do() {
   return (

@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react';
 import { Stack } from '@mui/material';
-import { CustomButton, Days, DetailTitle } from 'components/atoms/index';
+import CustomButton from 'components/atoms/CustomButton';
+import Days from 'components/atoms/Days';
+import DetailTitle from 'components/atoms/DetailTitle';
 
 export interface HeaderProps {
   page: string;
@@ -12,7 +14,7 @@ export default function Header({ page }: HeaderProps) {
       case 'detail':
         return { title: <DetailTitle />, img: '/settingDot.png' };
       case 'routineTemplateAddPage':
-        return { title: <span>routineTemplateAdd</span>, img: undefined };
+        return { title: 'routineTemplateAdd', img: undefined };
       default:
         return { title: <Days />, img: '/moveNext.png' };
     }

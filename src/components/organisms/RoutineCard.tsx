@@ -1,7 +1,8 @@
 import React from 'react';
 import { Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { RoutinePercent, RoutineDate } from 'components/atoms/index';
+import RoutinePercent from 'components/atoms/RoutinePercent';
+import RoutineDate from 'components/atoms/RoutineDate';
 
 export default function RoutineCard() {
   return (
