@@ -33,6 +33,11 @@ export class UserUseCase {
     return searchUser;
   }
 
+  async getUserById(userId: string): Promise<User | null> {
+    const searchUser = await this.userRepository.getUserById(userId);
+    return searchUser;
+  }
+
   async encryptPassword(password: string): Promise<string> {
     const saltRounds = 10;
     const hashedPassword = await bycrypt.hash(password, saltRounds);

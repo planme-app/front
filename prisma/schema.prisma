@@ -29,7 +29,7 @@ model routine {
   title               String
   type                RoutineType
   is_repeat           Boolean
-  days_of_week_binary Int
+  days_of_week_binary String
   created_at          DateTime           @default(now())
   deleted_at          DateTime?
   routine_instance    routine_instance[]
@@ -38,6 +38,7 @@ model routine {
 model routine_instance {
   routine_instance_id    String                   @id @default(uuid())
   routine_id             String
+  created_at             DateTime                 @default(now())
   routine                routine                  @relation(fields: [routine_id], references: [routine_id])
   count_routine_instance count_routine_instance[]
   time_routine_instance  time_routine_instance[]
