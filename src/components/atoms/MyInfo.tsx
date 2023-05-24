@@ -3,8 +3,8 @@ import { Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 export interface MyInfoProps {
-  title?: string;
-  content?: string;
+  title: string;
+  content: string;
 }
 
 export default function MyInfo({ title, content }: MyInfoProps) {

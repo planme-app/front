@@ -12,14 +12,16 @@ type Position =
   | 'revert'
   | 'unset';
 
+type PageType =
+  | 'startStop'
+  | 'resetDelete'
+  | 'movePrev'
+  | 'moveNext_or_SettingDot'
+  | 'setting'
+  | 'logout';
+
 interface CustomButtonProps {
-  type:
-    | 'startStop'
-    | 'resetDelete'
-    | 'movePrev'
-    | 'moveNext_or_SettingDot'
-    | 'setting'
-    | 'logout';
+  type: PageType;
   children?: string;
   display?: string;
   justifyContent?: string;

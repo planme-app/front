@@ -2,13 +2,7 @@ import React, { PropsWithChildren } from 'react';
 import { Container } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-interface StyledContentProps {
-  flexDirection?: 'row' | 'column';
-  minHeight?: string;
-  backgroundColor?: string;
-}
-
-interface LoginBodyProps {
+interface StyledLoginBodyProps {
   flexDirection?: 'row' | 'column';
   minHeight?: string;
   backgroundColor?: string;
@@ -20,7 +14,7 @@ const StyledRoot = styled('div')(({ theme }) => ({
   }
 }));
 
-const StyledContent = styled('div')<StyledContentProps>(
+const StyledContent = styled('div')<StyledLoginBodyProps>(
   ({ theme, flexDirection = 'column' }) => ({
     maxWidth: 480,
     margin: 'auto',
@@ -35,7 +29,7 @@ const StyledContent = styled('div')<StyledContentProps>(
 export default function LoginBody({
   children,
   flexDirection
-}: PropsWithChildren<LoginBodyProps>) {
+}: PropsWithChildren<StyledLoginBodyProps>) {
   return (
     <StyledRoot>
       <Container maxWidth="sm">
