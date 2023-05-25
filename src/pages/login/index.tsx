@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import Image from 'next/image';
 import { loginApi } from 'controllers/services/api';
 import ModalAtom from 'components/atoms/ModalAtom';
 
