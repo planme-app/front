@@ -11,9 +11,7 @@ export class TemplateUseCase {
   async getTemplate() {
     const templates = await this.templateRepository.getTemplate();
     const groupedBySection = this.groupBySection(templates);
-    return {
-      data: groupedBySection
-    };
+    return groupedBySection;
   }
 
   groupBySection(templates: Template[]) {
@@ -49,13 +47,11 @@ export class TemplateUseCase {
       routine_template_id
     );
     return {
-      data: {
-        routineTemplateId: template?.routine_template_id,
-        title: template?.title,
-        logoUrl: template?.logo_url,
-        section: template?.section,
-        type: template?.type
-      }
+      routineTemplateId: template?.routine_template_id,
+      title: template?.title,
+      logoUrl: template?.logo_url,
+      section: template?.section,
+      type: template?.type
     };
   }
 
@@ -64,13 +60,11 @@ export class TemplateUseCase {
       template
     );
     return {
-      data: {
-        routineTemplateId: createdTemplate?.routine_template_id,
-        title: createdTemplate?.title,
-        logoUrl: createdTemplate?.logo_url,
-        section: createdTemplate?.section,
-        type: createdTemplate?.type
-      }
+      routineTemplateId: createdTemplate?.routine_template_id,
+      title: createdTemplate?.title,
+      logoUrl: createdTemplate?.logo_url,
+      section: createdTemplate?.section,
+      type: createdTemplate?.type
     };
   }
 }
