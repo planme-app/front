@@ -75,12 +75,16 @@ export const loginApi = async (email: string, passwd: string) => {
 export const getTemplate = async () => {
   try {
     const res = await axios.get(URL_GET_TEMPLATE);
-    if (res.status === 201) {
-      return { result: true, message: MessageObj.success, data: res.data };
+    if (res.status === 200) {
+      return { result: true, message: 'success', data: res.data };
     } else {
       return { result: false, message: res.data.error, data: {} };
     }
   } catch (err) {
-    return { result: false, message: '이미 존재하는 계정입니다.', data: {} };
+    return {
+      result: false,
+      message: `알 수 없는 에러가 발생했습니다. 잠시 후 다시 시도해주세요.`,
+      data: {}
+    };
   }
 };
