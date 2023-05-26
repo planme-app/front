@@ -1,44 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 
 import { Typography } from '@mui/material';
 import MainBody from 'components/atoms/MainBody';
 import RoutineTemplateCard from 'components/organisms/RoutineTemplateCard';
+import { getTemplate } from '@/controllers/services/api';
+import { Template } from '@/controllers/Entity/Template';
+
+interface TemplateType {
+  [key: string]: Template[];
+}
 
 export default function RoutineTemplatePage() {
-  const routineList = [
-    {
-      routineName: '팔굽혀',
-      imageSrc: '/icon/pushups72.png'
-    },
-    {
-      routineName: '걷기',
-      imageSrc: '/icon/pushups72.png'
-    },
-    {
-      routineName: '팔굽혀',
-      imageSrc: '/icon/pushups72.png'
-    },
-    {
-      routineName: '걷기',
-      imageSrc: '/icon/pushups72.png'
-    }
-  ];
+  const [routineTemplate, setRoutineTemplate] = useState<TemplateType>({});
 
-  const themeList = [
-    {
-      themeName: '운동',
-      routineList: routineList
-    },
-    {
-      themeName: '마음',
-      routineList: routineList
-    },
-    {
-      themeName: '공부',
-      routineList: routineList
+  const getTemplateApi = async () => {
+    const res = await getTemplate();
+    if (res.data === null) {
+      setRoutineTemplate({});
     }
-  ];
+    setRoutineTemplate(res.data);
+  };
+
+  useEffect(() => {
+    getTemplateApi();
+  }, []);
 
   return (
     <>
@@ -55,11 +41,11 @@ export default function RoutineTemplatePage() {
         >
           습관 선택
         </Typography>
-        {themeList.map((theme, index) => (
+        {Object.keys(routineTemplate).map((theme) => (
           <RoutineTemplateCard
-            routineTheme={theme.themeName}
-            routineList={theme.routineList}
-            key={index}
+            routineTheme={theme}
+            routineList={routineTemplate[theme]}
+            key={theme}
           />
         ))}
       </MainBody>

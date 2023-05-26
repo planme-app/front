@@ -2,9 +2,8 @@ import React, { useRef, useEffect } from 'react';
 
 import { styled } from '@mui/material/styles';
 import { Typography, Stack } from '@mui/material';
-import RoutineTemplate, {
-  RoutineTemplateProps
-} from 'components/atoms/RoutineTemplate';
+import RoutineTemplate from 'components/atoms/RoutineTemplate';
+import { Template } from '@/controllers/Entity/Template';
 
 const StyledRowScroll = styled('div')(({ theme }) => ({
   msOverflowStyle: 'none', // IE 및 Edge에서 스크롤바 숨김
@@ -38,7 +37,7 @@ const useHorizontalScroll = () => {
 
 export interface RoutineTemplateCardProps {
   routineTheme: string;
-  routineList: RoutineTemplateProps[];
+  routineList: Template[] | [];
 }
 
 export default function RoutineTemplateCard(props: RoutineTemplateCardProps) {
@@ -64,11 +63,11 @@ export default function RoutineTemplateCard(props: RoutineTemplateCardProps) {
         }}
       >
         <Stack direction="row" alignItems="flex-start" spacing={2}>
-          {routineList.map((routine, index) => (
+          {routineList?.map((routine) => (
             <RoutineTemplate
-              routineName={routine.routineName}
-              imageSrc={routine.imageSrc}
-              key={index}
+              title={routine.title}
+              logoUrl={routine.logoUrl}
+              key={routine.routineTemplateId}
             />
           ))}
         </Stack>
