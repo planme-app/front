@@ -3,7 +3,7 @@ import React, { useRef, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import { Typography, Stack } from '@mui/material';
 import RoutineTemplate from 'components/atoms/RoutineTemplate';
-import { Template } from '@/controllers/Entity/Template';
+import { Template } from 'controllers/Entity/Template';
 
 const StyledRowScroll = styled('div')(({ theme }) => ({
   msOverflowStyle: 'none', // IE 및 Edge에서 스크롤바 숨김

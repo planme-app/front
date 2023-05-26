@@ -4,8 +4,8 @@ import Head from 'next/head';
 import { Typography } from '@mui/material';
 import MainBody from 'components/atoms/MainBody';
 import RoutineTemplateCard from 'components/organisms/RoutineTemplateCard';
-import { getTemplate } from '@/controllers/services/api';
-import { Template } from '@/controllers/Entity/Template';
+import { getTemplate } from 'controllers/services/api';
+import { Template } from 'controllers/Entity/Template';
 
 interface TemplateType {
   [key: string]: Template[];
