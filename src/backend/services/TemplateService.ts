@@ -1,5 +1,9 @@
-import { Template, PostTemplateRequest } from 'models/Template';
-import { TemplateRepository } from '../repositories/TemplateRepository';
+import {
+  Template,
+  PostTemplateRequest,
+  TemplateResponse
+} from 'models/Template';
+import { TemplateRepository } from 'repositories/TemplateRepository';
 
 export class TemplateUseCase {
   constructor(private templateRepository: TemplateRepository) {}
@@ -13,13 +17,27 @@ export class TemplateUseCase {
   }
 
   groupBySection(templates: Template[]) {
-    const init: { [index: string]: Template[] } = {};
+    const init: { [index: string]: TemplateResponse[] } = {};
     const result = templates.reduce((groupTemplate, template) => {
       const { section } = template;
       if (groupTemplate[section]) {
-        groupTemplate[section].push(template);
+        groupTemplate[section].push({
+          routineTemplateId: template.routine_template_id,
+          title: template.title,
+          logoUrl: template.logo_url,
+          section: template.section,
+          type: template.type
+        });
       } else {
-        groupTemplate[section] = [template];
+        groupTemplate[section] = [
+          {
+            routineTemplateId: template.routine_template_id,
+            title: template.title,
+            logoUrl: template.logo_url,
+            section: template.section,
+            type: template.type
+          }
+        ];
       }
       return groupTemplate;
     }, init);
@@ -31,14 +49,28 @@ export class TemplateUseCase {
       routine_template_id
     );
     return {
-      data: template
+      data: {
+        routineTemplateId: template?.routine_template_id,
+        title: template?.title,
+        logoUrl: template?.logo_url,
+        section: template?.section,
+        type: template?.type
+      }
     };
   }
 
-  async postTemplate(template: PostTemplateRequest): Promise<Template> {
+  async postTemplate(template: PostTemplateRequest) {
     const createdTemplate = await this.templateRepository.createTemplate(
       template
     );
-    return createdTemplate;
+    return {
+      data: {
+        routineTemplateId: createdTemplate?.routine_template_id,
+        title: createdTemplate?.title,
+        logoUrl: createdTemplate?.logo_url,
+        section: createdTemplate?.section,
+        type: createdTemplate?.type
+      }
+    };
   }
 }

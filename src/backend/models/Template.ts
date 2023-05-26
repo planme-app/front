@@ -8,6 +8,14 @@ export interface Template {
   type: PrismaRoutineType;
 }
 
+export interface TemplateResponse {
+  routineTemplateId: string;
+  title: string;
+  section: string;
+  logoUrl: string;
+  type: PrismaRoutineType;
+}
+
 export interface PostTemplateRequest {
   title: string;
   section: string;
