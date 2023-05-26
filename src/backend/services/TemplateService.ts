@@ -1,4 +1,4 @@
-import { Template } from 'models/Template';
+import { Template, PostTemplateRequest } from 'models/Template';
 import { TemplateRepository } from '../repositories/TemplateRepository';
 
 export class TemplateUseCase {
@@ -33,5 +33,12 @@ export class TemplateUseCase {
     return {
       data: template
     };
+  }
+
+  async postTemplate(template: PostTemplateRequest): Promise<Template> {
+    const createdTemplate = await this.templateRepository.createTemplate(
+      template
+    );
+    return createdTemplate;
   }
 }

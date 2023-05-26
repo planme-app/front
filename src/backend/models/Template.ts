@@ -7,3 +7,10 @@ export interface Template {
   logo_url: string;
   type: PrismaRoutineType;
 }
+
+export interface PostTemplateRequest {
+  title: string;
+  section: string;
+  logo_url: string;
+  type: PrismaRoutineType;
+}

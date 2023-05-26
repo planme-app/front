@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { Template } from 'models/Template';
+import { Template, PostTemplateRequest } from 'models/Template';
 import { TemplateRepository } from 'repositories/TemplateRepository';
 
 export class PrismaTemplateRepository implements TemplateRepository {
@@ -7,7 +7,6 @@ export class PrismaTemplateRepository implements TemplateRepository {
 
   async getTemplate(): Promise<Template[]> {
     const template = await this.prisma.routine_template.findMany();
-
     return template;
   }
 
@@ -15,7 +14,13 @@ export class PrismaTemplateRepository implements TemplateRepository {
     const template = await this.prisma.routine_template.findUnique({
       where: { routine_template_id }
     });
-
     return template;
+  }
+
+  async createTemplate(template: PostTemplateRequest): Promise<Template> {
+    const createTemplate = await this.prisma.routine_template.create({
+      data: template
+    });
+    return createTemplate;
   }
 }
