@@ -25,4 +25,13 @@ export class TemplateUseCase {
     }, init);
     return result;
   }
+
+  async getTemplateById(routine_template_id: string) {
+    const template = await this.templateRepository.getTemplateById(
+      routine_template_id
+    );
+    return {
+      data: template
+    };
+  }
 }

@@ -11,9 +11,9 @@ export class PrismaTemplateRepository implements TemplateRepository {
     return template;
   }
 
-  async getTemplateById(routine_template_id: string): Promise<Template[]> {
-    const template = await this.prisma.routine_template.findMany({
-      where: { routine_template_id: routine_template_id }
+  async getTemplateById(routine_template_id: string): Promise<Template | null> {
+    const template = await this.prisma.routine_template.findUnique({
+      where: { routine_template_id }
     });
 
     return template;
