@@ -10,8 +10,8 @@ export default function Loading() {
   const router = useRouter();
 
   // useEffect(() => {
-  //   const findToken = localStorage.getItem('Authorization');
-  //   if (findToken) {
+  //   const checkLogin = localStorage.getItem('Authorization');
+  //   if (checkLogin) {
   //     router.push('/');
   //   } else {
   //     router.push('/login');

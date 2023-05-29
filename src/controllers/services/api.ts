@@ -1,3 +1,4 @@
+import routines from '@/pages/api/user/[userId]/routines';
 import axios, { AxiosError } from 'axios';
 
 export const API_BASE_URL = process.env.NEXT_PUBLIC_REACT_APP_API_URL;
@@ -5,6 +6,16 @@ export const API_BASE_URL = process.env.NEXT_PUBLIC_REACT_APP_API_URL;
 const URL_SIGNUP = `${API_BASE_URL}/api/user/signup`;
 
 const URL_LOGIN = `${API_BASE_URL}/api/user/signin`;
+
+const URL_ROUTINES = ({
+  userId,
+  date
+}: {
+  userId: string | null;
+  date: string;
+}) => {
+  return `${API_BASE_URL}/api/user/${userId}/routines?date=${date}`;
+};
 
 enum MessageObj {
   success = '회원가입을 완료하였습니다.',
@@ -40,8 +51,13 @@ export const loginApi = async (email: string, passwd: string) => {
       passwd
     });
     if (res.status === 200) {
+      console.log(res.data);
       const accessToken = res.data.accessToken;
+      const userId = res.data.user.id;
+      const userName = res.data.user.userName;
       localStorage.setItem('Authorization', `Bearer ${accessToken}`);
+      localStorage.setItem('userId', userId);
+      localStorage.setItem('userName', userName);
       return res.data;
     } else {
       return {
@@ -56,6 +72,43 @@ export const loginApi = async (email: string, passwd: string) => {
         return {
           result: false,
           message: '이메일 또는 비밀번호가 잘못 입력 되었습니다.'
+        };
+      } else {
+        return {
+          result: false,
+          message: `알 수 없는 에러가 발생했습니다. (HTTP 상태 코드: ${status})`
+        };
+      }
+    } else {
+      return {
+        result: false,
+        message: `알 수 없는 에러가 발생했습니다. 잠시 후 다시 시도해주세요.`
+      };
+    }
+  }
+};
+
+export const routinesApi = async (date: string) => {
+  try {
+    const userId = localStorage.getItem('userId');
+
+    const res = await axios.get(URL_ROUTINES({ userId, date }));
+
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      return {
+        result: false,
+        message: `HTTP 상태 코드: ${res.status}`
+      };
+    }
+  } catch (error) {
+    if (error instanceof AxiosError && error.response) {
+      const status = error.response.status;
+      if (status == 404) {
+        return {
+          result: false,
+          message: '사용자 ID를 찾을 수 없습니다.'
         };
       } else {
         return {

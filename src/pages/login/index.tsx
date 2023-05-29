@@ -61,7 +61,7 @@ export default function Login() {
       if (checkEmail(id) && checkPw(pw)) {
         const result = await loginApi(id, pw);
         if (result.accessToken) {
-          router.push('/');
+          router.push('/routine');
           return;
         } else {
           setMessage(result?.message);
