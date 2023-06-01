@@ -1,5 +1,6 @@
 import routines from '@/pages/api/user/[userId]/routines';
 import axios, { AxiosError } from 'axios';
+import Cookies from 'js-cookie';
 
 export const API_BASE_URL = process.env.NEXT_PUBLIC_REACT_APP_API_URL;
 
@@ -55,10 +56,10 @@ export const loginApi = async (email: string, passwd: string) => {
       const userId = res.data.user.id;
       const userName = res.data.user.userName;
       const userEmail = res.data.user.email;
-      localStorage.setItem('Authorization', `Bearer ${accessToken}`);
-      localStorage.setItem('userId', userId);
-      localStorage.setItem('userName', userName);
-      localStorage.setItem('userEmail', userEmail);
+      Cookies.set('Authorization', `Bearer ${accessToken}`);
+      Cookies.set('userId', userId);
+      Cookies.set('userName', userName);
+      Cookies.set('userEmail', userEmail);
       return res.data;
     } else {
       return {
@@ -91,7 +92,7 @@ export const loginApi = async (email: string, passwd: string) => {
 
 export const routinesApi = async (date: string) => {
   try {
-    const userId = localStorage.getItem('userId');
+    const userId = Cookies.get('userId') ?? null;
 
     const res = await axios.get(URL_ROUTINES({ userId, date }));
 

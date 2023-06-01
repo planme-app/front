@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { Stack } from '@mui/material';
@@ -26,12 +27,12 @@ export default function Main() {
   const [routines, setRoutines] = useRecoilState(routineList);
 
   useEffect(() => {
-    if (!localStorage.getItem('Authorization')) {
+    const { Authorization, userEmail, userName } = Cookies.get();
+
+    if (!Authorization) {
       router.push('/login');
-    } else {
-      const email = localStorage.getItem('userEmail');
-      const name = localStorage.getItem('userName');
-      setMypageInfo({ email: email, name: name });
+    } else if (userEmail && userName) {
+      setMypageInfo({ email: userEmail ?? null, name: userName ?? null });
     }
   }, []);
 

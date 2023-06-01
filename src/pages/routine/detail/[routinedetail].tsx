@@ -1,16 +1,29 @@
-import React from 'react';
+import {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  ParsedUrlQuery
+} from 'next';
 import Head from 'next/head';
 import { Stack } from '@mui/material';
-import Header from 'components/organisms/Header';
-import CustomButton from 'components/atoms/CustomButton';
-import RoutinePercent from 'components/atoms/RoutinePercent';
 import LoginBody from 'components/atoms/LoginBody';
+import Header from 'components/organisms/Header';
+import RoutinePercent from 'components/atoms/RoutinePercent';
+import CustomButton from 'components/atoms/CustomButton';
 
-export default function Do() {
+export interface DoProps {
+  params: {
+    routinsDetail: string;
+  };
+}
+
+export default function Do({
+  params
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  console.log(params.routinsDetail);
   return (
     <>
       <Head>
-        <title>doing...</title>
+        <title>진행 중...</title>
       </Head>
       <LoginBody>
         <Header page={'detail'} />
@@ -38,10 +51,27 @@ export default function Do() {
             height="30px"
             color="#fff"
           >
-            Reset
+            리셋
           </CustomButton>
         </Stack>
       </LoginBody>
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<
+  DoProps,
+  ParsedUrlQuery
+> = async (context) => {
+  const { routinsDetail } = context.params ?? {};
+
+  // `routinsDetail` 매개변수를 사용하여 서버 사이드 로직을 수행할 수 있습니다.
+
+  return {
+    props: {
+      params: {
+        routinsDetail: routinsDetail ?? ''
+      }
+    }
+  };
+};
