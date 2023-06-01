@@ -51,13 +51,14 @@ export const loginApi = async (email: string, passwd: string) => {
       passwd
     });
     if (res.status === 200) {
-      console.log(res.data);
       const accessToken = res.data.accessToken;
       const userId = res.data.user.id;
       const userName = res.data.user.userName;
+      const userEmail = res.data.user.email;
       localStorage.setItem('Authorization', `Bearer ${accessToken}`);
       localStorage.setItem('userId', userId);
       localStorage.setItem('userName', userName);
+      localStorage.setItem('userEmail', userEmail);
       return res.data;
     } else {
       return {

@@ -1,14 +1,40 @@
 import React, { useMemo } from 'react';
 import { Stack } from '@mui/material';
+import { useRecoilState } from 'recoil';
 import CustomButton from 'components/atoms/CustomButton';
 import Days from 'components/atoms/Days';
 import DetailTitle from 'components/atoms/DetailTitle';
+import { routineDate } from 'stores/routines';
+import { routinesApi } from 'controllers/services/api';
 
 export interface HeaderProps {
   page: string;
 }
 
+const year = new Date().getFullYear(); // 년
+const month = new Date().getMonth(); // 월
+const days = new Date().getDate();
+
 export default function Header({ page }: HeaderProps) {
+  const [day, setDay] = useRecoilState(routineDate);
+
+  const updateDate = async (offset: number) => {
+    const offsetForDate = offset > 0 ? day.nextDate : day.prevDate;
+    const newDate = new Date(year, month, days + offsetForDate);
+
+    const date = `${newDate.getFullYear()}-${String(
+      newDate.getMonth() + 1
+    ).padStart(2, '0')}-${String(newDate.getDate()).padStart(2, '0')}`;
+
+    setDay((prev) => ({
+      date: date,
+      prevDate: prev.prevDate + offset,
+      nextDate: prev.nextDate + offset
+    }));
+
+    await routinesApi(date);
+  };
+  console.log(day);
   const pageType = useMemo(() => {
     switch (page) {
       case 'detail':
@@ -16,7 +42,10 @@ export default function Header({ page }: HeaderProps) {
       case 'routineTemplateAddPage':
         return { title: 'routineTemplateAdd', img: undefined };
       default:
-        return { title: <Days />, img: '/moveNext.png' };
+        return {
+          title: <Days />,
+          img: '/moveNext.png'
+        };
     }
   }, [page]);
 
@@ -42,6 +71,7 @@ export default function Header({ page }: HeaderProps) {
           imageWidth={20}
           imageHeight={20}
           alt="moveButton"
+          onClick={() => (page === 'header' ? updateDate(-1) : null)}
         />
         {pageType.title}
         <CustomButton
@@ -50,6 +80,7 @@ export default function Header({ page }: HeaderProps) {
           imageWidth={20}
           imageHeight={20}
           alt="moveButton"
+          onClick={() => (page === 'header' ? updateDate(1) : null)}
         />
       </Stack>
     </>

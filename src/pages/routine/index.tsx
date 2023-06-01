@@ -6,21 +6,43 @@ import LoginBody from 'components/atoms/LoginBody';
 import Header from 'components/organisms/Header';
 import RoutineCard from 'components/organisms/RoutineCard';
 import MypageSlide from 'components/organisms/MypageSlide';
-import { useRecoilValueLoadable } from 'recoil';
-import { routinesState } from 'stores/routines';
+import { routinesApi } from 'controllers/services/api';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { routineDate, routineList } from 'stores/routines';
 
 export default function Main() {
   const router = useRouter();
+  const [mypageInfo, setMypageInfo] = useState<{
+    email: string | null;
+    name: string | null;
+  }>({
+    email: '',
+    name: ''
+  });
 
-  const [mypage, SetMypage] = useState<boolean>(false);
+  const [mypage, setMypage] = useState<boolean>(false);
 
-  const routines = useRecoilValueLoadable(routinesState);
+  const routineDates = useRecoilValue(routineDate);
+  const [routines, setRoutines] = useRecoilState(routineList);
 
   useEffect(() => {
-    const checkLogin = localStorage.getItem('Authorization');
-    if (!checkLogin) {
+    if (!localStorage.getItem('Authorization')) {
       router.push('/login');
+    } else {
+      const email = localStorage.getItem('userEmail');
+      const name = localStorage.getItem('userName');
+      setMypageInfo({ email: email, name: name });
     }
+  }, []);
+
+  useEffect(() => {
+    const routineFetch = async () => {
+      const routine = await routinesApi(routineDates.date);
+      if (routine.length) {
+        setRoutines(routine);
+      }
+    };
+    routineFetch();
   }, []);
 
   return (
@@ -38,7 +60,11 @@ export default function Main() {
         >
           <RoutineCard />
         </Stack>
-        <MypageSlide open={mypage} />
+        <MypageSlide
+          open={mypage}
+          email={mypageInfo.email}
+          name={mypageInfo.name}
+        />
       </LoginBody>
     </>
   );

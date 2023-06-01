@@ -1,5 +1,14 @@
-import { atom, selector } from 'recoil';
-import { routinesApi } from 'controllers/services/api';
+import { atom } from 'recoil';
+
+export interface RoutineType {
+  routine_instance_id: string;
+  title: string;
+  type: string;
+  days_of_week: string[];
+  created_at: Date;
+  goal: number | boolean;
+  progress: number | boolean;
+}
 
 const initialDate = () => {
   return `${new Date().getFullYear()}-${String(
@@ -9,14 +18,10 @@ const initialDate = () => {
 
 export const routineDate = atom({
   key: 'routineDate',
-  default: initialDate()
+  default: { date: initialDate(), prevDate: -1, nextDate: 1 }
 });
 
-export const routinesState = selector({
-  key: 'routinesState',
-  get: async ({ get }) => {
-    const date = get(routineDate);
-    const result = await routinesApi(date);
-    return result;
-  }
+export const routineList = atom<RoutineType[]>({
+  key: 'routineList',
+  default: []
 });

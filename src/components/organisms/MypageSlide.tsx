@@ -5,21 +5,21 @@ import MypageLayout from 'components/atoms/MypageLayout';
 
 interface MypageSlideProps {
   open: boolean;
-  email?: string;
-  name?: string;
+  email: string | null;
+  name: string | null;
 }
 
 export default function MypageSlide({ open, email, name }: MypageSlideProps) {
   const [infoData, setInfoData] = useState([
-    { title: 'EMAIL:', content: '12345@naver.com' },
-    { title: 'NAME:', content: '홍길동' }
+    { title: 'EMAIL:', content: '' },
+    { title: 'NAME:', content: '' }
   ]);
 
   useEffect(() => {
     if (email && name) {
       setInfoData([
-        { ...infoData[0], content: email },
-        { ...infoData[1], content: name }
+        { title: 'EMAIL:', content: email },
+        { title: 'NAME:', content: name !== 'undefined' ? name : 'unknown' }
       ]);
     }
   }, [email, name]);
