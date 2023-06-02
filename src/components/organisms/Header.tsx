@@ -9,16 +9,17 @@ import { routinesApi } from 'controllers/services/api';
 
 export interface HeaderProps {
   page: string;
+  userId?: string | null;
 }
 
 const year = new Date().getFullYear(); // 년
 const month = new Date().getMonth(); // 월
 const days = new Date().getDate();
 
-export default function Header({ page }: HeaderProps) {
+export default function Header({ page, userId }: HeaderProps) {
   const [day, setDay] = useRecoilState(routineDate);
 
-  const updateDate = async (offset: number) => {
+  const moveDate = async (offset: number) => {
     const offsetForDate = offset > 0 ? day.nextDate : day.prevDate;
     const newDate = new Date(year, month, days + offsetForDate);
 
@@ -32,7 +33,7 @@ export default function Header({ page }: HeaderProps) {
       nextDate: prev.nextDate + offset
     }));
 
-    await routinesApi(date);
+    await routinesApi(date, userId);
   };
   console.log(day);
   const pageType = useMemo(() => {
@@ -71,7 +72,7 @@ export default function Header({ page }: HeaderProps) {
           imageWidth={20}
           imageHeight={20}
           alt="moveButton"
-          onClick={() => (page === 'header' ? updateDate(-1) : null)}
+          onClick={() => (page === 'header' ? moveDate(-1) : null)}
         />
         {pageType.title}
         <CustomButton
@@ -80,7 +81,7 @@ export default function Header({ page }: HeaderProps) {
           imageWidth={20}
           imageHeight={20}
           alt="moveButton"
-          onClick={() => (page === 'header' ? updateDate(1) : null)}
+          onClick={() => (page === 'header' ? moveDate(1) : null)}
         />
       </Stack>
     </>

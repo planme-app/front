@@ -1,29 +1,17 @@
-import {
-  GetServerSideProps,
-  InferGetServerSidePropsType,
-  ParsedUrlQuery
-} from 'next';
+import React from 'react';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { Stack } from '@mui/material';
-import LoginBody from 'components/atoms/LoginBody';
 import Header from 'components/organisms/Header';
-import RoutinePercent from 'components/atoms/RoutinePercent';
 import CustomButton from 'components/atoms/CustomButton';
+import RoutinePercent from 'components/atoms/RoutinePercent';
+import LoginBody from 'components/atoms/LoginBody';
 
-export interface DoProps {
-  params: {
-    routinsDetail: string;
-  };
-}
-
-export default function Do({
-  params
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log(params.routinsDetail);
+export default function Do({ routineId }: { routineId: string }) {
   return (
     <>
       <Head>
-        <title>진행 중...</title>
+        <title>doing...</title>
       </Head>
       <LoginBody>
         <Header page={'detail'} />
@@ -51,7 +39,7 @@ export default function Do({
             height="30px"
             color="#fff"
           >
-            리셋
+            Reset
           </CustomButton>
         </Stack>
       </LoginBody>
@@ -59,19 +47,11 @@ export default function Do({
   );
 }
 
-export const getServerSideProps: GetServerSideProps<
-  DoProps,
-  ParsedUrlQuery
-> = async (context) => {
-  const { routinsDetail } = context.params ?? {};
-
-  // `routinsDetail` 매개변수를 사용하여 서버 사이드 로직을 수행할 수 있습니다.
-
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const routineId = context.params!.routinedetail as string;
   return {
     props: {
-      params: {
-        routinsDetail: routinsDetail ?? ''
-      }
+      routineId
     }
   };
 };

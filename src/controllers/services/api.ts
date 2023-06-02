@@ -1,4 +1,5 @@
 import routines from '@/pages/api/user/[userId]/routines';
+import { GetServerSideProps } from 'next';
 import axios, { AxiosError } from 'axios';
 import Cookies from 'js-cookie';
 
@@ -12,7 +13,7 @@ const URL_ROUTINES = ({
   userId,
   date
 }: {
-  userId: string | null;
+  userId?: string | null;
   date: string;
 }) => {
   return `${API_BASE_URL}/api/user/${userId}/routines?date=${date}`;
@@ -56,10 +57,10 @@ export const loginApi = async (email: string, passwd: string) => {
       const userId = res.data.user.id;
       const userName = res.data.user.userName;
       const userEmail = res.data.user.email;
-      Cookies.set('Authorization', `Bearer ${accessToken}`);
-      Cookies.set('userId', userId);
-      Cookies.set('userName', userName);
-      Cookies.set('userEmail', userEmail);
+      Cookies.set('Authorization', `Bearer ${accessToken}`, { expires: 7 });
+      Cookies.set('userId', userId, { expires: 7 });
+      Cookies.set('userName', userName, { expires: 7 });
+      Cookies.set('userEmail', userEmail, { expires: 7 });
       return res.data;
     } else {
       return {
@@ -90,10 +91,8 @@ export const loginApi = async (email: string, passwd: string) => {
   }
 };
 
-export const routinesApi = async (date: string) => {
+export const routinesApi = async (date: string, userId?: string | null) => {
   try {
-    const userId = Cookies.get('userId') ?? null;
-
     const res = await axios.get(URL_ROUTINES({ userId, date }));
 
     if (res.status === 200) {
