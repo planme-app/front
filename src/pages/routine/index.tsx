@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
@@ -34,7 +33,7 @@ export default function Main({ initialRoutines, userId, myInfo }: MainProps) {
   useEffect(() => {
     setRoutines(initialRoutines);
   }, []);
-  console.log(routines);
+
   return (
     <>
       <Head>

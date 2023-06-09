@@ -1,13 +1,114 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { Stack } from '@mui/material';
+import { routineList, RoutineType } from 'stores/routines';
+import { timerState, timeStateRecoil } from 'stores/routineDetailType';
 import Header from 'components/organisms/Header';
 import CustomButton from 'components/atoms/CustomButton';
 import RoutinePercent from 'components/atoms/RoutinePercent';
 import LoginBody from 'components/atoms/LoginBody';
+import UseTimer from 'components/atoms/UseTimer';
+import RoutineDetailCountButton from 'components/organisms/RoutineDetailCountButton';
 
 export default function Do({ routineId }: { routineId: string }) {
+  const [routine, setRoutine] = useState<RoutineType>();
+  const routines = useRecoilValue(routineList);
+  const running = useRecoilValue(timerState);
+  const [recoilTime, setRecoilTime] = useRecoilState(timeStateRecoil);
+  const { time, start, stop, reset } = UseTimer();
+
+  const startStopTimer = () => {
+    if (!running) {
+      start();
+    } else {
+      stop();
+    }
+  };
+
+  const resetTimer = () => {
+    reset();
+  };
+
+  const routineType = useMemo(() => {
+    switch (routine?.type) {
+      case 'bool':
+        return { buttonStyle: null };
+      case 'count':
+        return { buttonStyle: <RoutineDetailCountButton /> };
+      default:
+        return {
+          buttonStyle: running ? (
+            <>
+              <CustomButton
+                type="startStop"
+                display="flex"
+                borderRadius="10px"
+                backgroundColor="#556cd6"
+                mt={15}
+                px={4}
+                height="35px"
+                color="#fff"
+                onClick={startStopTimer}
+              >
+                일시정지
+              </CustomButton>
+              <CustomButton
+                type="resetDelete"
+                display="flex"
+                borderRadius="10px"
+                backgroundColor="#ACB3BF"
+                mt={4}
+                px={1}
+                height="30px"
+                color="#fff"
+                onClick={resetTimer}
+              >
+                Reset
+              </CustomButton>
+            </>
+          ) : (
+            <>
+              <CustomButton
+                type="startStop"
+                display="flex"
+                borderRadius="10px"
+                backgroundColor="#556cd6"
+                mt={15}
+                px={4}
+                height="35px"
+                color="#fff"
+                onClick={startStopTimer}
+              >
+                시작
+              </CustomButton>
+            </>
+          )
+        };
+    }
+  }, [running]);
+
+  useEffect(() => {
+    const foundRoutine = routines.find(
+      (list) => list.routine_instance_id === routineId
+    );
+    if (foundRoutine) {
+      setRoutine(foundRoutine);
+      if (
+        foundRoutine.type === 'time' &&
+        typeof foundRoutine.progress === 'number' &&
+        typeof foundRoutine.goal === 'number'
+      ) {
+        setRecoilTime({
+          ...recoilTime,
+          goal: foundRoutine.goal,
+          progress: foundRoutine.progress
+        });
+      }
+    }
+  }, [routines]);
+
   return (
     <>
       <Head>
@@ -16,31 +117,13 @@ export default function Do({ routineId }: { routineId: string }) {
       <LoginBody>
         <Header page={'detail'} />
         <Stack minHeight={'74vh'} direction="column" alignItems="center">
-          <RoutinePercent size={300} />
-          <CustomButton
-            type="startStop"
-            display="flex"
-            borderRadius="10px"
-            backgroundColor="#556cd6"
-            mt={15}
-            px={4}
-            height="35px"
-            color="#fff"
-          >
-            일시정지
-          </CustomButton>
-          <CustomButton
-            type="resetDelete"
-            display="flex"
-            borderRadius="10px"
-            backgroundColor="#ACB3BF"
-            mt={4}
-            px={1}
-            height="30px"
-            color="#fff"
-          >
-            Reset
-          </CustomButton>
+          <RoutinePercent
+            size={300}
+            type={routine ? routine.type : 'time'}
+            progress={routine ? routine.progress : 0}
+            goal={routine ? routine.goal : 100}
+          />
+          {routineType.buttonStyle}
         </Stack>
       </LoginBody>
     </>
