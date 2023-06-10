@@ -6,7 +6,7 @@ import CircularProgress, {
 } from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { timeStateRecoil } from 'stores/routineDetailType';
+import { timeStateRecoil, countStateRecoil } from 'stores/routineDetailType';
 
 interface CircularType {
   size?: number;
@@ -20,7 +20,8 @@ function CircularProgressWithLabel(
 ) {
   const { size, type, progress, goal } = props;
 
-  const value = useRecoilValue(timeStateRecoil);
+  const timeContent = useRecoilValue(timeStateRecoil);
+  const countContent = useRecoilValue(countStateRecoil);
 
   const routineType = useMemo(() => {
     switch (type) {
@@ -28,12 +29,16 @@ function CircularProgressWithLabel(
         return { content: progress };
       case 'time':
         return {
-          content: value.time
+          content: timeContent.time,
+          percent: timeContent.percent
         };
       default:
-        return { content: progress };
+        return {
+          content: countContent.progress,
+          percent: countContent.percent
+        };
     }
-  }, [type, progress, value.time]);
+  }, [type, progress, timeContent.time]);
 
   const thickness = size && size > 250 ? 3.5 : 4.5;
 
@@ -92,7 +97,7 @@ function CircularProgressWithLabel(
           color={size && size > 200 ? '#9C9C9C' : 'black'}
           fontWeight="bold"
         >
-          {`${Math.round(value.percent)}%`}
+          {`${Math.round(routineType.percent ? routineType.percent : 0)}%`}
         </Typography>
       </Box>
     </Box>

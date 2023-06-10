@@ -4,7 +4,11 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { Stack } from '@mui/material';
 import { routineList, RoutineType } from 'stores/routines';
-import { timerState, timeStateRecoil } from 'stores/routineDetailType';
+import {
+  timerState,
+  timeStateRecoil,
+  boolStateRecoil
+} from 'stores/routineDetailType';
 import Header from 'components/organisms/Header';
 import CustomButton from 'components/atoms/CustomButton';
 import RoutinePercent from 'components/atoms/RoutinePercent';
@@ -16,6 +20,7 @@ export default function Do({ routineId }: { routineId: string }) {
   const [routine, setRoutine] = useState<RoutineType>();
   const routines = useRecoilValue(routineList);
   const running = useRecoilValue(timerState);
+  const [success, setSuccess] = useRecoilState(boolStateRecoil);
   const [recoilTime, setRecoilTime] = useRecoilState(timeStateRecoil);
   const { time, start, stop, reset } = UseTimer();
 
@@ -31,10 +36,30 @@ export default function Do({ routineId }: { routineId: string }) {
     reset();
   };
 
+  const checkSuccess = () => {
+    setSuccess(true);
+  };
+
   const routineType = useMemo(() => {
     switch (routine?.type) {
       case 'bool':
-        return { buttonStyle: null };
+        return {
+          buttonStyle: (
+            <CustomButton
+              type="startStop"
+              display="flex"
+              borderRadius="10px"
+              backgroundColor="#556cd6"
+              mt={15}
+              px={4}
+              height="35px"
+              color="#fff"
+              onClick={checkSuccess}
+            >
+              {success ? '성공' : '확인'}
+            </CustomButton>
+          )
+        };
       case 'count':
         return { buttonStyle: <RoutineDetailCountButton /> };
       default:
@@ -108,7 +133,7 @@ export default function Do({ routineId }: { routineId: string }) {
       }
     }
   }, [routines]);
-
+  console.log('count');
   return (
     <>
       <Head>

@@ -1,6 +1,8 @@
 import React from 'react';
+import { useRecoilState } from 'recoil';
 import { styled } from '@mui/material/styles';
 import { Box, Stack } from '@mui/material';
+import { countStateRecoil } from 'stores/routineDetailType';
 import CustomButton from 'components/atoms/CustomButton';
 
 const StyledStack = styled(Stack)(() => ({
@@ -17,25 +19,38 @@ const ButtonData = [
   { id: 4, label: '40' }
 ];
 
-const buttons = (startIndex: number, endIndex: number) => {
-  return ButtonData.slice(startIndex, endIndex).map((button) => (
-    <CustomButton
-      key={button.id}
-      width="100px"
-      height="40px"
-      display="center"
-      justifyContent="center"
-      backgroundColor="#556cd6"
-      color="white"
-      borderRadius="5px"
-      m="auto"
-    >
-      {button.label}
-    </CustomButton>
-  ));
-};
-
 export default function RoutineDetailCountButton() {
+  const [count, setCount] = useRecoilState(countStateRecoil);
+
+  const plusCount = (cnt: number) => {
+    setCount((prev) => {
+      return {
+        ...prev,
+        progress: prev.progress + cnt,
+        percent: Math.floor(((prev.progress + cnt) / prev.goal) * 100)
+      };
+    });
+  };
+
+  const buttons = (startIndex: number, endIndex: number) => {
+    return ButtonData.slice(startIndex, endIndex).map((button) => (
+      <CustomButton
+        key={button.id}
+        width="100px"
+        height="40px"
+        display="center"
+        justifyContent="center"
+        backgroundColor="#556cd6"
+        color="white"
+        borderRadius="5px"
+        m="auto"
+        onClick={() => plusCount(Number(button.label))}
+      >
+        {button.label}
+      </CustomButton>
+    ));
+  };
+
   return (
     <Box
       sx={{

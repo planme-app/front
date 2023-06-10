@@ -14,3 +14,8 @@ export const countStateRecoil = atom({
   key: 'countStateRecoil',
   default: { goal: 150, progress: 0, percent: 0 }
 });
+
+export const boolStateRecoil = atom({
+  key: 'boolStateRecoil',
+  default: false
+});
