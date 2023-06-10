@@ -10,106 +10,29 @@ import {
   boolStateRecoil
 } from 'stores/routineDetailType';
 import Header from 'components/organisms/Header';
-import CustomButton from 'components/atoms/CustomButton';
 import RoutinePercent from 'components/atoms/RoutinePercent';
 import LoginBody from 'components/atoms/LoginBody';
-import UseTimer from 'components/atoms/UseTimer';
 import RoutineDetailCountButton from 'components/organisms/RoutineDetailCountButton';
+import RoutineDetailBoolButton from 'components/organisms/RoutineDetailBoolButton';
+import RoutineDetailTimeButton from 'components/organisms/RoutineDetailTimeButton';
 
 export default function Do({ routineId }: { routineId: string }) {
   const [routine, setRoutine] = useState<RoutineType>();
   const routines = useRecoilValue(routineList);
   const running = useRecoilValue(timerState);
-  const [success, setSuccess] = useRecoilState(boolStateRecoil);
   const [recoilTime, setRecoilTime] = useRecoilState(timeStateRecoil);
-  const { time, start, stop, reset } = UseTimer();
-
-  const startStopTimer = () => {
-    if (!running) {
-      start();
-    } else {
-      stop();
-    }
-  };
-
-  const resetTimer = () => {
-    reset();
-  };
-
-  const checkSuccess = () => {
-    setSuccess(true);
-  };
 
   const routineType = useMemo(() => {
     switch (routine?.type) {
       case 'bool':
         return {
-          buttonStyle: (
-            <CustomButton
-              type="startStop"
-              display="flex"
-              borderRadius="10px"
-              backgroundColor="#556cd6"
-              mt={15}
-              px={4}
-              height="35px"
-              color="#fff"
-              onClick={checkSuccess}
-            >
-              {success ? '성공' : '확인'}
-            </CustomButton>
-          )
+          buttonStyle: <RoutineDetailTimeButton running={running} />
         };
       case 'count':
         return { buttonStyle: <RoutineDetailCountButton /> };
       default:
         return {
-          buttonStyle: running ? (
-            <>
-              <CustomButton
-                type="startStop"
-                display="flex"
-                borderRadius="10px"
-                backgroundColor="#556cd6"
-                mt={15}
-                px={4}
-                height="35px"
-                color="#fff"
-                onClick={startStopTimer}
-              >
-                일시정지
-              </CustomButton>
-              <CustomButton
-                type="resetDelete"
-                display="flex"
-                borderRadius="10px"
-                backgroundColor="#ACB3BF"
-                mt={4}
-                px={1}
-                height="30px"
-                color="#fff"
-                onClick={resetTimer}
-              >
-                Reset
-              </CustomButton>
-            </>
-          ) : (
-            <>
-              <CustomButton
-                type="startStop"
-                display="flex"
-                borderRadius="10px"
-                backgroundColor="#556cd6"
-                mt={15}
-                px={4}
-                height="35px"
-                color="#fff"
-                onClick={startStopTimer}
-              >
-                시작
-              </CustomButton>
-            </>
-          )
+          buttonStyle: <RoutineDetailBoolButton />
         };
     }
   }, [running]);
@@ -133,7 +56,7 @@ export default function Do({ routineId }: { routineId: string }) {
       }
     }
   }, [routines]);
-  console.log('count');
+
   return (
     <>
       <Head>
