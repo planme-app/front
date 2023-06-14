@@ -47,7 +47,6 @@ export class PrismaRoutineInstanceRepository
     if (routineInstanceGoal) {
       return {
         routine_instance_id: routineInstance.routine_instance_id,
-        created_at: routineInstance.created_at,
         goal: routineInstanceGoal.goal,
         progress: routineInstanceGoal.progress
       };
