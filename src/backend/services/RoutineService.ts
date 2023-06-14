@@ -86,7 +86,7 @@ export class RoutineUseCase {
     const day = ['일', '월', '화', '수', '목', '금', '토'];
     const routines = await this.routineRepository.getRoutinesByUserId(userId);
     const filteredTodayRoutines = this.filterTodayRoutines(routines);
-    return filteredTodayRoutines.map(async (routine) => {
+    const routinesPromises = filteredTodayRoutines.map(async (routine) => {
       const daysOfWeek = routine.days_of_week_binary
         .split('')
         .map((binaryDay, idx) => {
@@ -102,9 +102,11 @@ export class RoutineUseCase {
         ...routineInstance,
         title: routine.title,
         type: routine.type,
-        days_of_week: daysOfWeek
+        days_of_week: daysOfWeek,
+        created_at: routine.created_at
       };
     });
+    return Promise.all(routinesPromises);
   }
 
   filterTodayRoutines(routines: Routine[]) {
