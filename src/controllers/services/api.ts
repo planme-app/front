@@ -1,4 +1,7 @@
+// import routines from '@/pages/api/user/[userId]/routines';
+// import { GetServerSideProps } from 'next';
 import axios, { AxiosError } from 'axios';
+import Cookies from 'js-cookie';
 
 export const API_BASE_URL = process.env.NEXT_PUBLIC_REACT_APP_API_URL;
 
@@ -6,6 +9,16 @@ const URL_SIGNUP = `${API_BASE_URL}/api/user/signup`;
 const URL_LOGIN = `${API_BASE_URL}/api/user/signin`;
 const URL_GET_TEMPLATE = `${API_BASE_URL}/api/template`;
 const URL_POST_ROUTINE = `${API_BASE_URL}/api/user/routines`;
+
+const URL_ROUTINES = ({
+  userId,
+  date
+}: {
+  userId?: string | null;
+  date: string;
+}) => {
+  return `${API_BASE_URL}/api/user/${userId}/routines?date=${date}`;
+};
 
 enum MessageObj {
   success = '회원가입을 완료하였습니다.',
@@ -42,7 +55,13 @@ export const loginApi = async (email: string, passwd: string) => {
     });
     if (res.status === 200) {
       const accessToken = res.data.accessToken;
-      localStorage.setItem('Authorization', `Bearer ${accessToken}`);
+      const userId = res.data.user.id;
+      const userName = res.data.user.userName;
+      const userEmail = res.data.user.email;
+      Cookies.set('Authorization', `Bearer ${accessToken}`, { expires: 7 });
+      Cookies.set('userId', userId, { expires: 7 });
+      Cookies.set('userName', userName, { expires: 7 });
+      Cookies.set('userEmail', userEmail, { expires: 7 });
       return res.data;
     } else {
       return {
@@ -57,6 +76,43 @@ export const loginApi = async (email: string, passwd: string) => {
         return {
           result: false,
           message: '이메일 또는 비밀번호가 잘못 입력 되었습니다.'
+        };
+      } else {
+        return {
+          result: false,
+          message: `알 수 없는 에러가 발생했습니다. (HTTP 상태 코드: ${status})`
+        };
+      }
+    } else {
+      return {
+        result: false,
+        message: `알 수 없는 에러가 발생했습니다. 잠시 후 다시 시도해주세요.`
+      };
+    }
+  }
+};
+
+export const routinesApi = async (date: string, userId?: string | null) => {
+  try {
+    const res = await axios.get(
+      `https://cd84f081-598a-4df9-899c-e600a685c815.mock.pstmn.io/api/user/${userId}/routines?date=${date}`
+    );
+
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      return {
+        result: false,
+        message: `HTTP 상태 코드: ${res.status}`
+      };
+    }
+  } catch (error) {
+    if (error instanceof AxiosError && error.response) {
+      const status = error.response.status;
+      if (status == 404) {
+        return {
+          result: false,
+          message: '사용자 ID를 찾을 수 없습니다.'
         };
       } else {
         return {

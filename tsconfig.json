@@ -23,7 +23,8 @@
       "styles/*": ["src/styles/*"],
       "models/*": ["src/backend/models/*"],
       "repositories/*": ["src/backend/repositories/*"],
-      "services/*": ["src/backend/services/*"]
+      "services/*": ["src/backend/services/*"],
+      "stores/*": ["src/stores/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
