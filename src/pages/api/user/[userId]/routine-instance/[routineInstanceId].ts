@@ -1,8 +1,8 @@
-import { PrismaRoutineInstanceRepository } from '@/backend/repositories/PrismaRoutineInstanceRepository';
-import { PrismaRoutineRepository } from '@/backend/repositories/PrismaRoutineRepository';
-import { PrismaUserRepository } from '@/backend/repositories/PrismaUserRepository';
-import { RoutineUseCase } from '@/backend/services/RoutineService';
-import { UserUseCase } from '@/backend/services/UserService';
+import { PrismaRoutineInstanceRepository } from 'repositories/PrismaRoutineInstanceRepository';
+import { PrismaRoutineRepository } from 'repositories/PrismaRoutineRepository';
+import { PrismaUserRepository } from 'repositories/PrismaUserRepository';
+import { RoutineUseCase } from 'services/RoutineService';
+import { UserUseCase } from 'services/UserService';
 import { PrismaClient, RoutineType as PrismaRoutineType } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 
