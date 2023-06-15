@@ -4,8 +4,11 @@ import {
   count_routine_instance,
   time_routine_instance
 } from '@prisma/client';
-import { Routine, RoutineInstance } from 'models/Routine';
-import { RoutineInstanceWithGoal } from 'models/Routine';
+import {
+  Routine,
+  RoutineInstance,
+  RoutineInstanceWithGoal
+} from 'models/Routine';
 import { RoutineInstanceRepository } from 'repositories/RoutineInstanceRepository';
 
 export class PrismaRoutineInstanceRepository

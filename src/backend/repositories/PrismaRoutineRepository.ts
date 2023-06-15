@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, RoutineType as PrismaRoutineType } from '@prisma/client';
 import { Routine } from 'models/Routine';
 import { RoutineRepository } from 'repositories/RoutineRepository';
-import { RoutineType as PrismaRoutineType } from '@prisma/client';
 
 export class PrismaRoutineRepository implements RoutineRepository {
   constructor(private prisma: PrismaClient) {}
