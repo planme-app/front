@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 import { Typography } from '@mui/material';
 import MainBody from 'components/atoms/MainBody';
@@ -13,6 +14,10 @@ const goalPlaceholders = ['분/일', '개'];
 const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default function RoutineTemplateAddPage() {
+  const router = useRouter();
+  const title = router.query?.title;
+  const type = router.query?.type;
+
   const [name, setName] = useState('');
   const [selectedType, setSelectedType] = useState(types[0]);
   const [goal, setGoal] = useState('');
@@ -27,6 +32,23 @@ export default function RoutineTemplateAddPage() {
     false,
     false
   ]);
+
+  useEffect(() => {
+    if (title !== undefined) {
+      setName(title);
+    }
+    if (type !== undefined) {
+      if (type === 'time') {
+        setSelectedType(types[0]);
+        setGoalType(goalTypes[0]);
+        setGoaplaceholder(goalPlaceholders[0]);
+      } else if (type === 'count') {
+        setSelectedType(types[1]);
+        setGoalType(goalTypes[1]);
+        setGoaplaceholder(goalPlaceholders[1]);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (selectedType === 'time') {
