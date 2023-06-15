@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-export default function RoutineDate() {
+export default function RoutineDate({
+  routineDays
+}: {
+  routineDays?: string[];
+}) {
   const [days, setDays] = useState<string[]>([
     '일',
     '월',
@@ -12,8 +16,6 @@ export default function RoutineDate() {
     '금',
     '토'
   ]);
-  //예시를 위한 상태입니다.
-  const boldDays = ['월', '수', '금'];
 
   return (
     <Box sx={{ paddingTop: '10px' }}>
@@ -23,9 +25,9 @@ export default function RoutineDate() {
           variant="body1"
           component="span"
           sx={{
-            fontSize: boldDays.includes(day) ? '12px' : '10px',
-            fontWeight: boldDays.includes(day) ? 'bold' : 'normal',
-            color: boldDays.includes(day) ? 'black' : '#B6B6B6',
+            fontSize: routineDays?.includes(day) ? '12px' : '10px',
+            fontWeight: routineDays?.includes(day) ? 'bold' : 'normal',
+            color: routineDays?.includes(day) ? 'black' : '#B6B6B6',
             ml: 0.2
           }}
         >

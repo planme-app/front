@@ -1,23 +1,27 @@
 import React, { useMemo } from 'react';
+import { useRouter } from 'next/router';
 import { Stack } from '@mui/material';
 import { useRecoilState } from 'recoil';
 import CustomButton from 'components/atoms/CustomButton';
 import Days from 'components/atoms/Days';
 import DetailTitle from 'components/atoms/DetailTitle';
-import { routineDate } from 'stores/routines';
+import { routineDate, routineList } from 'stores/routines';
 import { routinesApi } from 'controllers/services/api';
 
 export interface HeaderProps {
   page: string;
   userId?: string | null;
+  title?: string;
 }
 
 const year = new Date().getFullYear(); // 년
 const month = new Date().getMonth(); // 월
 const days = new Date().getDate();
 
-export default function Header({ page, userId }: HeaderProps) {
+export default function Header({ page, userId, title }: HeaderProps) {
+  const router = useRouter();
   const [day, setDay] = useRecoilState(routineDate);
+  const [routines, setRoutines] = useRecoilState(routineList);
 
   const moveDate = async (offset: number) => {
     const offsetForDate = offset > 0 ? day.nextDate : day.prevDate;
@@ -33,13 +37,15 @@ export default function Header({ page, userId }: HeaderProps) {
       nextDate: prev.nextDate + offset
     }));
 
-    await routinesApi(date, userId);
+    const newRoutineList = await routinesApi(date, userId);
+
+    setRoutines(newRoutineList);
   };
 
   const pageType = useMemo(() => {
     switch (page) {
       case 'detail':
-        return { title: <DetailTitle />, img: '/settingDot.png' };
+        return { title: <DetailTitle title={title} />, img: '/settingDot.png' };
       case 'routineTemplateAddPage':
         return { title: 'routineTemplateAdd', img: undefined };
       default:
@@ -48,21 +54,22 @@ export default function Header({ page, userId }: HeaderProps) {
           img: '/moveNext.png'
         };
     }
-  }, [page]);
+  }, [page, title]);
 
   return (
     <Stack
       sx={{
         position: 'fixed',
         top: 0,
-        left: 0,
+        left: '50%',
+        maxWidth: '480px',
         width: '100vw',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
         zIndex: 1000,
-        backgroundColor: '#fff'
+        transform: 'translate(-50%, 0)'
       }}
     >
       <CustomButton
@@ -71,7 +78,9 @@ export default function Header({ page, userId }: HeaderProps) {
         imageWidth={20}
         imageHeight={20}
         alt="moveButton"
-        onClick={() => (page === 'header' ? moveDate(-1) : null)}
+        onClick={() =>
+          page === 'header' ? moveDate(-1) : router.push('/routine')
+        }
       />
       {pageType.title}
       <CustomButton

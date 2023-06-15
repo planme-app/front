@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
-export default function DetailTitle() {
+export default function DetailTitle({ title }: { title?: string }) {
   return (
     <Box
       sx={{
@@ -23,7 +23,7 @@ export default function DetailTitle() {
           color: 'black'
         }}
       >
-        팔굽혀 펴기
+        {title}
       </Button>
       <Typography sx={{ mt: -3, color: '#A4A4A4' }}>오늘</Typography>
     </Box>

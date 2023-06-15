@@ -2,8 +2,13 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import { styled } from '@mui/material/styles';
 import { Box, Stack } from '@mui/material';
-import { countStateRecoil } from 'stores/routineDetailType';
+import { routineList } from 'stores/routines';
 import CustomButton from 'components/atoms/CustomButton';
+
+interface CountType {
+  routineId: string;
+  goal: number;
+}
 
 const StyledStack = styled(Stack)(() => ({
   width: '80vw',
@@ -19,17 +24,18 @@ const ButtonData = [
   { id: 4, label: '40' }
 ];
 
-export default function RoutineDetailCountButton() {
-  const [count, setCount] = useRecoilState(countStateRecoil);
+export default function RoutineDetailCountButton({ routineId }: CountType) {
+  const [routines, setRoutines] = useRecoilState(routineList);
 
   const plusCount = (cnt: number) => {
-    setCount((prev) => {
-      return {
-        ...prev,
-        progress: prev.progress + cnt,
-        percent: Math.floor(((prev.progress + cnt) / prev.goal) * 100)
-      };
-    });
+    setRoutines(
+      routines.map((prev) =>
+        prev.routine_instance_id === routineId &&
+        typeof prev.progress === 'number'
+          ? { ...prev, progress: prev.progress + cnt }
+          : prev
+      )
+    );
   };
 
   const buttons = (startIndex: number, endIndex: number) => {

@@ -1,11 +1,50 @@
 import React from 'react';
 import Link from 'next/link';
 import { Box, Stack } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import RoutinePercent from 'components/atoms/RoutinePercent';
 import RoutineDate from 'components/atoms/RoutineDate';
 
-export default function RoutineCard({ routineId }: { routineId?: string }) {
+interface RoutineInfo {
+  routineId?: string;
+  routineTitle?: string;
+  routineDays?: string[];
+  cardProgress?: number | boolean;
+  cardGoal?: number | boolean;
+}
+
+export default function RoutineCard({
+  routineId,
+  routineTitle,
+  routineDays,
+  cardProgress,
+  cardGoal
+}: RoutineInfo) {
+  const value = Math.floor((Number(cardProgress) / Number(cardGoal)) * 100);
+
+  if (!routineTitle) {
+    return (
+      <Box
+        sx={{
+          width: '330px',
+          height: '100px',
+          borderRadius: '10px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-around',
+          flexDirection: 'row',
+          backgroundColor: '#F8F8F8',
+          mb: 3
+        }}
+      >
+        <Skeleton variant="text" width={180} height={40} />
+        <Skeleton variant="rectangular" width={180} height={70} />
+        <Skeleton variant="circular" width={70} height={70} />
+      </Box>
+    );
+  }
+
   return (
     <Link
       href={`routine/detail/${routineId}`}
@@ -33,11 +72,11 @@ export default function RoutineCard({ routineId }: { routineId?: string }) {
           }}
         >
           <Typography fontSize={'18px'} fontWeight={'bold'}>
-            팔굽혀 펴기
+            {routineTitle}
           </Typography>
-          <RoutineDate />
+          <RoutineDate routineDays={routineDays} />
         </Stack>
-        <RoutinePercent size={70} />
+        <RoutinePercent size={70} routineCardValue={value} />
       </Box>
     </Link>
   );

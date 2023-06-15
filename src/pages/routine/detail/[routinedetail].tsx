@@ -1,14 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { Stack } from '@mui/material';
 import { routineList, RoutineType } from 'stores/routines';
-import {
-  timerState,
-  timeStateRecoil,
-  boolStateRecoil
-} from 'stores/routineDetailType';
+import { timerState } from 'stores/routines';
 import Header from 'components/organisms/Header';
 import RoutinePercent from 'components/atoms/RoutinePercent';
 import LoginBody from 'components/atoms/LoginBody';
@@ -17,44 +14,72 @@ import RoutineDetailBoolButton from 'components/organisms/RoutineDetailBoolButto
 import RoutineDetailTimeButton from 'components/organisms/RoutineDetailTimeButton';
 
 export default function Do({ routineId }: { routineId: string }) {
+  const router = useRouter();
   const [routine, setRoutine] = useState<RoutineType>();
-  const routines = useRecoilValue(routineList);
+  const [routines, setRoutines] = useRecoilState(routineList);
   const running = useRecoilValue(timerState);
-  const [recoilTime, setRecoilTime] = useRecoilState(timeStateRecoil);
+  const foundRoutine = routines.find(
+    (list) => list.routine_instance_id === routineId
+  );
 
   const routineType = useMemo(() => {
     switch (routine?.type) {
       case 'bool':
         return {
-          buttonStyle: <RoutineDetailTimeButton running={running} />
+          buttonStyle: <RoutineDetailBoolButton routineId={routineId} />
         };
       case 'count':
-        return { buttonStyle: <RoutineDetailCountButton /> };
+        return {
+          buttonStyle: (
+            <RoutineDetailCountButton
+              routineId={routineId}
+              goal={typeof routine.goal === 'number' ? routine.goal : 100}
+            />
+          )
+        };
       default:
         return {
-          buttonStyle: <RoutineDetailBoolButton />
+          buttonStyle: (
+            <RoutineDetailTimeButton routineId={routineId} running={running} />
+          )
         };
     }
-  }, [running]);
+  }, [running, routine]);
 
   useEffect(() => {
-    const foundRoutine = routines.find(
-      (list) => list.routine_instance_id === routineId
-    );
+    const sessionRoutine = sessionStorage.getItem('routine');
     if (foundRoutine) {
       setRoutine(foundRoutine);
-      if (
-        foundRoutine.type === 'time' &&
-        typeof foundRoutine.progress === 'number' &&
-        typeof foundRoutine.goal === 'number'
-      ) {
-        setRecoilTime({
-          ...recoilTime,
-          goal: foundRoutine.goal,
-          progress: foundRoutine.progress
-        });
+    } else if (sessionRoutine) {
+      const routineFromSession = JSON.parse(sessionRoutine).find(
+        (list: RoutineType) => list.routine_instance_id === routineId
+      );
+      if (routine !== routineFromSession) {
+        setRoutine(routineFromSession);
       }
+    } else {
+      router.push('/routine');
     }
+  }, [routines, routine]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      sessionStorage.removeItem('routine');
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
+  useEffect(() => {
+    const saveRoutinesSession = () => {
+      sessionStorage.setItem('routine', JSON.stringify(routines));
+    };
+    window.addEventListener('beforeunload', saveRoutinesSession);
+    return () => {
+      window.removeEventListener('beforeunload', saveRoutinesSession);
+    };
   }, [routines]);
 
   return (
@@ -63,13 +88,14 @@ export default function Do({ routineId }: { routineId: string }) {
         <title>doing...</title>
       </Head>
       <LoginBody>
-        <Header page={'detail'} />
+        <Header page={'detail'} title={routine?.title} />
         <Stack minHeight={'74vh'} direction="column" alignItems="center">
           <RoutinePercent
             size={300}
             type={routine ? routine.type : 'time'}
             progress={routine ? routine.progress : 0}
             goal={routine ? routine.goal : 100}
+            routineId={routine?.routine_instance_id}
           />
           {routineType.buttonStyle}
         </Stack>

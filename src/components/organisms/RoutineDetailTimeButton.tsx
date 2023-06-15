@@ -3,11 +3,13 @@ import CustomButton from 'components/atoms/CustomButton';
 import UseTimer from 'components/atoms/UseTimer';
 
 export default function RoutineDetailTimeButton({
-  running
+  running,
+  routineId
 }: {
   running: boolean;
+  routineId?: string;
 }) {
-  const { time, start, stop, reset } = UseTimer();
+  const { start, stop, reset } = UseTimer({ routineId });
 
   const startStopTimer = () => {
     if (!running) {
@@ -20,6 +22,7 @@ export default function RoutineDetailTimeButton({
   const resetTimer = () => {
     reset();
   };
+
   return running ? (
     <>
       <CustomButton

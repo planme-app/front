@@ -25,3 +25,13 @@ export const routineList = atom<RoutineType[]>({
   key: 'routineList',
   default: []
 });
+
+export const timerState = atom({
+  key: 'timerState',
+  default: false
+});
+
+export const mypageState = atom({
+  key: 'mypageState',
+  default: false
+});
