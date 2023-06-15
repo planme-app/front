@@ -74,7 +74,9 @@ export default function Do({ routineId }: { routineId: string }) {
 
   useEffect(() => {
     const saveRoutinesSession = () => {
-      sessionStorage.setItem('routine', JSON.stringify(routines));
+      if (!sessionStorage.getItem('routine')) {
+        sessionStorage.setItem('routine', JSON.stringify(routines));
+      }
     };
     window.addEventListener('beforeunload', saveRoutinesSession);
     return () => {
