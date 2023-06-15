@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Stack, Typography, InputBase, Box, FormControl } from '@mui/material';
+import { Stack, Typography, InputBase, FormControl } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
@@ -26,16 +26,19 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 export interface RoutineTemplateAddTextProps {
-  name: string;
-  setName: (name: string) => void;
+  title: string;
+  placeholder: string;
+  value: string | number;
+  setValue: (value: string) => void;
 }
 
 export default function RoutineTemplateAddText(
   props: RoutineTemplateAddTextProps
 ) {
-  const { name, setName } = props;
+  const { title, placeholder, value, setValue } = props;
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+    setValue(e.target.value);
+    console.log(e.target.value);
   };
 
   return (
@@ -47,25 +50,15 @@ export default function RoutineTemplateAddText(
           pb: 1
         }}
       >
-        습관 이름
+        {title}
       </Typography>
-      <Box
-        component="form"
-        noValidate
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: { sm: '1fr 1fr' },
-          gap: 2
-        }}
-      >
-        <FormControl variant="standard">
-          <BootstrapInput
-            placeholder="습관 이름 입력"
-            value={name}
-            onChange={handleName}
-          />
-        </FormControl>
-      </Box>
+      <FormControl>
+        <BootstrapInput
+          placeholder={placeholder}
+          value={value}
+          onChange={handleName}
+        />
+      </FormControl>
     </Stack>
   );
 }

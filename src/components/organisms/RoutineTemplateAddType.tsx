@@ -36,12 +36,13 @@ export default function RoutineTemplateAddType(
   };
 
   const handleClose = (value: string) => {
+    console.log(value);
     setOpen(false);
     setSelectedType(value);
   };
 
   return (
-    <Stack>
+    <Stack sx={{ pb: 3 }}>
       <Typography
         sx={{
           fontWeight: 'bold',
