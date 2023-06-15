@@ -59,7 +59,13 @@ export default function RoutineTemplateAddPage() {
         weekData.push(dayOfWeek[index]);
       }
     });
-    if (title !== '' && type !== '' && weekData.length > 0 && goal !== '') {
+    console.log('aaa' + weekData.length);
+    if (
+      title.length > 0 &&
+      type.length > 0 &&
+      weekData.length > 0 &&
+      goal.length > 0
+    ) {
       const res = await postRoutine(title, type, weekData, goal);
       if (res.result === true) {
         router.push('/routine');

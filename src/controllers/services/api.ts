@@ -5,10 +5,12 @@ import Cookies from 'js-cookie';
 
 export const API_BASE_URL = process.env.NEXT_PUBLIC_REACT_APP_API_URL;
 
+const cookiesUserId = Cookies.get('userId');
+
 const URL_SIGNUP = `${API_BASE_URL}/api/user/signup`;
 const URL_LOGIN = `${API_BASE_URL}/api/user/signin`;
 const URL_GET_TEMPLATE = `${API_BASE_URL}/api/template`;
-const URL_POST_ROUTINE = `${API_BASE_URL}/api/user/routines`;
+const URL_POST_ROUTINE = `${API_BASE_URL}/api/user/${cookiesUserId}/routines`;
 
 const URL_ROUTINES = ({
   userId,
@@ -95,7 +97,8 @@ export const loginApi = async (email: string, passwd: string) => {
 export const routinesApi = async (date: string, userId?: string | null) => {
   try {
     const res = await axios.get(
-      `https://cd84f081-598a-4df9-899c-e600a685c815.mock.pstmn.io/api/user/${userId}/routines?date=${date}`
+      // `https://cd84f081-598a-4df9-899c-e600a685c815.mock.pstmn.io/api/user/${userId}/routines?date=${date}`
+      `${API_BASE_URL}/api/user/${userId}/routines?date=${date}`
     );
 
     if (res.status === 200) {
@@ -159,7 +162,8 @@ export const postRoutine = async (
       daysOfWeek: daysOfWeek,
       goal: goal
     });
-    if (res.status === 200) {
+    console.log(res);
+    if (res.status === 201) {
       return { result: true, message: 'success', data: res.data };
     } else {
       return { result: false, message: res.data.error, data: {} };
