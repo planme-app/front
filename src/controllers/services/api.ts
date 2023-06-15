@@ -5,6 +5,7 @@ export const API_BASE_URL = process.env.NEXT_PUBLIC_REACT_APP_API_URL;
 const URL_SIGNUP = `${API_BASE_URL}/api/user/signup`;
 const URL_LOGIN = `${API_BASE_URL}/api/user/signin`;
 const URL_GET_TEMPLATE = `${API_BASE_URL}/api/template`;
+const URL_POST_ROUTINE = `${API_BASE_URL}/api/user/routines`;
 
 enum MessageObj {
   success = '회원가입을 완료하였습니다.',
@@ -75,6 +76,33 @@ export const loginApi = async (email: string, passwd: string) => {
 export const getTemplate = async () => {
   try {
     const res = await axios.get(URL_GET_TEMPLATE);
+    if (res.status === 200) {
+      return { result: true, message: 'success', data: res.data };
+    } else {
+      return { result: false, message: res.data.error, data: {} };
+    }
+  } catch (err) {
+    return {
+      result: false,
+      message: `알 수 없는 에러가 발생했습니다. 잠시 후 다시 시도해주세요.`,
+      data: {}
+    };
+  }
+};
+
+export const postRoutine = async (
+  title: string,
+  type: string,
+  daysOfWeek: string[],
+  goal: string
+) => {
+  try {
+    const res = await axios.post(URL_POST_ROUTINE, {
+      title: title,
+      type: type,
+      daysOfWeek: daysOfWeek,
+      goal: goal
+    });
     if (res.status === 200) {
       return { result: true, message: 'success', data: res.data };
     } else {

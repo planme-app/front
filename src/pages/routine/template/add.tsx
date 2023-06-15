@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import MainBody from 'components/atoms/MainBody';
 import RoutineTemplateAddText from 'components/organisms/RoutineTemplateAddText';
 import RoutineTemplateAddType from 'components/organisms/RoutineTemplateAddType';
 import RoutineTemplateAddWeek from 'components/organisms/RoutineTemplateAddWeek';
+import { postRoutine } from 'controllers/services/api';
 
 const types = ['time', 'count'];
 const goalTypes = ['분', '개'];
@@ -15,11 +16,19 @@ const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default function RoutineTemplateAddPage() {
   const router = useRouter();
-  const title = router.query?.title;
-  const type = router.query?.type;
 
-  const [name, setName] = useState('');
-  const [selectedType, setSelectedType] = useState(types[0]);
+  const stringTypeGuards = (value: string[] | string | undefined) => {
+    if (value !== undefined && typeof value === 'string') {
+      return value;
+    }
+    return '';
+  };
+
+  const title = stringTypeGuards(router.query?.title);
+  const type = stringTypeGuards(router.query?.type);
+
+  const [name, setName] = useState(title || '');
+  const [selectedType, setSelectedType] = useState(type || types[0]);
   const [goal, setGoal] = useState('');
   const [goalType, setGoalType] = useState(goalTypes[0]);
   const [goalPlaceholder, setGoaplaceholder] = useState(goalPlaceholders[0]);
@@ -34,23 +43,6 @@ export default function RoutineTemplateAddPage() {
   ]);
 
   useEffect(() => {
-    if (title !== undefined) {
-      setName(title);
-    }
-    if (type !== undefined) {
-      if (type === 'time') {
-        setSelectedType(types[0]);
-        setGoalType(goalTypes[0]);
-        setGoaplaceholder(goalPlaceholders[0]);
-      } else if (type === 'count') {
-        setSelectedType(types[1]);
-        setGoalType(goalTypes[1]);
-        setGoaplaceholder(goalPlaceholders[1]);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
     if (selectedType === 'time') {
       setGoalType(goalTypes[0]);
       setGoaplaceholder(goalPlaceholders[0]);
@@ -59,6 +51,21 @@ export default function RoutineTemplateAddPage() {
       setGoaplaceholder(goalPlaceholders[1]);
     }
   }, [selectedType]);
+
+  const saveTemplate = async () => {
+    const weekData: string[] = [];
+    week.forEach((item, index) => {
+      if (item) {
+        weekData.push(dayOfWeek[index]);
+      }
+    });
+    if (title !== '' && type !== '' && weekData.length > 0 && goal !== '') {
+      const res = await postRoutine(title, type, weekData, goal);
+      if (res.result === true) {
+        router.push('/routine');
+      }
+    }
+  };
 
   return (
     <>
@@ -98,6 +105,9 @@ export default function RoutineTemplateAddPage() {
           week={week}
           setWeek={setWeek}
         />
+        <Button variant="contained" size="large" onClick={saveTemplate}>
+          저장
+        </Button>
       </MainBody>
     </>
   );
