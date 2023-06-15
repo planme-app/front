@@ -19,4 +19,19 @@ export interface RoutineInstanceRepository {
     routine_instance_id: string,
     goal: boolean
   ): Promise<RoutineInstanceWithGoal>;
+  editTimeRoutineInstance(
+    routine_instance_id: string,
+    progress: number
+  ): Promise<RoutineInstanceWithGoal | null>;
+  editCountRoutineInstance(
+    routine_instance_id: string,
+    progress: number
+  ): Promise<RoutineInstanceWithGoal | null>;
+  editBoolRoutineInstance(
+    routine_instance_id: string,
+    progress: boolean
+  ): Promise<RoutineInstanceWithGoal | null>;
+  getRoutineInstanceById(
+    routine_instance_id: string
+  ): Promise<RoutineInstance | null>;
 }
