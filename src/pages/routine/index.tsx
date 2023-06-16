@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
 import { Stack } from '@mui/material';
 import LoginBody from 'components/atoms/LoginBody';
 import Header from 'components/organisms/Header';
 import RoutineCard from 'components/organisms/RoutineCard';
-import MypageSlide from 'components/organisms/MypageSlide';
 import BottomBar from 'components/organisms/BottomBar';
 import { routinesApi } from 'controllers/services/api';
-import { useRecoilValue, useRecoilState } from 'recoil';
-import { mypageState, routineList, RoutineType } from 'stores/routines';
+import { useRecoilState } from 'recoil';
+import { routineList, RoutineType } from 'stores/routines';
 
 interface MyInfoType {
   userEmail: string | null;
@@ -21,10 +20,7 @@ interface MainProps {
   myInfo: MyInfoType;
 }
 
-export default function Main({ initialRoutines, userId, myInfo }: MainProps) {
-  const [mypageInfo, setMypageInfo] = useState<MyInfoType>(myInfo);
-  const mypage = useRecoilValue<boolean>(mypageState);
-
+export default function Main({ initialRoutines, userId }: MainProps) {
   const [routines, setRoutines] = useRecoilState(routineList);
 
   useEffect(() => {
@@ -64,11 +60,6 @@ export default function Main({ initialRoutines, userId, myInfo }: MainProps) {
               ))}
         </Stack>
         <BottomBar state={0} />
-        <MypageSlide
-          open={mypage}
-          email={mypageInfo.userEmail}
-          name={mypageInfo.userName}
-        />
       </LoginBody>
     </>
   );

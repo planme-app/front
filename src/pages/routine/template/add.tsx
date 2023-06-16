@@ -8,6 +8,7 @@ import RoutineTemplateAddText from 'components/organisms/RoutineTemplateAddText'
 import RoutineTemplateAddType from 'components/organisms/RoutineTemplateAddType';
 import RoutineTemplateAddWeek from 'components/organisms/RoutineTemplateAddWeek';
 import { postRoutine } from 'controllers/services/api';
+import ModalAtom from '@/components/atoms/ModalAtom';
 
 const types = ['time', 'count'];
 const goalTypes = ['분', '개'];
@@ -41,6 +42,8 @@ export default function RoutineTemplateAddPage() {
     false,
     false
   ]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if (selectedType === 'time') {
@@ -59,18 +62,28 @@ export default function RoutineTemplateAddPage() {
         weekData.push(dayOfWeek[index]);
       }
     });
-    console.log('aaa' + weekData.length);
-    if (
-      title.length > 0 &&
-      type.length > 0 &&
-      weekData.length > 0 &&
-      goal.length > 0
-    ) {
+    if (title.length === 0) {
+      setMessage('제목을 입력해주세요.');
+      setModalOpen(true);
+    } else if (type.length === 0) {
+      setMessage('타입을 선택해주세요.');
+      setModalOpen(true);
+    } else if (goal.length === 0) {
+      setMessage('빈도를 선택해주세요.');
+      setModalOpen(true);
+    } else if (weekData.length === 0) {
+      setMessage('목표를 입력해주세요.');
+      setModalOpen(true);
+    } else {
       const res = await postRoutine(title, type, weekData, goal);
       if (res.result === true) {
         router.push('/routine');
       }
     }
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -115,6 +128,12 @@ export default function RoutineTemplateAddPage() {
           저장
         </Button>
       </MainBody>
+      <ModalAtom
+        open={modalOpen}
+        handleClose={handleClose}
+        title={'error'}
+        message={message}
+      />
     </>
   );
 }

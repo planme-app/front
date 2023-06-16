@@ -38,7 +38,6 @@ export default function RoutineTemplateAddText(
   const { title, placeholder, value, setValue } = props;
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-    console.log(e.target.value);
   };
 
   return (

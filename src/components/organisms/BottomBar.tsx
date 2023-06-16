@@ -12,6 +12,18 @@ interface State {
 export default function BottomBar({ state }: State) {
   const router = useRouter();
 
+  const goRoutine = () => {
+    router.push('/routine');
+  };
+
+  const goTemplate = () => {
+    router.push('/routine/template');
+  };
+
+  const goProfile = () => {
+    router.push('/profile');
+  };
+
   return (
     <Paper
       sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
@@ -21,17 +33,17 @@ export default function BottomBar({ state }: State) {
         <BottomNavigationAction
           label="Home"
           icon={<HomeIcon />}
-          onClick={() => router.push('/routine')}
+          onClick={goRoutine}
         />
         <BottomNavigationAction
           label="Add"
           icon={<AddBoxIcon />}
-          onClick={() => router.push('/routine/template')}
+          onClick={goTemplate}
         />
         <BottomNavigationAction
           label="Profile"
           icon={<AccountCircleIcon />}
-          onClick={() => router.push('/profile')}
+          onClick={goProfile}
         />
       </BottomNavigation>
     </Paper>

@@ -160,7 +160,6 @@ export const postRoutine = async (
       daysOfWeek: daysOfWeek,
       goal: goal
     });
-    console.log(res);
     if (res.status === 201) {
       return { result: true, message: 'success', data: res.data };
     } else {
