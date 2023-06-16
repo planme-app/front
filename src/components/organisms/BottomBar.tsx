@@ -1,35 +1,39 @@
 import React from 'react';
-import { useRecoilState } from 'recoil';
-import { Stack, Typography } from '@mui/material';
-import { mypageState } from 'stores/routines';
+import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useRouter } from 'next/router';
 
-export default function BottomBar() {
-  const [myPage, setMypage] = useRecoilState(mypageState);
+interface State {
+  state: number;
+}
+
+export default function BottomBar({ state }: State) {
+  const router = useRouter();
+
   return (
-    <Stack
-      sx={{
-        position: 'fixed',
-        bottom: 50,
-        left: '50%',
-        maxWidth: '480px',
-        width: '100vw',
-        height: '70px',
-        marginBottom: '10px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'end',
-        flexDirection: 'row',
-        zIndex: 1000,
-        transform: 'translate(-50%, 0)'
-      }}
+    <Paper
+      sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
+      elevation={3}
     >
-      <Typography
-        fontSize={'25px'}
-        marginRight={'15px'}
-        onClick={() => setMypage(true)}
-      >
-        ☰
-      </Typography>
-    </Stack>
+      <BottomNavigation showLabels value={state}>
+        <BottomNavigationAction
+          label="Home"
+          icon={<HomeIcon />}
+          onClick={() => router.push('/routine')}
+        />
+        <BottomNavigationAction
+          label="Add"
+          icon={<AddBoxIcon />}
+          onClick={() => router.push('/routine/template')}
+        />
+        <BottomNavigationAction
+          label="Profile"
+          icon={<AccountCircleIcon />}
+          onClick={() => router.push('/profile')}
+        />
+      </BottomNavigation>
+    </Paper>
   );
 }

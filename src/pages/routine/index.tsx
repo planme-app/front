@@ -63,7 +63,7 @@ export default function Main({ initialRoutines, userId, myInfo }: MainProps) {
                 <RoutineCard key={index} />
               ))}
         </Stack>
-        <BottomBar />
+        <BottomBar state={0} />
         <MypageSlide
           open={mypage}
           email={mypageInfo.userEmail}

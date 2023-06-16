@@ -1,5 +1,3 @@
-// import routines from '@/pages/api/user/[userId]/routines';
-// import { GetServerSideProps } from 'next';
 import axios, { AxiosError } from 'axios';
 import Cookies from 'js-cookie';
 
@@ -58,7 +56,7 @@ export const loginApi = async (email: string, passwd: string) => {
     if (res.status === 200) {
       const accessToken = res.data.accessToken;
       const userId = res.data.user.id;
-      const userName = res.data.user.userName;
+      const userName = res.data.user.username;
       const userEmail = res.data.user.email;
       Cookies.set('Authorization', `Bearer ${accessToken}`, { expires: 7 });
       Cookies.set('userId', userId, { expires: 7 });
