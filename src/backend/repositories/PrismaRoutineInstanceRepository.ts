@@ -96,4 +96,82 @@ export class PrismaRoutineInstanceRepository
     });
     return addBoolRoutineInstance;
   }
+
+  async getRoutineInstanceById(
+    routine_instance_id: string
+  ): Promise<RoutineInstance | null> {
+    const routineInstance = await this.prisma.routine_instance.findUnique({
+      where: { routine_instance_id }
+    });
+    return routineInstance;
+  }
+
+  async editTimeRoutineInstance(
+    routine_instance_id: string,
+    progress: number
+  ): Promise<RoutineInstanceWithGoal | null> {
+    const timeRoutineInstance =
+      await this.prisma.time_routine_instance.findFirst({
+        where: { routine_instance_id }
+      });
+
+    const newTimeRoutineInstance =
+      await this.prisma.time_routine_instance.update({
+        where: {
+          time_routine_instance_id:
+            timeRoutineInstance?.time_routine_instance_id
+        },
+        data: {
+          progress
+        }
+      });
+
+    return newTimeRoutineInstance;
+  }
+
+  async editCountRoutineInstance(
+    routine_instance_id: string,
+    progress: number
+  ): Promise<RoutineInstanceWithGoal | null> {
+    const countRoutineInstance =
+      await this.prisma.count_routine_instance.findFirst({
+        where: { routine_instance_id }
+      });
+
+    const newCountRoutineInstance =
+      await this.prisma.count_routine_instance.update({
+        where: {
+          count_routine_instance_id:
+            countRoutineInstance?.count_routine_instance_id
+        },
+        data: {
+          progress
+        }
+      });
+
+    return newCountRoutineInstance;
+  }
+
+  async editBoolRoutineInstance(
+    routine_instance_id: string,
+    progress: boolean
+  ): Promise<RoutineInstanceWithGoal | null> {
+    const boolRoutineInstance =
+      await this.prisma.bool_routine_instance.findFirst({
+        where: { routine_instance_id }
+      });
+
+    const newBoolRoutineInstance =
+      await this.prisma.bool_routine_instance.update({
+        where: {
+          bool_routine_instance_id:
+            boolRoutineInstance?.bool_routine_instance_id
+        },
+        data: {
+          progress
+        }
+      });
+
+    return newBoolRoutineInstance;
+  }
 }
