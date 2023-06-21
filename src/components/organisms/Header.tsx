@@ -69,7 +69,8 @@ export default function Header({ page, userId, title }: HeaderProps) {
         justifyContent: 'center',
         flexDirection: 'row',
         zIndex: 1000,
-        transform: 'translate(-50%, 0)'
+        transform: 'translate(-50%, 0)',
+        backgroundColor: 'white'
       }}
     >
       <CustomButton
