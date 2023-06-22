@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import MainBody from 'components/atoms/MainBody';
 import RoutineTemplateCard from 'components/organisms/RoutineTemplateCard';
 import { getTemplate } from 'controllers/services/api';
 import { Template } from 'controllers/Entity/Template';
+import { useRouter } from 'next/router';
+import BottomBar from '@/components/organisms/BottomBar';
 
 interface TemplateType {
   [key: string]: Template[];
 }
 
 export default function RoutineTemplatePage() {
+  const router = useRouter();
   const [routineTemplate, setRoutineTemplate] = useState<TemplateType>({});
 
   const getTemplateApi = async () => {
@@ -25,6 +28,10 @@ export default function RoutineTemplatePage() {
   useEffect(() => {
     getTemplateApi();
   }, []);
+
+  const goTemplateAdd = () => {
+    router.push('template/add');
+  };
 
   return (
     <>
@@ -41,6 +48,9 @@ export default function RoutineTemplatePage() {
         >
           습관 선택
         </Typography>
+        <Button variant="contained" onClick={goTemplateAdd}>
+          사용자 추가
+        </Button>
         {Object.keys(routineTemplate).map((theme) => (
           <RoutineTemplateCard
             routineTheme={theme}
@@ -48,6 +58,7 @@ export default function RoutineTemplatePage() {
             key={theme}
           />
         ))}
+        <BottomBar state={1} />
       </MainBody>
     </>
   );

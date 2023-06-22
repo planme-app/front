@@ -1,13 +1,14 @@
-import routines from '@/pages/api/user/[userId]/routines';
-import { GetServerSideProps } from 'next';
 import axios, { AxiosError } from 'axios';
 import Cookies from 'js-cookie';
 
 export const API_BASE_URL = process.env.NEXT_PUBLIC_REACT_APP_API_URL;
 
+const cookiesUserId = Cookies.get('userId');
+
 const URL_SIGNUP = `${API_BASE_URL}/api/user/signup`;
 const URL_LOGIN = `${API_BASE_URL}/api/user/signin`;
 const URL_GET_TEMPLATE = `${API_BASE_URL}/api/template`;
+const URL_POST_ROUTINE = `${API_BASE_URL}/api/user/${cookiesUserId}/routines`;
 
 const URL_ROUTINES = ({
   userId,
@@ -55,7 +56,7 @@ export const loginApi = async (email: string, passwd: string) => {
     if (res.status === 200) {
       const accessToken = res.data.accessToken;
       const userId = res.data.user.id;
-      const userName = res.data.user.userName;
+      const userName = res.data.user.username;
       const userEmail = res.data.user.email;
       Cookies.set('Authorization', `Bearer ${accessToken}`, { expires: 7 });
       Cookies.set('userId', userId, { expires: 7 });
@@ -91,11 +92,11 @@ export const loginApi = async (email: string, passwd: string) => {
   }
 };
 
-
 export const routinesApi = async (date: string, userId?: string | null) => {
   try {
     const res = await axios.get(
-      `https://cd84f081-598a-4df9-899c-e600a685c815.mock.pstmn.io/api/user/${userId}/routines?date=${date}`
+      // `https://cd84f081-598a-4df9-899c-e600a685c815.mock.pstmn.io/api/user/${userId}/routines?date=${date}`
+      `${API_BASE_URL}/api/user/${userId}/routines?date=${date}`
     );
 
     if (res.status === 200) {
@@ -126,11 +127,40 @@ export const routinesApi = async (date: string, userId?: string | null) => {
         message: `알 수 없는 에러가 발생했습니다. 잠시 후 다시 시도해주세요.`
       };
     }
+  }
+};
 
 export const getTemplate = async () => {
   try {
     const res = await axios.get(URL_GET_TEMPLATE);
     if (res.status === 200) {
+      return { result: true, message: 'success', data: res.data };
+    } else {
+      return { result: false, message: res.data.error, data: {} };
+    }
+  } catch (err) {
+    return {
+      result: false,
+      message: `알 수 없는 에러가 발생했습니다. 잠시 후 다시 시도해주세요.`,
+      data: {}
+    };
+  }
+};
+
+export const postRoutine = async (
+  title: string,
+  type: string,
+  daysOfWeek: string[],
+  goal: string
+) => {
+  try {
+    const res = await axios.post(URL_POST_ROUTINE, {
+      title: title,
+      type: type,
+      daysOfWeek: daysOfWeek,
+      goal: goal
+    });
+    if (res.status === 201) {
       return { result: true, message: 'success', data: res.data };
     } else {
       return { result: false, message: res.data.error, data: {} };

@@ -1,16 +1,90 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import MainBody from 'components/atoms/MainBody';
 import RoutineTemplateAddText from 'components/organisms/RoutineTemplateAddText';
 import RoutineTemplateAddType from 'components/organisms/RoutineTemplateAddType';
+import RoutineTemplateAddWeek from 'components/organisms/RoutineTemplateAddWeek';
+import { postRoutine } from 'controllers/services/api';
+import ModalAtom from '@/components/atoms/ModalAtom';
 
 const types = ['time', 'count'];
+const goalTypes = ['분', '개'];
+const goalPlaceholders = ['분/일', '개'];
+const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
 export default function RoutineTemplateAddPage() {
-  const [name, setName] = useState('');
-  const [selectedType, setSelectedType] = useState(types[1]);
+  const router = useRouter();
+
+  const stringTypeGuards = (value: string[] | string | undefined) => {
+    if (value !== undefined && typeof value === 'string') {
+      return value;
+    }
+    return '';
+  };
+
+  const title = stringTypeGuards(router.query?.title);
+  const type = stringTypeGuards(router.query?.type);
+
+  const [name, setName] = useState(title || '');
+  const [selectedType, setSelectedType] = useState(type || types[0]);
+  const [goal, setGoal] = useState('');
+  const [goalType, setGoalType] = useState(goalTypes[0]);
+  const [goalPlaceholder, setGoaplaceholder] = useState(goalPlaceholders[0]);
+  const [week, setWeek] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    if (selectedType === 'time') {
+      setGoalType(goalTypes[0]);
+      setGoaplaceholder(goalPlaceholders[0]);
+    } else {
+      setGoalType(goalTypes[1]);
+      setGoaplaceholder(goalPlaceholders[1]);
+    }
+  }, [selectedType]);
+
+  const saveTemplate = async () => {
+    const weekData: string[] = [];
+    week.forEach((item, index) => {
+      if (item) {
+        weekData.push(dayOfWeek[index]);
+      }
+    });
+    if (title.length === 0) {
+      setMessage('제목을 입력해주세요.');
+      setModalOpen(true);
+    } else if (type.length === 0) {
+      setMessage('타입을 선택해주세요.');
+      setModalOpen(true);
+    } else if (goal.length === 0) {
+      setMessage('빈도를 선택해주세요.');
+      setModalOpen(true);
+    } else if (weekData.length === 0) {
+      setMessage('목표를 입력해주세요.');
+      setModalOpen(true);
+    } else {
+      const res = await postRoutine(title, type, weekData, goal);
+      if (res.result === true) {
+        router.push('/routine');
+      }
+    }
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
+  };
 
   return (
     <>
@@ -26,15 +100,40 @@ export default function RoutineTemplateAddPage() {
             pb: 2
           }}
         >
-          습관 선택
+          사용자 정의
         </Typography>
-        <RoutineTemplateAddText name={name} setName={setName} />
+        <RoutineTemplateAddText
+          title={'습관 이름'}
+          placeholder={'습관 이름 입력'}
+          value={name}
+          setValue={setName}
+        />
         <RoutineTemplateAddType
           types={types}
           selectedType={selectedType}
           setSelectedType={setSelectedType}
         />
+        <RoutineTemplateAddText
+          title={`목표 (${goalType})`}
+          placeholder={goalPlaceholder}
+          value={goal}
+          setValue={setGoal}
+        />
+        <RoutineTemplateAddWeek
+          dayOfWeek={dayOfWeek}
+          week={week}
+          setWeek={setWeek}
+        />
+        <Button variant="contained" size="large" onClick={saveTemplate}>
+          저장
+        </Button>
       </MainBody>
+      <ModalAtom
+        open={modalOpen}
+        handleClose={handleClose}
+        title={'error'}
+        message={message}
+      />
     </>
   );
 }
