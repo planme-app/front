@@ -13,6 +13,7 @@ import {
   checkName
 } from 'controllers/domain/User';
 import ModalAtom from 'components/atoms/ModalAtom';
+import AlertMessage from 'components/atoms/AlertMessage';
 
 export interface TextFieldProps {
   email: {
@@ -137,12 +138,9 @@ export default function Signup() {
           Signup
         </Button>
       </LoginBody>
-      <ModalAtom
-        open={modalOpen}
-        handleClose={handleClose}
-        title={'error'}
-        message={message}
-      />
+      <ModalAtom open={modalOpen} handleClose={handleClose}>
+        <AlertMessage title={'error'} message={message} />
+      </ModalAtom>
     </>
   );
 }

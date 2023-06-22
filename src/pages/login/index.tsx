@@ -22,6 +22,7 @@ import {
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import LoginBody from 'components/atoms/LoginBody';
+import AlertMessage from 'components/atoms/AlertMessage';
 
 export default function Login() {
   const router = useRouter();
@@ -157,12 +158,9 @@ export default function Login() {
           */}
         </Stack>
       </LoginBody>
-      <ModalAtom
-        open={modalOpen}
-        handleClose={handleClose}
-        title={'error'}
-        message={message}
-      />
+      <ModalAtom open={modalOpen} handleClose={handleClose}>
+        <AlertMessage title={'error'} message={message} />
+      </ModalAtom>
     </>
   );
 }

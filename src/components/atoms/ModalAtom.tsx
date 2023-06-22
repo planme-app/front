@@ -1,28 +1,14 @@
-import React from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import React, { JSXElementConstructor, ReactElement } from 'react';
 import Modal from '@mui/material/Modal';
-
-const style = {
-  position: 'absolute' as const,
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'white',
-  boxShadow: 24,
-  p: 4
-};
 
 export interface ModalAtomProps {
   open: boolean;
   handleClose: (isOpen: boolean) => void;
-  title: string;
-  message: string;
+  children: ReactElement<any, string | JSXElementConstructor<any>>;
 }
 
 export default function ModalAtom(props: ModalAtomProps) {
-  const { open, handleClose, title, message } = props;
+  const { open, handleClose, children } = props;
 
   return (
     <Modal
@@ -31,14 +17,7 @@ export default function ModalAtom(props: ModalAtomProps) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          {title}
-        </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          {message}
-        </Typography>
-      </Box>
+      {children}
     </Modal>
   );
 }

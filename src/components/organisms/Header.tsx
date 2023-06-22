@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { Stack } from '@mui/material';
 import { useRecoilState } from 'recoil';
@@ -14,18 +14,14 @@ export interface HeaderProps {
   title?: string;
 }
 
-const year = new Date().getFullYear(); // 년
-const month = new Date().getMonth(); // 월
-const days = new Date().getDate();
-
 export default function Header({ page, userId, title }: HeaderProps) {
   const router = useRouter();
   const [day, setDay] = useRecoilState(routineDate);
   const [routines, setRoutines] = useRecoilState(routineList);
 
   const moveDate = async (offset: number) => {
-    const offsetForDate = offset > 0 ? day.nextDate : day.prevDate;
-    const newDate = new Date(year, month, days + offsetForDate);
+    const nowDate = new Date(day.date);
+    const newDate = new Date(nowDate.setDate(nowDate.getDate() + offset));
 
     const date = `${newDate.getFullYear()}-${String(
       newDate.getMonth() + 1
@@ -38,7 +34,6 @@ export default function Header({ page, userId, title }: HeaderProps) {
     }));
 
     const newRoutineList = await routinesApi(date, userId);
-    console.log(newRoutineList);
 
     setRoutines(newRoutineList);
   };
