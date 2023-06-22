@@ -38,6 +38,7 @@ export default function Header({ page, userId, title }: HeaderProps) {
     }));
 
     const newRoutineList = await routinesApi(date, userId);
+    console.log(newRoutineList);
 
     setRoutines(newRoutineList);
   };

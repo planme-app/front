@@ -101,7 +101,7 @@ export default function Login() {
 
         <Divider sx={{ mb: 5 }}></Divider>
 
-        <Stack spacing={3}>
+        <Stack spacing={3} sx={{ mb: 3 }}>
           <TextField name="ID" label="ID" value={id} onChange={saveUserId} />
 
           <FormControl sx={{ m: 1 }} variant="outlined">
@@ -129,13 +129,15 @@ export default function Login() {
           </FormControl>
         </Stack>
 
+        {/* 2차 배포 추가 기능
         <Stack
           direction="row"
           alignItems="center"
           justifyContent="space-between"
         >
-          <Checkbox checked={remember} onChange={saveRemeber} />
+          <Checkbox checked={remember} onChange={saveRemeber} /> 
         </Stack>
+        */}
 
         <Button variant="contained" size="large" onClick={handleLogin}>
           Login
@@ -149,8 +151,10 @@ export default function Login() {
           <Link variant="subtitle2" href="/signup" onClick={moveSignup}>
             회원가입
           </Link>
+          {/* 2차 배포 추가 기능
           <Link variant="subtitle2">아이디 찾기</Link>
           <Link variant="subtitle2">비밀번호 찾기</Link>
+          */}
         </Stack>
       </LoginBody>
       <ModalAtom
