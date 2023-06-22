@@ -4,8 +4,7 @@ import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { Stack } from '@mui/material';
-import { routineList, RoutineType } from 'stores/routines';
-import { timerState } from 'stores/routines';
+import { routineList, RoutineType, timerState } from 'stores/routineStore';
 import Header from 'components/organisms/Header';
 import RoutinePercent from 'components/atoms/RoutinePercent';
 import LoginBody from 'components/atoms/LoginBody';
@@ -54,8 +53,9 @@ export default function Do({ routineId }: { routineId: string }) {
       const routineFromSession = JSON.parse(sessionRoutine).find(
         (list: RoutineType) => list.routine_instance_id === routineId
       );
-      if (routine !== routineFromSession) {
+      if (routine?.progress !== routineFromSession.progress) {
         setRoutine(routineFromSession);
+        setRoutines([routineFromSession]);
       }
     } else {
       router.push('/routine');
@@ -70,7 +70,7 @@ export default function Do({ routineId }: { routineId: string }) {
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
-  }, []);
+  }, [routine]);
 
   useEffect(() => {
     const saveRoutinesSession = () => {

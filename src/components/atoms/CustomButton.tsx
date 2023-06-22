@@ -26,12 +26,14 @@ interface CustomButtonProps {
   display?: string;
   justifyContent?: string;
   alignContent?: string;
-  borderRadius?: string;
+  borderRadius?: number | string;
   position?: Position;
   backgroundColor?: string;
   mt?: number | string;
   m?: number | string;
-  px?: number;
+  mx?: number | string;
+  p?: number | string;
+  px?: number | string;
   height?: string;
   width?: string;
   bottom?: string;
@@ -53,6 +55,8 @@ export default function CustomButton({
   backgroundColor,
   m,
   mt,
+  mx,
+  p,
   px,
   height,
   width,
@@ -76,11 +80,13 @@ export default function CustomButton({
       sx={{
         backgroundColor,
         mt,
+        p,
         px,
         height,
         width,
         bottom,
-        m
+        m,
+        mx
       }}
     >
       <Button size="small" onClick={onClick} sx={{ color }} {...rest}>

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { routineList } from 'stores/routines';
-import { timerState } from 'stores/routines';
+import { routineList, timerState } from 'stores/routineStore';
 
 interface TimeType {
   routineId?: string;

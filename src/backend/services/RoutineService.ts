@@ -1,4 +1,8 @@
-import { Routine, RoutineInstanceWithGoal } from 'models/Routine';
+import {
+  Routine,
+  RoutineInstance,
+  RoutineInstanceWithGoal
+} from 'models/Routine';
 import { RoutineRepository } from 'repositories/RoutineRepository';
 import { RoutineInstanceRepository } from 'repositories/RoutineInstanceRepository';
 import { utcToZonedTime } from 'date-fns-tz';
@@ -115,5 +119,87 @@ export class RoutineUseCase {
     return routines.filter(
       (routine) => routine.days_of_week_binary.charAt(day) === '1'
     );
+  }
+
+  async getRoutineInstanceById(
+    routineInstanceId: string
+  ): Promise<RoutineInstance | null> {
+    const routineInstance =
+      this.routineInstanceRepository.getRoutineInstanceById(routineInstanceId);
+    return routineInstance;
+  }
+
+  async editRoutineInstanceProgress(
+    routineInstance: RoutineInstance,
+    type: PrismaRoutineType,
+    progress: number | boolean
+  ): Promise<RoutineInstanceWithGoal> {
+    let typeRoutineInstance: RoutineInstanceWithGoal | null;
+    switch (type) {
+      case 'time':
+        typeRoutineInstance = await this.editTimeRoutineInstance(
+          routineInstance.routine_instance_id,
+          progress as number
+        );
+        break;
+      case 'count':
+        typeRoutineInstance = await this.editCountRoutineInstance(
+          routineInstance.routine_instance_id,
+          progress as number
+        );
+        break;
+      case 'bool':
+        typeRoutineInstance = await this.editBoolRoutineInstance(
+          routineInstance.routine_instance_id,
+          progress as boolean
+        );
+        break;
+      default:
+        throw new Error('routine의 타입이 정확하지 않습니다.');
+    }
+
+    if (!typeRoutineInstance) {
+      throw new Error('routine instance 제대로 저장되지 않았습니다.');
+    }
+    return typeRoutineInstance;
+  }
+
+  private async editTimeRoutineInstance(
+    routineInstanceId: string,
+    progress: number
+  ): Promise<RoutineInstanceWithGoal | null> {
+    const timeRoutineInstance =
+      await this.routineInstanceRepository.editTimeRoutineInstance(
+        routineInstanceId,
+        progress
+      );
+
+    return timeRoutineInstance;
+  }
+
+  private async editCountRoutineInstance(
+    routineInstanceId: string,
+    progress: number
+  ): Promise<RoutineInstanceWithGoal | null> {
+    const countRoutineInstance =
+      await this.routineInstanceRepository.editCountRoutineInstance(
+        routineInstanceId,
+        progress
+      );
+
+    return countRoutineInstance;
+  }
+
+  private async editBoolRoutineInstance(
+    routineInstanceId: string,
+    progress: boolean
+  ): Promise<RoutineInstanceWithGoal | null> {
+    const boolRoutineInstance =
+      await this.routineInstanceRepository.editBoolRoutineInstance(
+        routineInstanceId,
+        progress
+      );
+
+    return boolRoutineInstance;
   }
 }

@@ -99,8 +99,8 @@ function CircularProgressWithLabel(
             strokeLinecap: 'round'
           }
         }}
-        color={props.color} // 추가된 코드
-        aria-label={'propsaria - label'} // 추가된 코드
+        color={props.color}
+        aria-label={'propsaria - label'}
         size={size || 30}
         thickness={thickness}
         value={
