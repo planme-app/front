@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
 import { useRecoilState } from 'recoil';
-import { routineDate, routineList } from 'stores/routines';
+import { routineDate, routineList } from 'stores/routineStore';
 import ModalAtom from 'components/atoms/ModalAtom';
 import dayjs, { Dayjs } from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
