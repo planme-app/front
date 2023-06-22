@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, RoutineType as PrismaRoutineType } from '@prisma/client';
 import { Routine } from 'models/Routine';
 import { RoutineRepository } from 'repositories/RoutineRepository';
 
@@ -11,5 +11,24 @@ export class PrismaRoutineRepository implements RoutineRepository {
     });
 
     return routine;
+  }
+
+  async addRoutine(
+    user_id: string,
+    title: string,
+    type: PrismaRoutineType,
+    daysOfWeek: string
+  ): Promise<Routine> {
+    const addedRoutine = await this.prisma.routine.create({
+      data: {
+        user_id,
+        title,
+        type,
+        is_repeat: true,
+        days_of_week_binary: daysOfWeek
+      }
+    });
+
+    return addedRoutine;
   }
 }

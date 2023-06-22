@@ -6,8 +6,8 @@ import Cookies from 'js-cookie';
 export const API_BASE_URL = process.env.NEXT_PUBLIC_REACT_APP_API_URL;
 
 const URL_SIGNUP = `${API_BASE_URL}/api/user/signup`;
-
 const URL_LOGIN = `${API_BASE_URL}/api/user/signin`;
+const URL_GET_TEMPLATE = `${API_BASE_URL}/api/template`;
 
 const URL_ROUTINES = ({
   userId,
@@ -24,12 +24,12 @@ enum MessageObj {
   error = 'error 입니다.'
 }
 
-export async function getSingup(
+export const getSingup = async (
   email: string,
   pw: string,
   twoPw: string,
   name: string
-) {
+) => {
   try {
     const res = await axios.post(URL_SIGNUP, {
       email: email,
@@ -44,7 +44,7 @@ export async function getSingup(
   } catch (err) {
     return { result: false, message: '이미 존재하는 계정입니다.' };
   }
-}
+};
 
 export const loginApi = async (email: string, passwd: string) => {
   try {
@@ -91,6 +91,7 @@ export const loginApi = async (email: string, passwd: string) => {
   }
 };
 
+
 export const routinesApi = async (date: string, userId?: string | null) => {
   try {
     const res = await axios.get(
@@ -125,5 +126,20 @@ export const routinesApi = async (date: string, userId?: string | null) => {
         message: `알 수 없는 에러가 발생했습니다. 잠시 후 다시 시도해주세요.`
       };
     }
+
+export const getTemplate = async () => {
+  try {
+    const res = await axios.get(URL_GET_TEMPLATE);
+    if (res.status === 200) {
+      return { result: true, message: 'success', data: res.data };
+    } else {
+      return { result: false, message: res.data.error, data: {} };
+    }
+  } catch (err) {
+    return {
+      result: false,
+      message: `알 수 없는 에러가 발생했습니다. 잠시 후 다시 시도해주세요.`,
+      data: {}
+    };
   }
 };

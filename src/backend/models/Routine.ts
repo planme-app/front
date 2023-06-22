@@ -19,7 +19,6 @@ export interface RoutineInstance {
 
 export interface RoutineInstanceWithGoal {
   routine_instance_id: string;
-  created_at: Date;
   goal: boolean | number;
   progress: boolean | number;
 }

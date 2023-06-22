@@ -4,12 +4,12 @@ import Image from 'next/image';
 import { Typography, Card, CardContent, CardActions } from '@mui/material';
 
 export type RoutineTemplateProps = {
-  routineName: string;
-  imageSrc: string;
+  title: string;
+  logoUrl: string;
 };
 
 export default function RoutineTemplate(props: RoutineTemplateProps) {
-  const { routineName, imageSrc } = props;
+  const { title, logoUrl } = props;
 
   return (
     <Card
@@ -28,9 +28,9 @@ export default function RoutineTemplate(props: RoutineTemplateProps) {
               maxWidth: 65
             }}
           >
-            {routineName}
+            {title}
           </Typography>
-          <Image src={imageSrc} width={65} height={65} alt={routineName} />
+          <Image src={logoUrl} width={65} height={65} alt={title} />
         </CardContent>
       </CardActions>
     </Card>
