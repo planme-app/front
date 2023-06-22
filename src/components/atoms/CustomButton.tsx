@@ -21,15 +21,19 @@ type PageType =
   | 'logout';
 
 interface CustomButtonProps {
-  type: PageType;
+  type?: PageType;
   children?: string;
   display?: string;
   justifyContent?: string;
-  borderRadius?: string;
+  alignContent?: string;
+  borderRadius?: number | string;
   position?: Position;
   backgroundColor?: string;
-  mt?: number;
-  px?: number;
+  mt?: number | string;
+  m?: number | string;
+  mx?: number | string;
+  p?: number | string;
+  px?: number | string;
   height?: string;
   width?: string;
   bottom?: string;
@@ -38,6 +42,7 @@ interface CustomButtonProps {
   imageWidth?: number;
   imageHeight?: number;
   alt?: string;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default function CustomButton({
@@ -45,9 +50,13 @@ export default function CustomButton({
   children,
   display,
   justifyContent,
+  alignContent,
   borderRadius,
   backgroundColor,
+  m,
   mt,
+  mx,
+  p,
   px,
   height,
   width,
@@ -58,24 +67,29 @@ export default function CustomButton({
   imageHeight,
   alt,
   color,
+  onClick,
   ...rest
 }: CustomButtonProps) {
   return (
     <Box
       display={display}
       justifyContent={justifyContent}
+      alignContent={alignContent}
       borderRadius={borderRadius}
       position={position}
       sx={{
         backgroundColor,
         mt,
+        p,
         px,
         height,
         width,
-        bottom
+        bottom,
+        m,
+        mx
       }}
     >
-      <Button size="small" sx={{ color }} {...rest}>
+      <Button size="small" onClick={onClick} sx={{ color }} {...rest}>
         {src && alt ? (
           <Image src={src} width={imageWidth} height={imageHeight} alt={alt} />
         ) : (

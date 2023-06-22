@@ -1,7 +1,10 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import { useRecoilValue } from 'recoil';
+import { routineDate } from 'stores/routineStore';
 
 export default function Days() {
+  const day = useRecoilValue(routineDate);
   return (
     <Box
       sx={{
@@ -20,7 +23,9 @@ export default function Days() {
           color: 'black'
         }}
       >
-        오늘
+        {String(new Date().getDate()).padStart(2, '0') === day.date.substr(8, 9)
+          ? '오늘'
+          : day.date.substr(8, 9)}
       </Button>
     </Box>
   );

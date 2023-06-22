@@ -1,25 +1,40 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import Cookies from 'js-cookie';
 import CustomButton from 'components/atoms/CustomButton';
 import MyInfo from 'components/atoms/MyInfo';
 import MypageLayout from 'components/atoms/MypageLayout';
+import { mypageState } from 'stores/routineStore';
 
 interface MypageSlideProps {
   open: boolean;
-  email?: string;
-  name?: string;
+  email: string | null;
+  name: string | null;
 }
 
 export default function MypageSlide({ open, email, name }: MypageSlideProps) {
+  const router = useRouter();
   const [infoData, setInfoData] = useState([
-    { title: 'EMAIL:', content: '12345@naver.com' },
-    { title: 'NAME:', content: '홍길동' }
+    { title: 'EMAIL:', content: '' },
+    { title: 'NAME:', content: '' }
   ]);
+  const [mypage, setMypage] = useRecoilState<boolean>(mypageState);
+
+  const logout = () => {
+    Cookies.remove('Authorization');
+    Cookies.remove('userId');
+    Cookies.remove('userName');
+    Cookies.remove('userEmail');
+    router.push('/login');
+    setMypage(false);
+  };
 
   useEffect(() => {
     if (email && name) {
       setInfoData([
-        { ...infoData[0], content: email },
-        { ...infoData[1], content: name }
+        { title: 'EMAIL:', content: email },
+        { title: 'NAME:', content: name !== 'undefined' ? name : 'unknown' }
       ]);
     }
   }, [email, name]);
@@ -42,8 +57,25 @@ export default function MypageSlide({ open, email, name }: MypageSlideProps) {
         bottom="150px"
         color="#fff"
         width="250px"
+        onClick={logout}
       >
         로그아웃
+      </CustomButton>
+      <CustomButton
+        display="flex"
+        justifyContent="center"
+        borderRadius="10px"
+        backgroundColor="#D9D9D9"
+        mt={15}
+        px={4}
+        position="absolute"
+        bottom="100px"
+        width="100px"
+        height="35px"
+        color="black"
+        onClick={() => setMypage(false)}
+      >
+        뒤로가기
       </CustomButton>
     </MypageLayout>
   );
