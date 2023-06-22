@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import { Stack, Typography } from '@mui/material';
-import { mypageState } from 'stores/routines';
+import { mypageState } from 'stores/routineStore';
 
 export default function BottomBar() {
   const [myPage, setMypage] = useRecoilState(mypageState);

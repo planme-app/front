@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 import CustomButton from 'components/atoms/CustomButton';
 import Days from 'components/atoms/Days';
 import DetailTitle from 'components/atoms/DetailTitle';
-import { routineDate, routineList } from 'stores/routines';
+import { routineDate, routineList } from 'stores/routineStore';
 import { routinesApi } from 'controllers/services/api';
 
 export interface HeaderProps {
@@ -40,6 +40,11 @@ export default function Header({ page, userId, title }: HeaderProps) {
     const newRoutineList = await routinesApi(date, userId);
 
     setRoutines(newRoutineList);
+  };
+
+  const prevPage = () => {
+    sessionStorage.removeItem('routine');
+    router.push('/routine');
   };
 
   const pageType = useMemo(() => {
@@ -78,9 +83,7 @@ export default function Header({ page, userId, title }: HeaderProps) {
         imageWidth={20}
         imageHeight={20}
         alt="moveButton"
-        onClick={() =>
-          page === 'header' ? moveDate(-1) : router.push('/routine')
-        }
+        onClick={() => (page === 'header' ? moveDate(-1) : prevPage())}
       />
       {pageType.title}
       <CustomButton

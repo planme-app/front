@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import CustomButton from 'components/atoms/CustomButton';
 import MyInfo from 'components/atoms/MyInfo';
 import MypageLayout from 'components/atoms/MypageLayout';
-import { mypageState } from 'stores/routines';
+import { mypageState } from 'stores/routineStore';
 
 interface MypageSlideProps {
   open: boolean;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import CustomButton from 'components/atoms/CustomButton';
-import { routineList } from 'stores/routines';
+import { routineList } from 'stores/routineStore';
 
 export default function RoutineDetailBoolButton({
   routineId
@@ -10,23 +10,30 @@ export default function RoutineDetailBoolButton({
 }) {
   const [success, setSuccess] = useRecoilState(routineList);
 
+  const successRoutine = success.find(
+    (list) => list.routine_instance_id === routineId
+  )?.progress;
+
   const checkSuccess = () => {
-    setSuccess((prevRoutines) =>
-      prevRoutines.map((prev) =>
-        prev.routine_instance_id === routineId
-          ? { ...prev, progress: true }
-          : prev
-      )
-    );
+    if (!successRoutine)
+      setSuccess((prevRoutines) =>
+        prevRoutines.map((prev) =>
+          prev.routine_instance_id === routineId
+            ? { ...prev, progress: true }
+            : prev
+        )
+      );
   };
   const cancleSuccess = () => {
-    setSuccess((prevRoutines) =>
-      prevRoutines.map((prev) =>
-        prev.routine_instance_id === routineId
-          ? { ...prev, progress: false }
-          : prev
-      )
-    );
+    if (successRoutine) {
+      setSuccess((prevRoutines) =>
+        prevRoutines.map((prev) =>
+          prev.routine_instance_id === routineId
+            ? { ...prev, progress: false }
+            : prev
+        )
+      );
+    }
   };
 
   return (

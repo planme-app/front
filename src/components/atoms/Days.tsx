@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useRecoilValue } from 'recoil';
-import { routineDate } from 'stores/routines';
+import { routineDate } from 'stores/routineStore';
 
 export default function Days() {
   const day = useRecoilValue(routineDate);

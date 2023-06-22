@@ -9,7 +9,7 @@ import MypageSlide from 'components/organisms/MypageSlide';
 import BottomBar from 'components/organisms/BottomBar';
 import { routinesApi } from 'controllers/services/api';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { mypageState, routineList, RoutineType } from 'stores/routines';
+import { mypageState, routineList, RoutineType } from 'stores/routineStore';
 
 interface MyInfoType {
   userEmail: string | null;
