@@ -63,10 +63,10 @@ export default function RoutineTemplateAddPage() {
         weekData.push(dayOfWeek[index]);
       }
     });
-    if (title.length === 0) {
+    if (name.length === 0) {
       setMessage('제목을 입력해주세요.');
       setModalOpen(true);
-    } else if (type.length === 0) {
+    } else if (selectedType.length === 0) {
       setMessage('타입을 선택해주세요.');
       setModalOpen(true);
     } else if (goal.length === 0) {
@@ -76,7 +76,11 @@ export default function RoutineTemplateAddPage() {
       setMessage('목표를 입력해주세요.');
       setModalOpen(true);
     } else {
-      const res = await postRoutine(title, type, weekData, goal);
+      let goalCount = goal;
+      if (selectedType === 'time') {
+        goalCount = `${Number(goal) * 60}`;
+      }
+      const res = await postRoutine(name, selectedType, weekData, goalCount);
       if (res.result === true) {
         router.push('/routine');
       }

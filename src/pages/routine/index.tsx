@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
 import { Stack, Typography } from '@mui/material';
@@ -7,8 +7,8 @@ import Header from 'components/organisms/Header';
 import RoutineCard from 'components/organisms/RoutineCard';
 import BottomBar from 'components/organisms/BottomBar';
 import { routinesApi } from 'controllers/services/api';
-import { useRecoilState } from 'recoil';
-import { routineList, RoutineType } from 'stores/routineStore';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { mypageState, routineList, RoutineType } from 'stores/routineStore';
 
 interface MyInfoType {
   userEmail: string | null;
@@ -28,8 +28,6 @@ export default function Main({
   routineDates
 }: MainProps) {
   const [showSkeleton, setShowSkeleton] = useState(false);
-  const [mypageInfo, setMypageInfo] = useState<MyInfoType>(myInfo);
-  const mypage = useRecoilValue<boolean>(mypageState);
 
   const [routines, setRoutines] = useRecoilState(routineList);
 
