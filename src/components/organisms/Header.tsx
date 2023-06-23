@@ -37,8 +37,8 @@ export default function Header({
   const { putRoutine } = usePutRoutine();
 
   const moveDate = async (offset: number) => {
-    const offsetForDate = offset > 0 ? day.nextDate : day.prevDate;
-    const newDate = new Date(year, month, days + offsetForDate);
+    const nowDate = new Date(day.date);
+    const newDate = new Date(nowDate.setDate(nowDate.getDate() + offset));
 
     const date = `${newDate.getFullYear()}-${String(
       newDate.getMonth() + 1
@@ -64,11 +64,11 @@ export default function Header({
       const routine = routines.find(
         (list) => list.routine_instance_id === routineId
       );
-      if (routine && routine.progress > 0) {
+      if (routine && !routine.progress) {
         const type = routine.type;
         const progress = routine.progress;
         try {
-          const response = await putRoutine(routineId, type, progress);
+          await putRoutine(routineId, type, progress);
         } catch (error) {
           console.error('Routine 업데이트 실패: ');
         }
@@ -105,7 +105,8 @@ export default function Header({
         justifyContent: 'center',
         flexDirection: 'row',
         zIndex: 1000,
-        transform: 'translate(-50%, 0)'
+        transform: 'translate(-50%, 0)',
+        backgroundColor: 'white'
       }}
     >
       <CustomButton

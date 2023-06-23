@@ -8,7 +8,8 @@ import RoutineTemplateAddText from 'components/organisms/RoutineTemplateAddText'
 import RoutineTemplateAddType from 'components/organisms/RoutineTemplateAddType';
 import RoutineTemplateAddWeek from 'components/organisms/RoutineTemplateAddWeek';
 import { postRoutine } from 'controllers/services/api';
-import ModalAtom from '@/components/atoms/ModalAtom';
+import ModalAtom from 'components/atoms/ModalAtom';
+import AlertMessage from 'components/atoms/AlertMessage';
 
 const types = ['time', 'count'];
 const goalTypes = ['분', '개'];
@@ -128,12 +129,9 @@ export default function RoutineTemplateAddPage() {
           저장
         </Button>
       </MainBody>
-      <ModalAtom
-        open={modalOpen}
-        handleClose={handleClose}
-        title={'error'}
-        message={message}
-      />
+      <ModalAtom open={modalOpen} handleClose={handleClose}>
+        <AlertMessage title={'error'} message={message} />
+      </ModalAtom>
     </>
   );
 }
