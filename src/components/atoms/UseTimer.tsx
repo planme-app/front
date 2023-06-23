@@ -17,6 +17,7 @@ export default function UseTimer({ routineId }: TimeType) {
           prevRoutines.map((prev) =>
             prev.routine_instance_id === routineId &&
             typeof prev.progress === 'number' &&
+            typeof prev.goal === 'number' &&
             prev.progress < prev.goal
               ? { ...prev, progress: prev.progress + 1 }
               : prev
