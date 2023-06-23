@@ -18,7 +18,12 @@ const initialDate = () => {
 
 export const routineDate = atom({
   key: 'routineDate',
-  default: { date: initialDate(), prevDate: -1, nextDate: 1 }
+  default: {
+    date: initialDate(),
+    prevDate: -1,
+    nextDate: 1,
+    today: new Date().getDate()
+  }
 });
 
 export const routineList = atom<RoutineType[]>({

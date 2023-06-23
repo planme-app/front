@@ -40,6 +40,7 @@ export default function Days() {
     const date = newValue.format('YYYY-MM-DD');
 
     setDay((prev) => ({
+      ...prev,
       date: date,
       prevDate: prev.prevDate,
       nextDate: prev.nextDate

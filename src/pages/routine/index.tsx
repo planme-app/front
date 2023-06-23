@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import LoginBody from 'components/atoms/LoginBody';
 import Header from 'components/organisms/Header';
 import RoutineCard from 'components/organisms/RoutineCard';
@@ -18,16 +18,46 @@ interface MainProps {
   initialRoutines: RoutineType[];
   userId: string | null;
   myInfo: MyInfoType;
+  routineDates: string;
 }
 
-export default function Main({ initialRoutines, userId }: MainProps) {
+export default function Main({
+  initialRoutines,
+  userId,
+  myInfo,
+  routineDates
+}: MainProps) {
+  const [showSkeleton, setShowSkeleton] = useState(false);
+  const [mypageInfo, setMypageInfo] = useState<MyInfoType>(myInfo);
+  const mypage = useRecoilValue<boolean>(mypageState);
+
   const [routines, setRoutines] = useRecoilState(routineList);
 
   useEffect(() => {
     if (!routines.length) {
       setRoutines(initialRoutines);
+    } else {
+      const fetchRoutines = async () => {
+        try {
+          const fetchedRoutines = await routinesApi(routineDates, userId);
+          setRoutines(fetchedRoutines);
+        } catch (error) {
+          console.error('Error fetching routines:', error);
+        }
+      };
+      fetchRoutines();
     }
   }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!routines.length) {
+        setShowSkeleton(true);
+      }
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [routines]);
 
   return (
     <>
@@ -39,25 +69,34 @@ export default function Main({ initialRoutines, userId }: MainProps) {
         <Stack
           minHeight={'74vh'}
           direction="column"
+          // display="center"
+          // justifyContent="center"
           alignItems="center"
           sx={{ my: 2 }}
         >
-          {routines.length
-            ? routines?.map((list) => {
-                return (
-                  <RoutineCard
-                    key={list.routine_instance_id}
-                    routineId={list.routine_instance_id}
-                    routineTitle={list.title}
-                    routineDays={list.days_of_week}
-                    cardProgress={list.progress}
-                    cardGoal={list.goal}
-                  />
-                );
-              })
-            : Array.from({ length: 5 }).map((_, index) => (
-                <RoutineCard key={index} />
-              ))}
+          {routines.length ? (
+            routines?.map((list) => {
+              return (
+                <RoutineCard
+                  key={list.routine_instance_id}
+                  routineId={list.routine_instance_id}
+                  routineTitle={list.title}
+                  routineDays={list.days_of_week}
+                  cardProgress={list.progress}
+                  cardGoal={list.goal}
+                />
+              );
+            })
+          ) : showSkeleton ? (
+            <Typography fontWeight={600} marginTop="25vh">
+              루틴이 아직 없어요..
+              <br /> 루틴을 추가해볼까요?! 🙌
+            </Typography>
+          ) : (
+            Array.from({ length: 5 }).map((_, index) => (
+              <RoutineCard key={index} />
+            ))
+          )}
         </Stack>
         <BottomBar state={0} />
       </LoginBody>
@@ -97,8 +136,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       initialRoutines: routines,
-      userId: userId,
-      myInfo: myInfo
+      userId,
+      myInfo,
+      routineDates
     }
   };
 };

@@ -1,13 +1,20 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
+
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+
 import { Stack } from '@mui/material';
+
 import { routineList, RoutineType, timerState } from 'stores/routineStore';
-import Header from 'components/organisms/Header';
+
+import { usePutRoutine } from 'controllers/application/PutRoutine';
+
 import RoutinePercent from 'components/atoms/RoutinePercent';
 import LoginBody from 'components/atoms/LoginBody';
+
+import Header from 'components/organisms/Header';
 import RoutineDetailCountButton from 'components/organisms/RoutineDetailCountButton';
 import RoutineDetailBoolButton from 'components/organisms/RoutineDetailBoolButton';
 import RoutineDetailTimeButton from 'components/organisms/RoutineDetailTimeButton';
@@ -20,6 +27,7 @@ export default function Do({ routineId }: { routineId: string }) {
   const foundRoutine = routines.find(
     (list) => list.routine_instance_id === routineId
   );
+  const { putRoutine } = usePutRoutine();
 
   const routineType = useMemo(() => {
     switch (routine?.type) {
@@ -63,7 +71,16 @@ export default function Do({ routineId }: { routineId: string }) {
   }, [routines, routine]);
 
   useEffect(() => {
-    const handlePopState = () => {
+    const handlePopState = async () => {
+      if (routine && routine.progress > 0) {
+        const type = routine.type;
+        const progress = routine.progress;
+        try {
+          const response = await putRoutine(routineId, type, progress);
+        } catch (error) {
+          console.error('Routine 업데이트 실패: ');
+        }
+      }
       sessionStorage.removeItem('routine');
     };
     window.addEventListener('popstate', handlePopState);
@@ -90,7 +107,7 @@ export default function Do({ routineId }: { routineId: string }) {
         <title>doing...</title>
       </Head>
       <LoginBody>
-        <Header page={'detail'} title={routine?.title} />
+        <Header page={'detail'} title={routine?.title} routineId={routineId} />
         <Stack minHeight={'74vh'} direction="column" alignItems="center">
           <RoutinePercent
             size={300}

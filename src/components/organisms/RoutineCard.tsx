@@ -1,10 +1,13 @@
 import React from 'react';
+import { useRecoilValue } from 'recoil';
+
 import Link from 'next/link';
-import { Box, Stack } from '@mui/material';
-import Skeleton from '@mui/material/Skeleton';
-import Typography from '@mui/material/Typography';
+
+import { Box, Stack, Skeleton, Typography } from '@mui/material';
+
 import RoutinePercent from 'components/atoms/RoutinePercent';
 import RoutineDate from 'components/atoms/RoutineDate';
+import { routineDate } from 'stores/routineStore';
 
 interface RoutineInfo {
   routineId?: string;
@@ -22,6 +25,20 @@ export default function RoutineCard({
   cardGoal
 }: RoutineInfo) {
   const value = Math.floor((Number(cardProgress) / Number(cardGoal)) * 100);
+  const day = useRecoilValue(routineDate);
+  const isDisabled = Number(day.date.split('-')[2]) === day.today + 1;
+
+  const linkStyle = {
+    textDecoration: 'none',
+    color: 'black',
+    cursor: isDisabled ? 'none' : 'pointer'
+  };
+
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (isDisabled) {
+      event.preventDefault();
+    }
+  };
 
   if (!routineTitle) {
     return (
@@ -47,8 +64,9 @@ export default function RoutineCard({
 
   return (
     <Link
-      href={`routine/detail/${routineId}`}
-      style={{ textDecoration: 'none', color: 'black' }}
+      href={isDisabled ? '#' : `routine/detail/${routineId}`}
+      style={linkStyle}
+      onClick={handleClick}
     >
       <Box
         sx={{
@@ -76,7 +94,18 @@ export default function RoutineCard({
           </Typography>
           <RoutineDate routineDays={routineDays} />
         </Stack>
-        <RoutinePercent size={70} routineCardValue={value} />
+        {Number(day.date.split('-')[2]) === day.today + 1 ? (
+          <Stack
+            sx={{
+              width: '70px',
+              height: '50px',
+              display: 'flex',
+              justifyContent: 'center'
+            }}
+          ></Stack>
+        ) : (
+          <RoutinePercent size={70} routineCardValue={value} />
+        )}
       </Box>
     </Link>
   );
