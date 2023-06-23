@@ -7,8 +7,8 @@ import Header from 'components/organisms/Header';
 import RoutineCard from 'components/organisms/RoutineCard';
 import BottomBar from 'components/organisms/BottomBar';
 import { routinesApi } from 'controllers/services/api';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { mypageState, routineList, RoutineType } from 'stores/routineStore';
+import { useRecoilState } from 'recoil';
+import { routineList, RoutineType } from 'stores/routineStore';
 
 interface MyInfoType {
   userEmail: string | null;
