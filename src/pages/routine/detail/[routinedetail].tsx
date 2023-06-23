@@ -72,11 +72,11 @@ export default function Do({ routineId }: { routineId: string }) {
 
   useEffect(() => {
     const handlePopState = async () => {
-      if (routine && routine.progress > 0) {
+      if (routine && routine.progress) {
         const type = routine.type;
         const progress = routine.progress;
         try {
-          const response = await putRoutine(routineId, type, progress);
+          await putRoutine(routineId, type, progress);
         } catch (error) {
           console.error('Routine 업데이트 실패: ');
         }

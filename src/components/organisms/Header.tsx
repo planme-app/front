@@ -64,7 +64,7 @@ export default function Header({
       const routine = routines.find(
         (list) => list.routine_instance_id === routineId
       );
-      if (routine && !routine.progress) {
+      if (routine && routine.progress) {
         const type = routine.type;
         const progress = routine.progress;
         try {

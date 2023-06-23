@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
 import { Stack, Typography } from '@mui/material';
@@ -28,8 +28,6 @@ export default function Main({
   routineDates
 }: MainProps) {
   const [showSkeleton, setShowSkeleton] = useState(false);
-  const [mypageInfo, setMypageInfo] = useState<MyInfoType>(myInfo);
-  const mypage = useRecoilValue<boolean>(mypageState);
 
   const [routines, setRoutines] = useRecoilState(routineList);
 
