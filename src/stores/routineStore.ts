@@ -1,5 +1,7 @@
 import { atom } from 'recoil';
 
+// RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
+
 export interface RoutineType {
   routine_instance_id: string;
   title: string;

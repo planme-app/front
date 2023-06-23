@@ -66,6 +66,7 @@ export default function RoutineTemplateCard(props: RoutineTemplateCardProps) {
           {routineList?.map((routine) => (
             <RoutineTemplate
               title={routine.title}
+              type={routine.type}
               logoUrl={routine.logoUrl}
               key={routine.routineTemplateId}
             />

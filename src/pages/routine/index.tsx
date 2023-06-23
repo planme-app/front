@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
 import { Stack, Typography } from '@mui/material';
 import LoginBody from 'components/atoms/LoginBody';
 import Header from 'components/organisms/Header';
 import RoutineCard from 'components/organisms/RoutineCard';
-import MypageSlide from 'components/organisms/MypageSlide';
 import BottomBar from 'components/organisms/BottomBar';
 import { routinesApi } from 'controllers/services/api';
-import { useRecoilValue, useRecoilState } from 'recoil';
-import { mypageState, routineList, RoutineType } from 'stores/routineStore';
+import { useRecoilState } from 'recoil';
+import { routineList, RoutineType } from 'stores/routineStore';
 
 interface MyInfoType {
   userEmail: string | null;
@@ -99,12 +98,7 @@ export default function Main({
             ))
           )}
         </Stack>
-        <BottomBar />
-        <MypageSlide
-          open={mypage}
-          email={mypageInfo.userEmail}
-          name={mypageInfo.userName}
-        />
+        <BottomBar state={0} />
       </LoginBody>
     </>
   );

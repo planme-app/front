@@ -41,7 +41,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           .json({ error: 'User with provided ID not found.' });
       }
 
-      const routines = await routineService.getTodayRoutine(userId as string);
+      const routines = await routineService.getDateRoutines(
+        userId as string,
+        date as string
+      );
       return res.status(200).json(routines);
     } catch (error) {
       console.error(error);
