@@ -1,6 +1,6 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
-import { Stack } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 
 const style = {
   position: 'absolute' as const,
@@ -18,16 +18,22 @@ export interface AlertMessageProps {
   message: string;
 }
 
-export default function AlertMessage(props: AlertMessageProps) {
+const AlertMessage = React.forwardRef((props: AlertMessageProps, ref) => {
   const { title, message } = props;
   return (
-    <Stack sx={style}>
-      <Typography id="modal-modal-title" variant="h6" component="h2">
-        {title}
-      </Typography>
-      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-        {message}
-      </Typography>
-    </Stack>
+    <Box ref={ref}>
+      <Stack sx={style}>
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+          {title}
+        </Typography>
+        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          {message}
+        </Typography>
+      </Stack>
+    </Box>
   );
-}
+});
+
+AlertMessage.displayName = 'AlertMessage';
+
+export default AlertMessage;
