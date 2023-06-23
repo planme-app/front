@@ -42,6 +42,7 @@ interface CustomButtonProps {
   imageWidth?: number;
   imageHeight?: number;
   alt?: string;
+  disabled?: boolean;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -67,6 +68,7 @@ export default function CustomButton({
   imageHeight,
   alt,
   color,
+  disabled,
   onClick,
   ...rest
 }: CustomButtonProps) {
@@ -89,7 +91,13 @@ export default function CustomButton({
         mx
       }}
     >
-      <Button size="small" onClick={onClick} sx={{ color }} {...rest}>
+      <Button
+        size="small"
+        onClick={onClick}
+        sx={{ color }}
+        {...rest}
+        disabled={disabled}
+      >
         {src && alt ? (
           <Image src={src} width={imageWidth} height={imageHeight} alt={alt} />
         ) : (
