@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
 import { useRecoilState } from 'recoil';
 import { routineDate, routineList } from 'stores/routineStore';
@@ -8,7 +8,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { routinesApi } from 'controllers/services/api';
-import Cookies from 'js-cookie';
 
 const style = {
   position: 'absolute' as const,
@@ -21,31 +20,26 @@ const style = {
 
 export default function Days() {
   const [day, setDay] = useRecoilState(routineDate);
-  const [routines, setRoutines] = useRecoilState(routineList);
-  const dayArr = day?.split('-');
+  const [, setRoutines] = useRecoilState(routineList);
   const [modalOpen, setModalOpen] = useState(false);
   const [value, setValue] = useState<Dayjs | null>(dayjs(day));
-
-  const todayYear = String(new Date().getFullYear()).padStart(2, '0');
-  const todayMonth = String(new Date().getMonth() + 1).padStart(2, '0');
-  const todayDay = String(new Date().getDate()).padStart(2, '0');
+  const today = dayjs().format('YYYY-MM-DD');
+  const dayMonth = dayjs(day).format('MM');
+  const dayDay = dayjs(day).format('DD');
 
   const handleOpen = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
 
-  const moveDate = async (newValue: Dayjs) => {
-    setValue(newValue);
-    const date = newValue.format('YYYY-MM-DD');
-    setDay(date);
-    const newRoutineList = await routinesApi(date);
-    setRoutines(newRoutineList);
-  };
-
-  useEffect(() => {
-    if (value !== null) {
-      moveDate(value);
+  const moveDate = async (newValue: Dayjs | null) => {
+    if (newValue !== null) {
+      setValue(newValue);
+      const date = newValue.format('YYYY-MM-DD');
+      setDay(date);
+      const newRoutineList = await routinesApi(date);
+      setRoutines(newRoutineList);
+      handleClose();
     }
-  }, [value]);
+  };
 
   return (
     <>
@@ -67,23 +61,13 @@ export default function Days() {
           }}
           onClick={handleOpen}
         >
-          {todayYear === dayArr[0] &&
-          todayMonth === dayArr[1] &&
-          todayDay === dayArr[2]
-            ? '오늘'
-            : `${dayArr[1]}월 ${dayArr[2]}일`}
+          {day === today ? '오늘' : `${dayMonth}월 ${dayDay}일`}
         </Button>
       </Box>
       <ModalAtom open={modalOpen} handleClose={handleClose}>
         <Stack sx={style}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateCalendar
-              value={value}
-              onChange={(newValue) => {
-                setValue(newValue);
-                handleClose();
-              }}
-            />
+            <DateCalendar value={value} onChange={moveDate} />
           </LocalizationProvider>
         </Stack>
       </ModalAtom>

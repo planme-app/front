@@ -9,24 +9,16 @@ import BottomBar from 'components/organisms/BottomBar';
 import { routinesApi } from 'controllers/services/api';
 import { useRecoilState } from 'recoil';
 import { routineList, RoutineType } from 'stores/routineStore';
+import dayjs from 'dayjs';
 
-interface MyInfoType {
-  userEmail: string | null;
-  userName: string | null;
-}
 interface MainProps {
   initialRoutines: RoutineType[];
   userId: string | null;
   routineDates: string;
 }
 
-export default function Main({
-  initialRoutines,
-  userId,
-  routineDates
-}: MainProps) {
+export default function Main({ initialRoutines, routineDates }: MainProps) {
   const [showSkeleton, setShowSkeleton] = useState(false);
-
   const [routines, setRoutines] = useRecoilState(routineList);
 
   useEffect(() => {
@@ -50,7 +42,7 @@ export default function Main({
       if (!routines.length) {
         setShowSkeleton(true);
       }
-    }, 5000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [routines]);
@@ -119,9 +111,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     context.res.end();
   }
 
-  const routineDates = `${new Date().getFullYear()}-${String(
-    new Date().getMonth() + 1
-  ).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`;
+  const routineDates = dayjs().format('YYYY-MM-DD');
   const routines = await routinesApi(routineDates);
 
   const myInfo =

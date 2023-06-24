@@ -96,7 +96,7 @@ export default function RoutineCard({
           </Typography>
           <RoutineDate routineDays={routineDays} />
         </Stack>
-        {day === nextDay ? (
+        {isDisabled ? (
           <Stack
             sx={{
               width: '70px',

@@ -21,17 +21,10 @@ export default function Header({ page, title, routineId }: HeaderProps) {
   const [day, setDay] = useRecoilState(routineDate);
   const [routines, setRoutines] = useRecoilState(routineList);
   const { putRoutine } = usePutRoutine();
-
   const nextDay = dayjs().add(1, 'd').format('YYYY-MM-DD');
 
   const moveDate = async (offset: number) => {
-    let date;
-    if (offset > 0) {
-      date = dayjs(day).add(1, 'd').format('YYYY-MM-DD');
-    } else {
-      date = dayjs(day).subtract(1, 'd').format('YYYY-MM-DD');
-    }
-
+    const date = dayjs(day).add(offset, 'd').format('YYYY-MM-DD');
     setDay(date);
 
     try {
