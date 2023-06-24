@@ -1,7 +1,12 @@
 import React from 'react';
-import Image from 'next/image';
 import { NextRouter, useRouter } from 'next/router';
-import { Typography, Card, CardContent, CardActions } from '@mui/material';
+import {
+  Typography,
+  Card,
+  CardContent,
+  CardActionArea,
+  CardMedia
+} from '@mui/material';
 
 export type RoutineTemplateProps = {
   title: string;
@@ -23,26 +28,38 @@ export default function RoutineTemplate(props: RoutineTemplateProps) {
   return (
     <Card
       sx={{
+        display: 'flex',
         minWidth: 110,
+        minHeight: 140,
         backgroundColor: '#F8F8F8'
       }}
+      onClick={moveAdd}
     >
-      <CardActions onClick={moveAdd}>
+      <CardActionArea
+        sx={{
+          minHeight: 140
+        }}
+      >
         <CardContent>
           <Typography
             align="center"
             sx={{
               fontWeight: 'bold',
               fontSize: 16,
-              maxWidth: 65,
-              maxHeight: 16
+              maxHeight: 30
             }}
           >
             {title}
           </Typography>
-          <Image src={logoUrl} width={65} height={65} alt={title} />
+          <CardMedia
+            component="img"
+            width={65}
+            height={65}
+            image={logoUrl}
+            alt={title}
+          />
         </CardContent>
-      </CardActions>
+      </CardActionArea>
     </Card>
   );
 }
