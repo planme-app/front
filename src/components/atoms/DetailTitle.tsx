@@ -1,8 +1,16 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import dayjs from 'dayjs';
+import { useRecoilValue } from 'recoil';
+import { routineDate } from '@/stores/routineStore';
 
 export default function DetailTitle({ title }: { title?: string }) {
+  const day = useRecoilValue(routineDate);
+  const today = dayjs().format('YYYY-MM-DD');
+  const dayMonth = dayjs(day).format('MM');
+  const dayDay = dayjs(day).format('DD');
+
   return (
     <Box
       sx={{
@@ -14,18 +22,19 @@ export default function DetailTitle({ title }: { title?: string }) {
         flexDirection: 'column'
       }}
     >
-      <Button
-        size="small"
+      <Typography
         sx={{
-          minHeight: '60px',
           fontSize: '25px',
           fontWeight: '700',
-          color: 'black'
+          color: 'black',
+          mt: 1.5
         }}
       >
         {title}
-      </Button>
-      <Typography sx={{ mt: -3, color: '#A4A4A4' }}>오늘</Typography>
+      </Typography>
+      <Typography sx={{ mt: -0.5, color: '#A4A4A4' }}>
+        {day === today ? '오늘' : `${dayMonth}월 ${dayDay}일`}
+      </Typography>
     </Box>
   );
 }

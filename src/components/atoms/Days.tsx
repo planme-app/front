@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Stack } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { routineDate, routineList } from 'stores/routineStore';
 import ModalAtom from 'components/atoms/ModalAtom';
@@ -24,6 +24,7 @@ export default function Days() {
   const [modalOpen, setModalOpen] = useState(false);
   const [value, setValue] = useState<Dayjs | null>(dayjs(day));
   const today = dayjs().format('YYYY-MM-DD');
+  const dayYear = dayjs(day).format('YYYY');
   const dayMonth = dayjs(day).format('MM');
   const dayDay = dayjs(day).format('DD');
 
@@ -57,11 +58,23 @@ export default function Days() {
           sx={{
             fontSize: '30px',
             fontWeight: '500',
-            color: 'black'
+            color: 'black',
+            flexDirection: 'column'
           }}
           onClick={handleOpen}
         >
-          {day === today ? '오늘' : `${dayMonth}월 ${dayDay}일`}
+          <Typography
+            sx={{
+              fontSize: '25px',
+              fontWeight: '700',
+              color: 'black'
+            }}
+          >
+            {day === today ? '오늘' : `${dayMonth}월 ${dayDay}일`}
+          </Typography>
+          <Typography
+            sx={{ mt: -0.5, color: '#A4A4A4' }}
+          >{`${dayYear}년`}</Typography>
         </Button>
       </Box>
       <ModalAtom open={modalOpen} handleClose={handleClose}>
