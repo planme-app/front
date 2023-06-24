@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import Head from 'next/head';
 import { GetServerSideProps } from 'next';
-import dayjs from 'dayjs';
+import Head from 'next/head';
 import { routineDate, routineList, RoutineType } from 'stores/routineStore';
-import { routinesApi } from 'controllers/services/api';
 import { Stack, Typography } from '@mui/material';
+import { routinesApi } from 'controllers/services/api';
 import LoginBody from 'components/atoms/LoginBody';
 import Header from 'components/organisms/Header';
 import RoutineCard from 'components/organisms/RoutineCard';
 import BottomBar from 'components/organisms/BottomBar';
+import dayjs from 'dayjs';
 
 interface MainProps {
   initialRoutines: RoutineType[];
@@ -37,13 +37,9 @@ export default function Main({ initialRoutines }: MainProps) {
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!routines.length) {
-        setShowSkeleton(true);
-      }
-    }, 2000);
-
-    return () => clearTimeout(timer);
+    if (!routines.length) {
+      setShowSkeleton(true);
+    }
   }, [routines]);
 
   return (
