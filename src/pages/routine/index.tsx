@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
 import dayjs from 'dayjs';
-import { routineList, RoutineType } from 'stores/routineStore';
+import { routineDate, routineList, RoutineType } from 'stores/routineStore';
 import { routinesApi } from 'controllers/services/api';
 import { Stack, Typography } from '@mui/material';
 import LoginBody from 'components/atoms/LoginBody';
@@ -13,13 +13,12 @@ import BottomBar from 'components/organisms/BottomBar';
 
 interface MainProps {
   initialRoutines: RoutineType[];
-  userId: string | null;
-  routineDates: string;
 }
 
-export default function Main({ initialRoutines, routineDates }: MainProps) {
+export default function Main({ initialRoutines }: MainProps) {
   const [showSkeleton, setShowSkeleton] = useState(false);
   const [routines, setRoutines] = useRecoilState(routineList);
+  const day = useRecoilValue(routineDate);
 
   useEffect(() => {
     if (!routines.length) {
@@ -27,7 +26,7 @@ export default function Main({ initialRoutines, routineDates }: MainProps) {
     } else {
       const fetchRoutines = async () => {
         try {
-          const fetchedRoutines = await routinesApi(routineDates);
+          const fetchedRoutines = await routinesApi(day);
           setRoutines(fetchedRoutines);
         } catch (error) {
           console.error('Error fetching routines:', error);
@@ -117,8 +116,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      initialRoutines: routines,
-      routineDates
+      initialRoutines: routines
     }
   };
 };
