@@ -11,9 +11,9 @@ export default function RoutineDate({
 
   return (
     <Box sx={{ paddingTop: '10px' }}>
-      {days.map((day, index) => (
+      {days.map((day) => (
         <Typography
-          key={index}
+          key={day}
           variant="body1"
           component="span"
           sx={{

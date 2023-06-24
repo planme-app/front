@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-
 import { Divider, Stack, Button, Typography } from '@mui/material';
-import LoginBody from 'components/atoms/LoginBody';
 import { signup } from 'controllers/application/User';
-import { SignupCard } from 'components/organisms/SignupCard';
 import {
   checkEmail,
   checkPw,
@@ -14,6 +11,8 @@ import {
 } from 'controllers/domain/User';
 import ModalAtom from 'components/atoms/ModalAtom';
 import AlertMessage from 'components/atoms/AlertMessage';
+import LoginBody from 'components/atoms/LoginBody';
+import { SignupCard } from 'components/organisms/SignupCard';
 
 export interface TextFieldProps {
   email: {

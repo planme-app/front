@@ -1,9 +1,9 @@
 import React from 'react';
-import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
+import { useRouter } from 'next/router';
 import HomeIcon from '@mui/icons-material/Home';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useRouter } from 'next/router';
+import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 
 interface State {
   state: number;

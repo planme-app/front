@@ -1,12 +1,12 @@
 import { Stack } from '@mui/material';
-import TextField from 'components/atoms/TextField';
-import { TextFieldProps } from 'pages/signup/index';
 import {
   checkEmail,
   checkPw,
   confirmPw,
   checkName
 } from 'controllers/domain/User';
+import TextField from 'components/atoms/TextField';
+import { TextFieldProps } from 'pages/signup/index';
 
 export function SignupCard({ props }: { props: TextFieldProps }) {
   const { email, pw, twoPw, name } = props;

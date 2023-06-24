@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { loginApi } from 'controllers/services/api';
-import ModalAtom from 'components/atoms/ModalAtom';
-
-import { checkEmail, checkPw } from 'controllers/domain/User';
 import {
   Link,
   Divider,
@@ -21,8 +17,11 @@ import {
 } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { loginApi } from 'controllers/services/api';
+import { checkEmail, checkPw } from 'controllers/domain/User';
 import LoginBody from 'components/atoms/LoginBody';
 import AlertMessage from 'components/atoms/AlertMessage';
+import ModalAtom from 'components/atoms/ModalAtom';
 
 export default function Login() {
   const router = useRouter();

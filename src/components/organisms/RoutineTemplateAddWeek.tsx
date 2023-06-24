@@ -1,7 +1,5 @@
 import React from 'react';
-
-import { Stack, Typography, Button } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Stack, Typography, Button, styled } from '@mui/material';
 
 const CircularButton = styled(Button)({
   borderRadius: '50%',

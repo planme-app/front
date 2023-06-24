@@ -1,7 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-
-import { styled } from '@mui/material/styles';
-import { Typography, Stack } from '@mui/material';
+import { Stack, Typography, styled } from '@mui/material';
 import RoutineTemplate from 'components/atoms/RoutineTemplate';
 import { Template } from 'controllers/Entity/Template';
 

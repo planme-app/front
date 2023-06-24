@@ -1,19 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useRecoilValue, useRecoilState } from 'recoil';
-
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-
-import { Stack } from '@mui/material';
-
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { routineList, RoutineType, timerState } from 'stores/routineStore';
-
+import { Stack } from '@mui/material';
 import { usePutRoutine } from 'controllers/application/PutRoutine';
-
 import RoutinePercent from 'components/atoms/RoutinePercent';
 import LoginBody from 'components/atoms/LoginBody';
-
 import Header from 'components/organisms/Header';
 import RoutineDetailCountButton from 'components/organisms/RoutineDetailCountButton';
 import RoutineDetailBoolButton from 'components/organisms/RoutineDetailBoolButton';

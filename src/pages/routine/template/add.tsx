@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-
 import { Button, Typography } from '@mui/material';
+import { postRoutine } from 'controllers/services/api';
 import MainBody from 'components/atoms/MainBody';
 import RoutineTemplateAddText from 'components/organisms/RoutineTemplateAddText';
 import RoutineTemplateAddType from 'components/organisms/RoutineTemplateAddType';
 import RoutineTemplateAddWeek from 'components/organisms/RoutineTemplateAddWeek';
-import { postRoutine } from 'controllers/services/api';
 import ModalAtom from 'components/atoms/ModalAtom';
 import AlertMessage from 'components/atoms/AlertMessage';
 

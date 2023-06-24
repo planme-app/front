@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import Modal from '@mui/material/Modal';
+import { Modal } from '@mui/material';
 
 export interface ModalAtomProps {
   open: boolean;

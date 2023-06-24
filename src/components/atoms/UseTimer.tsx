@@ -8,7 +8,7 @@ interface TimeType {
 
 export default function UseTimer({ routineId }: TimeType) {
   const [running, setRunning] = useRecoilState(timerState);
-  const [routines, setRoutines] = useRecoilState(routineList);
+  const [, setRoutines] = useRecoilState(routineList);
 
   useEffect(() => {
     if (running) {

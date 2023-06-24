@@ -1,8 +1,7 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
-import { styled } from '@mui/material/styles';
-import { Box, Stack } from '@mui/material';
 import { routineList } from 'stores/routineStore';
+import { Box, Stack, styled } from '@mui/material';
 import CustomButton from 'components/atoms/CustomButton';
 
 interface CountType {

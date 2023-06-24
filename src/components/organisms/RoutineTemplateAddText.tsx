@@ -1,7 +1,12 @@
 import React from 'react';
-
-import { Stack, Typography, InputBase, FormControl } from '@mui/material';
-import { alpha, styled } from '@mui/material/styles';
+import {
+  Stack,
+  Typography,
+  InputBase,
+  FormControl,
+  alpha,
+  styled
+} from '@mui/material';
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   'label + &': {

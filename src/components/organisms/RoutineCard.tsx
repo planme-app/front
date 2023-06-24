@@ -1,13 +1,10 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
-
 import Link from 'next/link';
-
+import { useRecoilValue } from 'recoil';
+import { routineDate } from 'stores/routineStore';
 import { Box, Stack, Skeleton, Typography } from '@mui/material';
-
 import RoutinePercent from 'components/atoms/RoutinePercent';
 import RoutineDate from 'components/atoms/RoutineDate';
-import { routineDate } from 'stores/routineStore';
 import dayjs from 'dayjs';
 
 interface RoutineInfo {

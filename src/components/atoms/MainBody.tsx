@@ -1,6 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Container } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Container, styled } from '@mui/material';
 
 const StyledRoot = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
