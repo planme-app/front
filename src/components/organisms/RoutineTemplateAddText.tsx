@@ -26,6 +26,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 export interface RoutineTemplateAddTextProps {
+  type: string;
   title: string;
   placeholder: string;
   value: string | number;
@@ -35,9 +36,18 @@ export interface RoutineTemplateAddTextProps {
 export default function RoutineTemplateAddText(
   props: RoutineTemplateAddTextProps
 ) {
-  const { title, placeholder, value, setValue } = props;
+  const { type, title, placeholder, value, setValue } = props;
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    if (type === 'number') {
+      const numValue = e.target.value;
+      const isValid = /^[1-9]\d*$/.test(numValue); // 정규식을 사용하여 숫자 검사
+
+      if (numValue === '' || isValid) {
+        setValue(numValue === '' ? '' : `${parseInt(numValue, 10)}`); // 숫자로 변환하여 상태 업데이트
+      }
+    } else {
+      setValue(e.target.value);
+    }
   };
 
   return (

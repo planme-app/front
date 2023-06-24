@@ -70,10 +70,10 @@ export default function RoutineTemplateAddPage() {
       setMessage('타입을 선택해주세요.');
       setModalOpen(true);
     } else if (goal.length === 0) {
-      setMessage('빈도를 선택해주세요.');
+      setMessage('목표를 입력해주세요.');
       setModalOpen(true);
     } else if (weekData.length === 0) {
-      setMessage('목표를 입력해주세요.');
+      setMessage('빈도를 선택해주세요.');
       setModalOpen(true);
     } else {
       let goalCount = goal;
@@ -108,6 +108,7 @@ export default function RoutineTemplateAddPage() {
           사용자 정의
         </Typography>
         <RoutineTemplateAddText
+          type={'text'}
           title={'습관 이름'}
           placeholder={'습관 이름 입력'}
           value={name}
@@ -119,6 +120,7 @@ export default function RoutineTemplateAddPage() {
           setSelectedType={setSelectedType}
         />
         <RoutineTemplateAddText
+          type={'number'}
           title={`목표 (${goalType})`}
           placeholder={goalPlaceholder}
           value={goal}
