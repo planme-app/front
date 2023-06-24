@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
+import dayjs from 'dayjs';
+import { routineList, RoutineType } from 'stores/routineStore';
+import { routinesApi } from 'controllers/services/api';
 import { Stack, Typography } from '@mui/material';
 import LoginBody from 'components/atoms/LoginBody';
 import Header from 'components/organisms/Header';
 import RoutineCard from 'components/organisms/RoutineCard';
 import BottomBar from 'components/organisms/BottomBar';
-import { routinesApi } from 'controllers/services/api';
-import { useRecoilState } from 'recoil';
-import { routineList, RoutineType } from 'stores/routineStore';
-import dayjs from 'dayjs';
 
 interface MainProps {
   initialRoutines: RoutineType[];
@@ -104,7 +104,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     });
   }
 
-  const { Authorization, userEmail, userName, userId } = parsedCookie;
+  const { Authorization, userId } = parsedCookie;
 
   if (!Authorization) {
     context.res.writeHead(302, { Location: '/login' });
@@ -112,18 +112,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   const routineDates = dayjs().format('YYYY-MM-DD');
-  const routines = await routinesApi(routineDates);
 
-  const myInfo =
-    Authorization && userEmail && userName
-      ? { userEmail, userName }
-      : undefined;
+  const routines = await routinesApi(routineDates, userId);
 
   return {
     props: {
       initialRoutines: routines,
-      userId,
-      myInfo,
       routineDates
     }
   };

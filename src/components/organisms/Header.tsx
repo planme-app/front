@@ -3,6 +3,9 @@ import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { routineDate, routineList } from 'stores/routineStore';
 import { Stack } from '@mui/material';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { usePutRoutine } from 'controllers/application/PutRoutine';
 import { routinesApi } from 'controllers/services/api';
 import CustomButton from 'components/atoms/CustomButton';
@@ -57,13 +60,16 @@ export default function Header({ page, title, routineId }: HeaderProps) {
   const pageType = useMemo(() => {
     switch (page) {
       case 'detail':
-        return { title: <DetailTitle title={title} />, img: '/settingDot.png' };
+        return {
+          title: <DetailTitle title={title} />,
+          icon: <MoreHorizIcon color="action" />
+        };
       case 'routineTemplateAddPage':
-        return { title: 'routineTemplateAdd', img: undefined };
+        return { title: 'routineTemplateAdd', icon: undefined };
       default:
         return {
           title: <Days />,
-          img: '/moveNext.png'
+          icon: <ArrowForwardIosIcon color="action" />
         };
     }
   }, [page, title]);
@@ -87,24 +93,22 @@ export default function Header({ page, title, routineId }: HeaderProps) {
     >
       <CustomButton
         type="movePrev"
-        src={'/movePrev.png'}
-        imageWidth={20}
-        imageHeight={20}
         alt="moveButton"
         onClick={() => (page === 'header' ? moveDate(-1) : prevPage())}
-      />
+      >
+        <ArrowBackIosNewIcon color="action" />
+      </CustomButton>
       {pageType.title}
       {day === nextDay ? (
         <CustomButton disabled={true} />
       ) : (
         <CustomButton
           type="moveNext_or_SettingDot"
-          src={pageType.img}
-          imageWidth={20}
-          imageHeight={20}
           alt="moveButton"
           onClick={() => (page === 'header' ? moveDate(1) : null)}
-        />
+        >
+          {pageType.icon}
+        </CustomButton>
       )}
     </Stack>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { routineDate, routineList } from 'stores/routineStore';
 import ModalAtom from 'components/atoms/ModalAtom';
 import dayjs, { Dayjs } from 'dayjs';
@@ -20,7 +20,7 @@ const style = {
 
 export default function Days() {
   const [day, setDay] = useRecoilState(routineDate);
-  const [, setRoutines] = useRecoilState(routineList);
+  const setRoutines = useSetRecoilState(routineList);
   const [modalOpen, setModalOpen] = useState(false);
   const [value, setValue] = useState<Dayjs | null>(dayjs(day));
   const today = dayjs().format('YYYY-MM-DD');

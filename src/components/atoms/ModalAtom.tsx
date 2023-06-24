@@ -1,10 +1,10 @@
-import React, { JSXElementConstructor, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import Modal from '@mui/material/Modal';
 
 export interface ModalAtomProps {
   open: boolean;
   handleClose: (isOpen: boolean) => void;
-  children: ReactElement<any, string | JSXElementConstructor<any>>;
+  children: ReactElement;
 }
 
 export default function ModalAtom(props: ModalAtomProps) {

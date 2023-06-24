@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
@@ -7,15 +7,7 @@ export default function RoutineDate({
 }: {
   routineDays?: string[];
 }) {
-  const [days, setDays] = useState<string[]>([
-    '일',
-    '월',
-    '화',
-    '수',
-    '목',
-    '금',
-    '토'
-  ]);
+  const days = ['일', '월', '화', '수', '목', '금', '토'];
 
   return (
     <Box sx={{ paddingTop: '10px' }}>
