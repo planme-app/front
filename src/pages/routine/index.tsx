@@ -17,14 +17,12 @@ interface MyInfoType {
 interface MainProps {
   initialRoutines: RoutineType[];
   userId: string | null;
-  myInfo: MyInfoType;
   routineDates: string;
 }
 
 export default function Main({
   initialRoutines,
   userId,
-  myInfo,
   routineDates
 }: MainProps) {
   const [showSkeleton, setShowSkeleton] = useState(false);
@@ -37,7 +35,7 @@ export default function Main({
     } else {
       const fetchRoutines = async () => {
         try {
-          const fetchedRoutines = await routinesApi(routineDates, userId);
+          const fetchedRoutines = await routinesApi(routineDates);
           setRoutines(fetchedRoutines);
         } catch (error) {
           console.error('Error fetching routines:', error);
@@ -63,7 +61,7 @@ export default function Main({
         <title>main</title>
       </Head>
       <LoginBody>
-        <Header page={'header'} userId={userId} />
+        <Header page={'header'} />
         <Stack
           minHeight={'74vh'}
           direction="column"
@@ -124,7 +122,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const routineDates = `${new Date().getFullYear()}-${String(
     new Date().getMonth() + 1
   ).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`;
-  const routines = await routinesApi(routineDates, userId);
+  const routines = await routinesApi(routineDates);
 
   const myInfo =
     Authorization && userEmail && userName

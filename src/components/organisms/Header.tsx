@@ -1,58 +1,41 @@
 import React, { useMemo } from 'react';
-import { useRecoilState } from 'recoil';
-
 import { useRouter } from 'next/router';
-
+import { useRecoilState } from 'recoil';
+import { routineDate, routineList } from 'stores/routineStore';
 import { Stack } from '@mui/material';
-
+import { usePutRoutine } from 'controllers/application/PutRoutine';
+import { routinesApi } from 'controllers/services/api';
 import CustomButton from 'components/atoms/CustomButton';
 import Days from 'components/atoms/Days';
 import DetailTitle from 'components/atoms/DetailTitle';
-
-import { routineDate, routineList } from 'stores/routineStore';
-
-import { usePutRoutine } from 'controllers/application/PutRoutine';
-import { routinesApi } from 'controllers/services/api';
+import dayjs from 'dayjs';
 
 export interface HeaderProps {
   page: string;
-  userId?: string | null;
   title?: string;
   routineId?: string;
 }
 
-const year = new Date().getFullYear(); // 년
-const month = new Date().getMonth(); // 월
-const days = new Date().getDate();
-
-export default function Header({
-  page,
-  userId,
-  title,
-  routineId
-}: HeaderProps) {
+export default function Header({ page, title, routineId }: HeaderProps) {
   const router = useRouter();
   const [day, setDay] = useRecoilState(routineDate);
   const [routines, setRoutines] = useRecoilState(routineList);
   const { putRoutine } = usePutRoutine();
 
+  const nextDay = dayjs().add(1, 'd').format('YYYY-MM-DD');
+
   const moveDate = async (offset: number) => {
-    const nowDate = new Date(day.date);
-    const newDate = new Date(nowDate.setDate(nowDate.getDate() + offset));
+    let date;
+    if (offset > 0) {
+      date = dayjs(day).add(1, 'd').format('YYYY-MM-DD');
+    } else {
+      date = dayjs(day).subtract(1, 'd').format('YYYY-MM-DD');
+    }
 
-    const date = `${newDate.getFullYear()}-${String(
-      newDate.getMonth() + 1
-    ).padStart(2, '0')}-${String(newDate.getDate()).padStart(2, '0')}`;
-
-    setDay((prev) => ({
-      ...prev,
-      date: date,
-      prevDate: prev.prevDate + offset,
-      nextDate: prev.nextDate + offset
-    }));
+    setDay(date);
 
     try {
-      const newRoutineList = await routinesApi(date, userId);
+      const newRoutineList = await routinesApi(date);
       setRoutines(newRoutineList);
     } catch (error) {
       console.error('Failed to fetch routine list:', error);
@@ -118,7 +101,7 @@ export default function Header({
         onClick={() => (page === 'header' ? moveDate(-1) : prevPage())}
       />
       {pageType.title}
-      {Number(day.date.split('-')[2]) === day.today + 1 ? (
+      {day === nextDay ? (
         <CustomButton disabled={true} />
       ) : (
         <CustomButton

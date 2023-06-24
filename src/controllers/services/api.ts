@@ -103,11 +103,10 @@ export const loginApi = async (email: string, passwd: string) => {
   }
 };
 
-export const routinesApi = async (date: string, userId?: string | null) => {
+export const routinesApi = async (date: string) => {
   try {
     const res = await axios.get(
-      // `https://cd84f081-598a-4df9-899c-e600a685c815.mock.pstmn.io/api/user/${userId}/routines?date=${date}`
-      `${API_BASE_URL}/api/user/${userId}/routines?date=${date}`
+      `${API_BASE_URL}/api/user/${cookiesUserId}/routines?date=${date}`
     );
 
     if (res.status === 200) {

@@ -22,32 +22,22 @@ const style = {
 export default function Days() {
   const [day, setDay] = useRecoilState(routineDate);
   const [routines, setRoutines] = useRecoilState(routineList);
-  const dayArr = day.date.split('-');
+  const dayArr = day?.split('-');
   const [modalOpen, setModalOpen] = useState(false);
-  const [value, setValue] = useState<Dayjs | null>(dayjs(day.date));
+  const [value, setValue] = useState<Dayjs | null>(dayjs(day));
 
   const todayYear = String(new Date().getFullYear()).padStart(2, '0');
   const todayMonth = String(new Date().getMonth() + 1).padStart(2, '0');
   const todayDay = String(new Date().getDate()).padStart(2, '0');
-  const userId = Cookies.get('userId');
 
   const handleOpen = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
 
   const moveDate = async (newValue: Dayjs) => {
     setValue(newValue);
-
     const date = newValue.format('YYYY-MM-DD');
-
-    setDay((prev) => ({
-      ...prev,
-      date: date,
-      prevDate: prev.prevDate,
-      nextDate: prev.nextDate
-    }));
-
-    const newRoutineList = await routinesApi(date, userId);
-
+    setDay(date);
+    const newRoutineList = await routinesApi(date);
     setRoutines(newRoutineList);
   };
 
