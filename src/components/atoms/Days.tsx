@@ -24,6 +24,7 @@ export default function Days() {
   const [modalOpen, setModalOpen] = useState(false);
   const [value, setValue] = useState<Dayjs | null>(dayjs(day));
   const today = dayjs().format('YYYY-MM-DD');
+  const nextDay = dayjs().add(1, 'd');
   const dayYear = dayjs(day).format('YYYY');
   const dayMonth = dayjs(day).format('MM');
   const dayDay = dayjs(day).format('DD');
@@ -32,7 +33,7 @@ export default function Days() {
   const handleClose = () => setModalOpen(false);
 
   const moveDate = async (newValue: Dayjs | null) => {
-    if (newValue !== null) {
+    if (newValue !== null && nextDay.diff(newValue, 'd') >= 0) {
       setValue(newValue);
       const date = newValue.format('YYYY-MM-DD');
       setDay(date);
