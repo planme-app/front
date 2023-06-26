@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+import dayjs from 'dayjs';
 
 export interface RoutineType {
   routine_instance_id: string;
@@ -10,20 +11,9 @@ export interface RoutineType {
   progress: number | boolean;
 }
 
-const initialDate = () => {
-  return `${new Date().getFullYear()}-${String(
-    new Date().getMonth() + 1
-  ).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`;
-};
-
 export const routineDate = atom({
   key: 'routineDate',
-  default: {
-    date: initialDate(),
-    prevDate: -1,
-    nextDate: 1,
-    today: new Date().getDate()
-  }
+  default: dayjs().format('YYYY-MM-DD')
 });
 
 export const routineList = atom<RoutineType[]>({

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-
+import { useRouter } from 'next/router';
 import { Button, Typography } from '@mui/material';
-import MainBody from 'components/atoms/MainBody';
-import RoutineTemplateCard from 'components/organisms/RoutineTemplateCard';
 import { getTemplate } from 'controllers/services/api';
 import { Template } from 'controllers/Entity/Template';
-import { useRouter } from 'next/router';
-import BottomBar from '@/components/organisms/BottomBar';
+import MainBody from 'components/atoms/MainBody';
+import RoutineTemplateCard from 'components/organisms/RoutineTemplateCard';
+import BottomBar from 'components/organisms/BottomBar';
 
 interface TemplateType {
   [key: string]: Template[];

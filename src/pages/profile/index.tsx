@@ -1,9 +1,9 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import Cookies from 'js-cookie';
-import MainBody from '@/components/atoms/MainBody';
-import BottomBar from '@/components/organisms/BottomBar';
 import { Box, Button, Stack } from '@mui/material';
+import MainBody from 'components/atoms/MainBody';
+import BottomBar from 'components/organisms/BottomBar';
+import Cookies from 'js-cookie';
 
 export default function Profile() {
   const router = useRouter();

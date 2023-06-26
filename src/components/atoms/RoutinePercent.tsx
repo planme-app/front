@@ -4,8 +4,7 @@ import CircularProgress, {
   CircularProgressProps,
   circularProgressClasses
 } from '@mui/material/CircularProgress';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import { Box, Typography } from '@mui/material';
 
 interface CircularType {
   size?: number;

@@ -1,6 +1,5 @@
 import React from 'react';
-import Typography from '@mui/material/Typography';
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 
 const style = {
   position: 'absolute' as const,

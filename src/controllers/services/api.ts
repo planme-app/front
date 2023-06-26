@@ -1,4 +1,3 @@
-import routines from 'pages/api/user/[userId]/routines';
 import axios, { AxiosError } from 'axios';
 import Cookies from 'js-cookie';
 
@@ -12,13 +11,15 @@ const URL_GET_TEMPLATE = `${API_BASE_URL}/api/template`;
 const URL_POST_ROUTINE = `${API_BASE_URL}/api/user/${cookiesUserId}/routines`;
 
 const URL_ROUTINES = ({
-  userId,
+  userIdSSR,
   date
 }: {
-  userId?: string | null;
+  userIdSSR?: string | null;
   date: string;
 }) => {
-  return `${API_BASE_URL}/api/user/${userId}/routines?date=${date}`;
+  return `${API_BASE_URL}/api/user/${
+    userIdSSR ? userIdSSR : cookiesUserId
+  }/routines?date=${date}`;
 };
 
 const URL_ROUTINE_UPDATE = ({
@@ -103,12 +104,9 @@ export const loginApi = async (email: string, passwd: string) => {
   }
 };
 
-export const routinesApi = async (date: string, userId?: string | null) => {
+export const routinesApi = async (date: string, userIdSSR?: string) => {
   try {
-    const res = await axios.get(
-      // `https://cd84f081-598a-4df9-899c-e600a685c815.mock.pstmn.io/api/user/${userId}/routines?date=${date}`
-      `${API_BASE_URL}/api/user/${userId}/routines?date=${date}`
-    );
+    const res = await axios.get(URL_ROUTINES({ date, userIdSSR }));
 
     if (res.status === 200) {
       return res.data;

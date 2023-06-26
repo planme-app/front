@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { routineList, timerState } from 'stores/routineStore';
 
 interface TimeType {
@@ -8,7 +8,7 @@ interface TimeType {
 
 export default function UseTimer({ routineId }: TimeType) {
   const [running, setRunning] = useRecoilState(timerState);
-  const [routines, setRoutines] = useRecoilState(routineList);
+  const setRoutines = useSetRecoilState(routineList);
 
   useEffect(() => {
     if (running) {

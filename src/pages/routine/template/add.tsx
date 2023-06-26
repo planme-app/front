@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-
 import { Button, Typography } from '@mui/material';
+import { postRoutine } from 'controllers/services/api';
 import MainBody from 'components/atoms/MainBody';
 import RoutineTemplateAddText from 'components/organisms/RoutineTemplateAddText';
 import RoutineTemplateAddType from 'components/organisms/RoutineTemplateAddType';
 import RoutineTemplateAddWeek from 'components/organisms/RoutineTemplateAddWeek';
-import { postRoutine } from 'controllers/services/api';
 import ModalAtom from 'components/atoms/ModalAtom';
 import AlertMessage from 'components/atoms/AlertMessage';
 
@@ -70,10 +69,10 @@ export default function RoutineTemplateAddPage() {
       setMessage('타입을 선택해주세요.');
       setModalOpen(true);
     } else if (goal.length === 0) {
-      setMessage('빈도를 선택해주세요.');
+      setMessage('목표를 입력해주세요.');
       setModalOpen(true);
     } else if (weekData.length === 0) {
-      setMessage('목표를 입력해주세요.');
+      setMessage('빈도를 선택해주세요.');
       setModalOpen(true);
     } else {
       let goalCount = goal;
@@ -108,6 +107,7 @@ export default function RoutineTemplateAddPage() {
           사용자 정의
         </Typography>
         <RoutineTemplateAddText
+          type={'text'}
           title={'습관 이름'}
           placeholder={'습관 이름 입력'}
           value={name}
@@ -119,6 +119,7 @@ export default function RoutineTemplateAddPage() {
           setSelectedType={setSelectedType}
         />
         <RoutineTemplateAddText
+          type={'number'}
           title={`목표 (${goalType})`}
           placeholder={goalPlaceholder}
           value={goal}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
-import CustomButton from 'components/atoms/CustomButton';
 import { routineList } from 'stores/routineStore';
+import CustomButton from 'components/atoms/CustomButton';
 
 export default function RoutineDetailBoolButton({
   routineId

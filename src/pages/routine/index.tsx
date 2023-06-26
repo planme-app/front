@@ -1,35 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import Head from 'next/head';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
+import { routineDate, routineList, RoutineType } from 'stores/routineStore';
 import { Stack, Typography } from '@mui/material';
+import { routinesApi } from 'controllers/services/api';
 import LoginBody from 'components/atoms/LoginBody';
 import Header from 'components/organisms/Header';
 import RoutineCard from 'components/organisms/RoutineCard';
 import BottomBar from 'components/organisms/BottomBar';
-import { routinesApi } from 'controllers/services/api';
-import { useRecoilState } from 'recoil';
-import { routineList, RoutineType } from 'stores/routineStore';
+import dayjs from 'dayjs';
 
-interface MyInfoType {
-  userEmail: string | null;
-  userName: string | null;
-}
 interface MainProps {
   initialRoutines: RoutineType[];
-  userId: string | null;
-  myInfo: MyInfoType;
-  routineDates: string;
 }
 
-export default function Main({
-  initialRoutines,
-  userId,
-  myInfo,
-  routineDates
-}: MainProps) {
+export default function Main({ initialRoutines }: MainProps) {
   const [showSkeleton, setShowSkeleton] = useState(false);
-
   const [routines, setRoutines] = useRecoilState(routineList);
+  const day = useRecoilValue(routineDate);
 
   useEffect(() => {
     if (!routines.length) {
@@ -37,7 +26,7 @@ export default function Main({
     } else {
       const fetchRoutines = async () => {
         try {
-          const fetchedRoutines = await routinesApi(routineDates, userId);
+          const fetchedRoutines = await routinesApi(day);
           setRoutines(fetchedRoutines);
         } catch (error) {
           console.error('Error fetching routines:', error);
@@ -48,13 +37,9 @@ export default function Main({
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!routines.length) {
-        setShowSkeleton(true);
-      }
-    }, 5000);
-
-    return () => clearTimeout(timer);
+    if (!routines.length) {
+      setShowSkeleton(true);
+    }
   }, [routines]);
 
   return (
@@ -63,7 +48,7 @@ export default function Main({
         <title>main</title>
       </Head>
       <LoginBody>
-        <Header page={'header'} userId={userId} />
+        <Header page={'header'} />
         <Stack
           minHeight={'74vh'}
           direction="column"
@@ -114,29 +99,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     });
   }
 
-  const { Authorization, userEmail, userName, userId } = parsedCookie;
+  const { Authorization, userId } = parsedCookie;
 
   if (!Authorization) {
     context.res.writeHead(302, { Location: '/login' });
     context.res.end();
   }
 
-  const routineDates = `${new Date().getFullYear()}-${String(
-    new Date().getMonth() + 1
-  ).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`;
-  const routines = await routinesApi(routineDates, userId);
+  const routineDates = dayjs().format('YYYY-MM-DD');
 
-  const myInfo =
-    Authorization && userEmail && userName
-      ? { userEmail, userName }
-      : undefined;
+  const routines = await routinesApi(routineDates, userId);
 
   return {
     props: {
-      initialRoutines: routines,
-      userId,
-      myInfo,
-      routineDates
+      initialRoutines: routines
     }
   };
 };

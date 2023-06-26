@@ -1,13 +1,11 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
-
 import Link from 'next/link';
-
+import { useRecoilValue } from 'recoil';
+import { routineDate } from 'stores/routineStore';
 import { Box, Stack, Skeleton, Typography } from '@mui/material';
-
 import RoutinePercent from 'components/atoms/RoutinePercent';
 import RoutineDate from 'components/atoms/RoutineDate';
-import { routineDate } from 'stores/routineStore';
+import dayjs from 'dayjs';
 
 interface RoutineInfo {
   routineId?: string;
@@ -26,7 +24,8 @@ export default function RoutineCard({
 }: RoutineInfo) {
   const value = Math.floor((Number(cardProgress) / Number(cardGoal)) * 100);
   const day = useRecoilValue(routineDate);
-  const isDisabled = Number(day.date.split('-')[2]) === day.today + 1;
+  const nextDay = dayjs().add(1, 'd').format('YYYY-mm-dd');
+  const isDisabled = day === nextDay;
 
   const linkStyle = {
     textDecoration: 'none',
@@ -94,7 +93,7 @@ export default function RoutineCard({
           </Typography>
           <RoutineDate routineDays={routineDays} />
         </Stack>
-        {Number(day.date.split('-')[2]) === day.today + 1 ? (
+        {isDisabled ? (
           <Stack
             sx={{
               width: '70px',

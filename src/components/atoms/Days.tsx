@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Button, Stack } from '@mui/material';
-import { useRecoilState } from 'recoil';
+import React, { useState } from 'react';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { routineDate, routineList } from 'stores/routineStore';
-import ModalAtom from 'components/atoms/ModalAtom';
-import dayjs, { Dayjs } from 'dayjs';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { routinesApi } from 'controllers/services/api';
-import Cookies from 'js-cookie';
+import ModalAtom from 'components/atoms/ModalAtom';
+import dayjs, { Dayjs } from 'dayjs';
 
 const style = {
   position: 'absolute' as const,
@@ -21,41 +20,28 @@ const style = {
 
 export default function Days() {
   const [day, setDay] = useRecoilState(routineDate);
-  const [routines, setRoutines] = useRecoilState(routineList);
-  const dayArr = day.date.split('-');
+  const setRoutines = useSetRecoilState(routineList);
   const [modalOpen, setModalOpen] = useState(false);
-  const [value, setValue] = useState<Dayjs | null>(dayjs(day.date));
-
-  const todayYear = String(new Date().getFullYear()).padStart(2, '0');
-  const todayMonth = String(new Date().getMonth() + 1).padStart(2, '0');
-  const todayDay = String(new Date().getDate()).padStart(2, '0');
-  const userId = Cookies.get('userId');
+  const [value, setValue] = useState<Dayjs | null>(dayjs(day));
+  const today = dayjs().format('YYYY-MM-DD');
+  const nextDay = dayjs().add(1, 'd');
+  const dayYear = dayjs(day).format('YYYY');
+  const dayMonth = dayjs(day).format('MM');
+  const dayDay = dayjs(day).format('DD');
 
   const handleOpen = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
 
-  const moveDate = async (newValue: Dayjs) => {
-    setValue(newValue);
-
-    const date = newValue.format('YYYY-MM-DD');
-
-    setDay((prev) => ({
-      ...prev,
-      date: date,
-      prevDate: prev.prevDate,
-      nextDate: prev.nextDate
-    }));
-
-    const newRoutineList = await routinesApi(date, userId);
-
-    setRoutines(newRoutineList);
-  };
-
-  useEffect(() => {
-    if (value !== null) {
-      moveDate(value);
+  const moveDate = async (newValue: Dayjs | null) => {
+    if (newValue !== null && nextDay.diff(newValue, 'd') >= 0) {
+      setValue(newValue);
+      const date = newValue.format('YYYY-MM-DD');
+      setDay(date);
+      const newRoutineList = await routinesApi(date);
+      setRoutines(newRoutineList);
+      handleClose();
     }
-  }, [value]);
+  };
 
   return (
     <>
@@ -73,27 +59,29 @@ export default function Days() {
           sx={{
             fontSize: '30px',
             fontWeight: '500',
-            color: 'black'
+            color: 'black',
+            flexDirection: 'column'
           }}
           onClick={handleOpen}
         >
-          {todayYear === dayArr[0] &&
-          todayMonth === dayArr[1] &&
-          todayDay === dayArr[2]
-            ? '오늘'
-            : `${dayArr[1]}월 ${dayArr[2]}일`}
+          <Typography
+            sx={{
+              fontSize: '25px',
+              fontWeight: '700',
+              color: 'black'
+            }}
+          >
+            {day === today ? '오늘' : `${dayMonth}월 ${dayDay}일`}
+          </Typography>
+          <Typography
+            sx={{ mt: -0.5, color: '#A4A4A4' }}
+          >{`${dayYear}년`}</Typography>
         </Button>
       </Box>
       <ModalAtom open={modalOpen} handleClose={handleClose}>
         <Stack sx={style}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateCalendar
-              value={value}
-              onChange={(newValue) => {
-                setValue(newValue);
-                handleClose();
-              }}
-            />
+            <DateCalendar value={value} onChange={moveDate} />
           </LocalizationProvider>
         </Stack>
       </ModalAtom>

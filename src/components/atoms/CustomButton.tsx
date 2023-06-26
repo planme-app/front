@@ -22,7 +22,7 @@ type PageType =
 
 interface CustomButtonProps {
   type?: PageType;
-  children?: string;
+  children?: string | React.ReactNode;
   display?: string;
   justifyContent?: string;
   alignContent?: string;
