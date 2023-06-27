@@ -122,6 +122,7 @@ export default function Signup() {
         ></Stack>
 
         <Button
+          data-cy="signup-submit"
           disabled={
             !(
               checkEmail(email) &&
