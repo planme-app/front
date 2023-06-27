@@ -100,7 +100,7 @@ export default function Do({ routineId }: { routineId: string }) {
       <Head>
         <title>doing...</title>
       </Head>
-      <LoginBody>
+      <LoginBody paddingTop={12}>
         <Header page={'detail'} title={routine?.title} routineId={routineId} />
         <Stack minHeight={'74vh'} direction="column" alignItems="center">
           <RoutinePercent

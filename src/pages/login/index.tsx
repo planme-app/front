@@ -1,27 +1,23 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Image from 'next/image';
 import {
-  Link,
   Divider,
   Stack,
-  TextField,
   FormControl,
   InputLabel,
   OutlinedInput,
-  InputAdornment,
-  IconButton,
-  Checkbox,
   Button,
   Typography
 } from '@mui/material';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { loginApi } from 'controllers/services/api';
 import { checkEmail, checkPw } from 'controllers/domain/User';
 import LoginBody from 'components/atoms/LoginBody';
 import AlertMessage from 'components/atoms/AlertMessage';
 import ModalAtom from 'components/atoms/ModalAtom';
+import gogleIcon from 'public/gogleIcon.png';
+import kakaoIcon from 'public/kakaoIcon.png';
 
 export default function Login() {
   const router = useRouter();
@@ -29,13 +25,15 @@ export default function Login() {
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [remember, setRemember] = useState(false);
+  // const [remember, setRemember] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [message, setMessage] = useState('');
 
-  const handleClickShowPassword = () => {
-    setShowPassword((item) => !item);
-  };
+  const backPage = () => history.back();
+
+  // const handleClickShowPassword = () => {
+  //   setShowPassword((item) => !item);
+  // };
 
   const saveUserId = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
@@ -45,9 +43,9 @@ export default function Login() {
     setPw(e.target.value);
   };
 
-  const saveRemeber = () => {
-    setRemember((item) => !item);
-  };
+  // const saveRemeber = () => {
+  //   setRemember((item) => !item);
+  // };
 
   const moveSignup = () => {
     router.push('/signup');
@@ -90,72 +88,129 @@ export default function Login() {
           justifyContent="space-between"
         >
           <Typography
-            variant="h3"
-            fontWeight={300}
-            color={'#556cd6'}
-            gutterBottom
+            variant="body1"
+            color={'black'}
+            onClick={backPage}
+            sx={{
+              opacity: 0.8,
+              mt: -2,
+              mb: 3,
+              transform: 'scaleY(-1)',
+              cursor: 'pointer'
+            }}
           >
-            Log in
+            ⤶
+          </Typography>
+          <Typography
+            variant="h4"
+            fontWeight={700}
+            fontFamily="Title_Medium"
+            color={'#EA811C'}
+            gutterBottom
+            sx={{ mb: 4 }}
+          >
+            로그인
           </Typography>
         </Stack>
 
-        <Divider sx={{ mb: 5 }}></Divider>
-
         <Stack spacing={3} sx={{ mb: 3 }}>
-          <TextField name="ID" label="ID" value={id} onChange={saveUserId} />
+          <FormControl variant="outlined">
+            <InputLabel
+              htmlFor="outlined-adornment-ID"
+              sx={{ fontWeight: 700 }}
+            >
+              아이디
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-ID"
+              name="ID"
+              value={id}
+              onChange={saveUserId}
+              label="아이디"
+              sx={{
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#E6DFD4',
+                  borderWidth: '2px',
+                  borderRadius: '5.5px'
+                }
+              }}
+            />
+          </FormControl>
 
-          <FormControl sx={{ m: 1 }} variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">
-              Password
+          <FormControl variant="outlined">
+            <InputLabel
+              htmlFor="outlined-adornment-password"
+              sx={{ fontWeight: 700 }}
+            >
+              비밀번호
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
               value={pw}
               onChange={saveUserPw}
               type={showPassword ? 'text' : 'password'}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Password"
+              label="비밀번호"
+              sx={{
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#E6DFD4',
+                  borderWidth: '2px',
+                  borderRadius: '5.5px'
+                }
+              }}
             />
           </FormControl>
         </Stack>
 
-        {/* 2차 배포 추가 기능
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
+        <Button
+          sx={{
+            mt: -2,
+            mb: 5,
+            color: '#a5a2a2',
+            fontSize: '11px',
+            fontWeight: 500,
+            display: 'flex',
+            justifyContent: 'flex-start'
+          }}
         >
-          <Checkbox checked={remember} onChange={saveRemeber} /> 
-        </Stack>
-        */}
-
-        <Button variant="contained" size="large" onClick={handleLogin}>
-          Login
+          + 아이디/비밀번호를 잊으셨나요?
         </Button>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{ my: 2 }}
+
+        <Button
+          variant="contained"
+          size="large"
+          onClick={moveSignup}
+          sx={{ color: 'white', height: '52px', boxShadow: 'none' }}
         >
-          <Link variant="subtitle2" href="/signup" onClick={moveSignup}>
-            회원가입
-          </Link>
-          {/* 2차 배포 추가 기능
-          <Link variant="subtitle2">아이디 찾기</Link>
-          <Link variant="subtitle2">비밀번호 찾기</Link>
-          */}
-        </Stack>
+          회원가입하기
+        </Button>
+
+        <Divider
+          sx={{
+            mt: 5,
+            mb: 4,
+            bgcolor: 'secondary.light',
+            borderBottomWidth: 2
+          }}
+        />
+        <Button
+          size="large"
+          sx={{ color: '#371C1D', height: '52px', mb: 3, bgcolor: '#F9E000' }}
+        >
+          <Image src={kakaoIcon} width={35} height={35} alt="gogleIcon" />
+          카카오로 시작하기
+        </Button>
+        <Button
+          onClick={handleLogin}
+          sx={{
+            color: '#371C1D',
+            height: '52px',
+            bgcolor: 'white',
+            border: '2px solid #E6DFD4'
+          }}
+        >
+          <Image src={gogleIcon} width={35} height={35} alt="gogleIcon" />
+          구글로 시작하기
+        </Button>
       </LoginBody>
       <ModalAtom open={modalOpen} handleClose={handleClose}>
         <AlertMessage title={'error'} message={message} />
