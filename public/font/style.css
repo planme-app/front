@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'Title_Light';
+  src: url('Title_Light.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Title_Medium';
+  src: url('Title_Medium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}

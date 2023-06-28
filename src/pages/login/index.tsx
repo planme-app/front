@@ -24,7 +24,7 @@ export default function Login() {
 
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword] = useState(false);
   // const [remember, setRemember] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [message, setMessage] = useState('');
@@ -81,6 +81,7 @@ export default function Login() {
       <Head>
         <title>Login</title>
       </Head>
+
       <LoginBody>
         <Stack
           direction="column"
@@ -117,7 +118,7 @@ export default function Login() {
           <FormControl variant="outlined">
             <InputLabel
               htmlFor="outlined-adornment-ID"
-              sx={{ fontWeight: 700 }}
+              sx={{ fontWeight: 700, fontFamily: 'Title_Light' }}
             >
               아이디
             </InputLabel>
@@ -140,7 +141,7 @@ export default function Login() {
           <FormControl variant="outlined">
             <InputLabel
               htmlFor="outlined-adornment-password"
-              sx={{ fontWeight: 700 }}
+              sx={{ fontWeight: 700, fontFamily: 'Title_Light' }}
             >
               비밀번호
             </InputLabel>
@@ -179,7 +180,12 @@ export default function Login() {
           variant="contained"
           size="large"
           onClick={moveSignup}
-          sx={{ color: 'white', height: '52px', boxShadow: 'none' }}
+          sx={{
+            color: 'white',
+            height: '52px',
+            boxShadow: 'none',
+            fontFamily: 'Title_Light'
+          }}
         >
           회원가입하기
         </Button>
@@ -192,26 +198,41 @@ export default function Login() {
             borderBottomWidth: 2
           }}
         />
+
         <Button
           size="large"
-          sx={{ color: '#371C1D', height: '52px', mb: 3, bgcolor: '#F9E000' }}
+          sx={{
+            color: '#371C1D',
+            height: '52px',
+            mb: 3,
+            bgcolor: '#FEE500',
+            fontFamily: 'Title_Light'
+          }}
         >
           <Image src={kakaoIcon} width={35} height={35} alt="gogleIcon" />
-          카카오로 시작하기
+          <Typography
+            marginLeft={1}
+            sx={{ fontSize: '14px', fontFamily: 'Title_Light' }}
+          >
+            카카오로 시작하기
+          </Typography>
         </Button>
+
         <Button
           onClick={handleLogin}
           sx={{
             color: '#371C1D',
             height: '52px',
             bgcolor: 'white',
-            border: '2px solid #E6DFD4'
+            border: '2px solid #E6DFD4',
+            fontFamily: 'Title_Light'
           }}
         >
           <Image src={gogleIcon} width={35} height={35} alt="gogleIcon" />
           구글로 시작하기
         </Button>
       </LoginBody>
+
       <ModalAtom open={modalOpen} handleClose={handleClose}>
         <AlertMessage title={'error'} message={message} />
       </ModalAtom>
