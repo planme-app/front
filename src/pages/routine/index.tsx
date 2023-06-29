@@ -34,7 +34,7 @@ export default function Main({ initialRoutines }: MainProps) {
       };
       fetchRoutines();
     }
-  }, []);
+  }, [day, initialRoutines, routines.length, setRoutines]);
 
   useEffect(() => {
     if (!routines.length) {

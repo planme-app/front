@@ -64,7 +64,7 @@ function CircularProgressWithLabel(
     const value = getValue();
 
     return { content, percent, value };
-  }, [type, progress]);
+  }, [type, progress, goal]);
 
   const cardValueBar = useMemo(() => {
     if (routineCardValue) {

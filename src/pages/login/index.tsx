@@ -179,7 +179,7 @@ export default function Login() {
         <Button
           variant="contained"
           size="large"
-          onClick={moveSignup}
+          onClick={handleLogin}
           sx={{
             color: 'white',
             height: '52px',

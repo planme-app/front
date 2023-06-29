@@ -27,7 +27,7 @@ export default function UseTimer({ routineId }: TimeType) {
 
       return () => clearInterval(interval);
     }
-  }, [running]);
+  }, [running, routineId, setRoutines]);
 
   const start = () => setRunning(true);
   const stop = () => setRunning(false);

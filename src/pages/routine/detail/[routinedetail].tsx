@@ -45,7 +45,7 @@ export default function Do({ routineId }: { routineId: string }) {
           )
         };
     }
-  }, [running, routine]);
+  }, [running, routine, routineId]);
 
   useEffect(() => {
     const sessionRoutine = sessionStorage.getItem('routine');
@@ -62,7 +62,7 @@ export default function Do({ routineId }: { routineId: string }) {
     } else {
       router.push('/routine');
     }
-  }, [routines, routine]);
+  }, [routines, routine, foundRoutine, router, routineId, setRoutines]);
 
   useEffect(() => {
     const handlePopState = async () => {
@@ -81,7 +81,7 @@ export default function Do({ routineId }: { routineId: string }) {
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [routine]);
+  }, [routine, putRoutine, routineId]);
 
   useEffect(() => {
     const saveRoutinesSession = () => {
@@ -118,7 +118,7 @@ export default function Do({ routineId }: { routineId: string }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const routineId = context.params!.routinedetail as string;
+  const routineId = context.params?.routinedetail as string | undefined;
   return {
     props: {
       routineId
