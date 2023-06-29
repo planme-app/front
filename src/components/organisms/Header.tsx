@@ -1,7 +1,13 @@
 import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { routineDate, routineList, timerState } from 'stores/routineStore';
+import {
+  routineDate,
+  routineList,
+  timerState,
+  routineEditState,
+  editType
+} from 'stores/routineStore';
 import { Stack } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -24,6 +30,7 @@ export default function Header({ page, title, routineId }: HeaderProps) {
   const [day, setDay] = useRecoilState(routineDate);
   const setRunning = useSetRecoilState(timerState);
   const [routines, setRoutines] = useRecoilState(routineList);
+  const setEditRoutineState = useSetRecoilState(routineEditState);
   const { putRoutine } = usePutRoutine();
   const nextDay = dayjs().add(1, 'd').format('YYYY-MM-DD');
 
@@ -59,6 +66,15 @@ export default function Header({ page, title, routineId }: HeaderProps) {
       sessionStorage.removeItem('routine');
       router.push('/routine');
     }
+  };
+
+  const editRoutine = () => {
+    setEditRoutineState((prev: editType) => {
+      return {
+        ...prev,
+        editSlide: !prev.editSlide
+      };
+    });
   };
 
   const pageType = useMemo(() => {
@@ -109,7 +125,7 @@ export default function Header({ page, title, routineId }: HeaderProps) {
         <CustomButton
           type="moveNext_or_SettingDot"
           alt="moveButton"
-          onClick={() => (page === 'header' ? moveDate(1) : null)}
+          onClick={() => (page === 'header' ? moveDate(1) : editRoutine())}
         >
           {pageType.icon}
         </CustomButton>
