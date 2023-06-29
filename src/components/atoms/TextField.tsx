@@ -7,10 +7,11 @@ export interface TextFieldProps {
   password: boolean;
   name: string;
   message: string;
+  dataCy?: string;
 }
 
 export default function TextFiled(props: TextFieldProps) {
-  const { value, isForm, password, name, message, change } = props;
+  const { value, isForm, password, name, message, change, dataCy } = props;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     change(e.target.value);
@@ -27,6 +28,7 @@ export default function TextFiled(props: TextFieldProps) {
       value={value}
       onChange={onChange}
       helperText={value.length !== 0 && !isForm ? message : ' '}
+      inputProps={{ 'data-cy': dataCy }}
     />
   );
 }

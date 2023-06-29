@@ -14,6 +14,7 @@ export function SignupCard({ props }: { props: TextFieldProps }) {
   return (
     <Stack spacing={3}>
       <TextField
+        dataCy="email-input"
         name="Email"
         password={false}
         isForm={checkEmail(email.value)}
@@ -22,6 +23,7 @@ export function SignupCard({ props }: { props: TextFieldProps }) {
         change={email.onChange}
       />
       <TextField
+        dataCy="password-input"
         name="Password"
         password={true}
         isForm={checkPw(pw.value)}
@@ -30,6 +32,7 @@ export function SignupCard({ props }: { props: TextFieldProps }) {
         change={pw.onChange}
       />
       <TextField
+        dataCy="password-check-input"
         name="CheckPassword"
         password={true}
         isForm={confirmPw(pw.value, twoPw.value)}
@@ -38,6 +41,7 @@ export function SignupCard({ props }: { props: TextFieldProps }) {
         change={twoPw.onChange}
       />
       <TextField
+        dataCy="name-input"
         name="Name"
         password={false}
         isForm={checkName(name.value)}
