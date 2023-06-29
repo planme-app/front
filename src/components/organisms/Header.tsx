@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import { useRecoilState } from 'recoil';
-import { routineDate, routineList } from 'stores/routineStore';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { routineDate, routineList, timerState } from 'stores/routineStore';
 import { Stack } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -22,6 +22,7 @@ export interface HeaderProps {
 export default function Header({ page, title, routineId }: HeaderProps) {
   const router = useRouter();
   const [day, setDay] = useRecoilState(routineDate);
+  const setRunning = useSetRecoilState(timerState);
   const [routines, setRoutines] = useRecoilState(routineList);
   const { putRoutine } = usePutRoutine();
   const nextDay = dayjs().add(1, 'd').format('YYYY-MM-DD');
@@ -51,6 +52,9 @@ export default function Header({ page, title, routineId }: HeaderProps) {
         } catch (error) {
           console.error('Routine 업데이트 실패: ');
         }
+      }
+      if (routine?.type === 'time') {
+        setRunning(false);
       }
       sessionStorage.removeItem('routine');
       router.push('/routine');

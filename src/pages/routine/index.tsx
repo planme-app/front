@@ -52,8 +52,6 @@ export default function Main({ initialRoutines }: MainProps) {
         <Stack
           minHeight={'74vh'}
           direction="column"
-          // display="center"
-          // justifyContent="center"
           alignItems="center"
           sx={{ my: 2 }}
         >

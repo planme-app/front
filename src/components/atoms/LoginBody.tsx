@@ -5,6 +5,7 @@ interface StyledLoginBodyProps {
   flexDirection?: 'row' | 'column';
   minHeight?: string;
   backgroundColor?: string;
+  paddingTop?: number;
 }
 
 const StyledRoot = styled('div')(({ theme }) => ({
@@ -14,25 +15,29 @@ const StyledRoot = styled('div')(({ theme }) => ({
 }));
 
 const StyledContent = styled('div')<StyledLoginBodyProps>(
-  ({ theme, flexDirection = 'column' }) => ({
+  ({ theme, flexDirection = 'column', paddingTop = 5 }) => ({
     maxWidth: 480,
     margin: 'auto',
     minHeight: '100vh',
     display: 'flex',
     justifyContent: 'center',
     flexDirection: flexDirection,
-    padding: theme.spacing(12, 0)
+    padding: theme.spacing(12, 0),
+    paddingTop: theme.spacing(paddingTop)
   })
 );
 
 export default function LoginBody({
   children,
-  flexDirection
+  flexDirection,
+  paddingTop
 }: PropsWithChildren<StyledLoginBodyProps>) {
   return (
     <StyledRoot>
       <Container maxWidth="sm">
-        <StyledContent flexDirection={flexDirection}>{children}</StyledContent>
+        <StyledContent flexDirection={flexDirection} paddingTop={paddingTop}>
+          {children}
+        </StyledContent>
       </Container>
     </StyledRoot>
   );
