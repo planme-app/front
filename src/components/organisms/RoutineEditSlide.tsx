@@ -21,14 +21,14 @@ export default function RoutineEditSlide({ open }: { open: boolean }) {
         sx={{
           width: '90vw',
           maxWidth: '480px',
-          height: '30vh',
+          height: '25vh',
           borderRadius: '10px',
           backgroundColor: 'white',
           flexDirection: 'column',
           position: 'absolute',
           left: ' 50%',
-          bottom: 0,
-          transform: open ? 'translate(-50%,-5%)' : 'translate(-50%,-15%)',
+          bottom: open ? '5%' : '-30%',
+          transform: 'translate(-50%,0)',
           transition: 'transform 1s ease',
           boxShadow: ' 0 4px 10px rgba(0, 0, 0, 0.1)'
         }}

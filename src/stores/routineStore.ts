@@ -11,7 +11,7 @@ export interface RoutineType {
   progress: number | boolean;
 }
 
-interface editType {
+export interface editType {
   editSlide: boolean;
   deleteSlide: boolean;
 }

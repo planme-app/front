@@ -34,8 +34,8 @@ export default function RoutineDeleteSlide({ open }: { open: boolean }) {
           position: 'absolute',
           zIndex: 9999,
           left: ' 50%',
-          bottom: 0,
-          transform: open ? 'translate(-50%,-5%)' : 'translate(-50%,100%)',
+          bottom: open ? '5%' : '-30%',
+          transform: 'translate(-50%,0)',
           transition: 'all 1s ease',
           boxShadow: ' 0 -4px 10px rgba(0, 0, 0, 0.1)'
         }}

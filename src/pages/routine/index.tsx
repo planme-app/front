@@ -53,7 +53,7 @@ export default function Main({ initialRoutines }: MainProps) {
           minHeight={'74vh'}
           direction="column"
           alignItems="center"
-          sx={{ my: 2 }}
+          sx={{ mb: -7 }}
         >
           {routines.length ? (
             routines?.map((list) => {
