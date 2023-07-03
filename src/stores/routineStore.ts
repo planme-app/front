@@ -11,7 +11,7 @@ export interface RoutineType {
   progress: number | boolean;
 }
 
-export interface editType {
+export interface EditType {
   editSlide: boolean;
   deleteSlide: boolean;
 }
@@ -35,7 +35,7 @@ export const mypageState = atom({
   default: false
 });
 
-export const routineEditState = atom<editType>({
+export const routineEditState = atom<EditType>({
   key: 'routineEditState',
   default: { editSlide: false, deleteSlide: false }
 });
