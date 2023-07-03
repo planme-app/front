@@ -48,6 +48,9 @@ export default function Do({ routineId }: { routineId: string }) {
   }, [running, routine, routineId]);
 
   useEffect(() => {
+    if (!routineId) {
+      router.push('/routine');
+    }
     const sessionRoutine = sessionStorage.getItem('routine');
     if (foundRoutine) {
       setRoutine(foundRoutine);
