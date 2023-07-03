@@ -180,10 +180,24 @@ export default function Login() {
           variant="contained"
           size="large"
           onClick={handleLogin}
+          color="secondary"
+          sx={{
+            mb: 2,
+            height: '52px',
+            fontFamily: 'Title_Light',
+            ':hover': { bgcolor: '#c4c2c2' }
+          }}
+        >
+          로그인
+        </Button>
+
+        <Button
+          variant="contained"
+          size="large"
+          onClick={moveSignup}
           sx={{
             color: 'white',
             height: '52px',
-            boxShadow: 'none',
             fontFamily: 'Title_Light'
           }}
         >
