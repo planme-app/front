@@ -103,16 +103,19 @@ export default function Signup() {
           justifyContent="space-between"
         >
           <Typography
-            variant="h3"
-            fontWeight={300}
-            color={'#556cd6'}
+            variant="h4"
+            fontWeight={700}
+            fontFamily="Title_Medium"
+            color={'#EA811C'}
             gutterBottom
           >
-            Sign up
+            회원가입
           </Typography>
         </Stack>
 
-        <Divider sx={{ my: 3 }}></Divider>
+        <Divider
+          sx={{ my: 3, bgcolor: 'secondary.light', borderBottomWidth: 2 }}
+        ></Divider>
         <SignupCard props={TextFieldArrayProps}></SignupCard>
         <Stack
           direction="row"
@@ -134,8 +137,14 @@ export default function Signup() {
           variant="contained"
           size="large"
           onClick={doSignup}
+          sx={{
+            color: 'white',
+            height: '52px',
+            boxShadow: 'none',
+            fontFamily: 'Title_Light'
+          }}
         >
-          Signup
+          회원가입
         </Button>
       </LoginBody>
       <ModalAtom open={modalOpen} handleClose={handleClose}>
