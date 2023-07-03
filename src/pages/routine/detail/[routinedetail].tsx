@@ -125,7 +125,10 @@ export default function Do({ routineId }: { routineId: string }) {
         </Stack>
       </LoginBody>
       {routineEditOpen.editSlide ? (
-        <RoutineEditSlide open={routineEditOpen.editSlide} />
+        <RoutineEditSlide
+          routineId={routineId}
+          open={routineEditOpen.editSlide}
+        />
       ) : null}
       {routineEditOpen.deleteSlide ? (
         <RoutineDeleteSlide open={routineEditOpen.deleteSlide} />

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { Button, Typography } from '@mui/material';
-import { postRoutine } from 'controllers/services/api';
+// import { postRoutine } from 'controllers/services/api';
 import MainBody from 'components/atoms/MainBody';
 import RoutineTemplateAddText from 'components/organisms/RoutineTemplateAddText';
 import RoutineTemplateAddType from 'components/organisms/RoutineTemplateAddType';
@@ -15,7 +16,11 @@ const goalTypes = ['분', '개'];
 const goalPlaceholders = ['분/일', '개'];
 const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
-export default function RoutineTemplateEditPage(routineId: string) {
+export default function RoutineTemplateEditPage({
+  routineId
+}: {
+  routineId: string;
+}) {
   const router = useRouter();
 
   const stringTypeGuards = (value: string[] | string | undefined) => {
@@ -75,14 +80,14 @@ export default function RoutineTemplateEditPage(routineId: string) {
       setMessage('빈도를 선택해주세요.');
       setModalOpen(true);
     } else {
-      let goalCount = goal;
-      if (selectedType === 'time') {
-        goalCount = `${Number(goal) * 60}`;
-      }
+      // let goalCount = goal;
+      // if (selectedType === 'time') {
+      //   goalCount = `${Number(goal) * 60}`;
+      // }
       //   const res = await postRoutine(name, selectedType, weekData, goalCount);
       //   if (res.result === true) {
-      router.push(`routine/detail/${routineId}`);
       //   }
+      router.push(`/routine/detail/${routineId}`);
     }
   };
 
@@ -93,7 +98,7 @@ export default function RoutineTemplateEditPage(routineId: string) {
   return (
     <>
       <Head>
-        <title>addpage</title>
+        <title>editpage</title>
       </Head>
       <MainBody>
         <Typography
@@ -104,7 +109,7 @@ export default function RoutineTemplateEditPage(routineId: string) {
             pb: 2
           }}
         >
-          사용자 정의
+          루틴 수정
         </Typography>
         <RoutineTemplateAddText
           type={'text'}
@@ -140,3 +145,12 @@ export default function RoutineTemplateEditPage(routineId: string) {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const routineId = context.params?.routineEdit as string | undefined;
+  return {
+    props: {
+      routineId
+    }
+  };
+};

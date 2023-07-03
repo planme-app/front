@@ -6,7 +6,7 @@ import {
   routineList,
   timerState,
   routineEditState,
-  editType
+  EditType
 } from 'stores/routineStore';
 import { Stack } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -69,7 +69,7 @@ export default function Header({ page, title, routineId }: HeaderProps) {
   };
 
   const editRoutine = () => {
-    setEditRoutineState((prev: editType) => {
+    setEditRoutineState((prev: EditType) => {
       return {
         ...prev,
         editSlide: !prev.editSlide

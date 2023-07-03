@@ -1,14 +1,26 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
-import { routineEditState, editType } from 'stores/routineStore';
+import { routineEditState, EditType } from 'stores/routineStore';
 import { Box, Button, Typography } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-export default function RoutineEditSlide({ open }: { open: boolean }) {
+export default function RoutineEditSlide({
+  open,
+  routineId
+}: {
+  open: boolean;
+  routineId: string;
+}) {
+  const router = useRouter();
   const setRoutineDeleteState = useSetRecoilState(routineEditState);
 
+  const moveEditPage = () => {
+    router.push(`/edit/${routineId}`);
+  };
+
   const openDeleteSlide = () => {
-    setRoutineDeleteState((prev: editType) => {
+    setRoutineDeleteState((prev: EditType) => {
       return {
         editSlide: !prev.editSlide,
         deleteSlide: !prev.deleteSlide
@@ -37,6 +49,7 @@ export default function RoutineEditSlide({ open }: { open: boolean }) {
           루틴 설정
         </Typography>
         <Button
+          onClick={moveEditPage}
           sx={{
             width: '70vw',
             maxWidth: '400px',
