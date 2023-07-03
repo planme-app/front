@@ -11,6 +11,10 @@ export interface RoutineType {
   progress: number | boolean;
 }
 
+export interface EditType {
+  editSlide: boolean;
+  deleteSlide: boolean;
+}
 export const routineDate = atom({
   key: 'routineDate',
   default: dayjs().format('YYYY-MM-DD')
@@ -29,4 +33,9 @@ export const timerState = atom({
 export const mypageState = atom({
   key: 'mypageState',
   default: false
+});
+
+export const routineEditState = atom<EditType>({
+  key: 'routineEditState',
+  default: { editSlide: false, deleteSlide: false }
 });

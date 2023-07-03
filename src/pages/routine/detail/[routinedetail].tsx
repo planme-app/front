@@ -3,7 +3,12 @@ import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { routineList, RoutineType, timerState } from 'stores/routineStore';
+import {
+  routineList,
+  RoutineType,
+  timerState,
+  routineEditState
+} from 'stores/routineStore';
 import { Stack } from '@mui/material';
 import { usePutRoutine } from 'controllers/application/PutRoutine';
 import RoutinePercent from 'components/atoms/RoutinePercent';
@@ -12,12 +17,15 @@ import Header from 'components/organisms/Header';
 import RoutineDetailCountButton from 'components/organisms/RoutineDetailCountButton';
 import RoutineDetailBoolButton from 'components/organisms/RoutineDetailBoolButton';
 import RoutineDetailTimeButton from 'components/organisms/RoutineDetailTimeButton';
+import RoutineEditSlide from 'components/organisms/RoutineEditSlide';
+import RoutineDeleteSlide from 'components/organisms/RoutineDeleteSlide';
 
 export default function Do({ routineId }: { routineId: string }) {
   const router = useRouter();
   const [routine, setRoutine] = useState<RoutineType>();
   const [routines, setRoutines] = useRecoilState(routineList);
   const running = useRecoilValue(timerState);
+  const routineEditOpen = useRecoilValue(routineEditState);
   const foundRoutine = routines.find(
     (list) => list.routine_instance_id === routineId
   );
@@ -116,6 +124,12 @@ export default function Do({ routineId }: { routineId: string }) {
           {routineType.buttonStyle}
         </Stack>
       </LoginBody>
+      {routineEditOpen.editSlide ? (
+        <RoutineEditSlide open={routineEditOpen.editSlide} />
+      ) : null}
+      {routineEditOpen.deleteSlide ? (
+        <RoutineDeleteSlide open={routineEditOpen.deleteSlide} />
+      ) : null}
     </>
   );
 }
