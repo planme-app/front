@@ -29,6 +29,13 @@ export default function TextFiled(props: TextFieldProps) {
       onChange={onChange}
       helperText={value.length !== 0 && !isForm ? message : ' '}
       inputProps={{ 'data-cy': dataCy }}
+      sx={{
+        '& .MuiOutlinedInput-notchedOutline': {
+          borderColor: '#E6DFD4',
+          borderWidth: '2px',
+          borderRadius: '5.5px'
+        }
+      }}
     />
   );
 }
