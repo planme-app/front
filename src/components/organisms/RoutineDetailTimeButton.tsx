@@ -19,17 +19,13 @@ export default function RoutineDetailTimeButton({
     }
   };
 
-  const resetTimer = () => {
-    reset();
-  };
-
   return running ? (
     <>
       <CustomButton
         type="startStop"
         display="flex"
         borderRadius="10px"
-        backgroundColor="#556cd6"
+        backgroundColor="#E9801C"
         mt={15}
         px={4}
         height="35px"
@@ -47,7 +43,7 @@ export default function RoutineDetailTimeButton({
         px={1}
         height="30px"
         color="#fff"
-        onClick={resetTimer}
+        onClick={reset}
       >
         Reset
       </CustomButton>
@@ -58,7 +54,7 @@ export default function RoutineDetailTimeButton({
         type="startStop"
         display="flex"
         borderRadius="10px"
-        backgroundColor="#556cd6"
+        backgroundColor="#E9801C"
         mt={15}
         px={4}
         height="35px"

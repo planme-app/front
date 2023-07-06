@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 import { routineEditState, EditType } from 'stores/routineStore';
@@ -13,23 +13,43 @@ export default function RoutineEditSlide({
   routineId: string;
 }) {
   const router = useRouter();
-  const setRoutineDeleteState = useSetRecoilState(routineEditState);
+  const boxRef = useRef<HTMLDivElement | null>(null);
+  const setEditSlideState = useSetRecoilState(routineEditState);
 
   const moveEditPage = () => {
     router.push(`/edit/${routineId}`);
   };
 
   const openDeleteSlide = () => {
-    setRoutineDeleteState((prev: EditType) => {
+    setEditSlideState((prev: EditType) => {
       return {
         editSlide: !prev.editSlide,
         deleteSlide: !prev.deleteSlide
       };
     });
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (boxRef.current && !boxRef.current.contains(event.target as Node)) {
+        setEditSlideState((prev: EditType) => {
+          return {
+            ...prev,
+            editSlide: false
+          };
+        });
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [boxRef, setEditSlideState]);
   return (
     <>
       <Box
+        ref={boxRef}
         sx={{
           width: '90vw',
           maxWidth: '480px',

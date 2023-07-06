@@ -1,8 +1,8 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import { routineList } from 'stores/routineStore';
-import { Box, Stack, styled } from '@mui/material';
 import CustomButton from 'components/atoms/CustomButton';
+import { Box, Stack, styled } from '@mui/material';
 
 interface CountType {
   routineId: string;
@@ -45,7 +45,7 @@ export default function RoutineDetailCountButton({ routineId }: CountType) {
         height="40px"
         display="center"
         justifyContent="center"
-        backgroundColor="#556cd6"
+        backgroundColor="#E9801C"
         color="white"
         borderRadius="5px"
         m="auto"

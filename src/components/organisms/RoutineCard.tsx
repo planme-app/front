@@ -24,7 +24,7 @@ export default function RoutineCard({
 }: RoutineInfo) {
   const value = Math.floor((Number(cardProgress) / Number(cardGoal)) * 100);
   const day = useRecoilValue(routineDate);
-  const nextDay = dayjs().add(1, 'd').format('YYYY-mm-dd');
+  const nextDay = dayjs().add(1, 'd').format('YYYY-MM-DD');
   const isDisabled = day === nextDay;
 
   const linkStyle = {
@@ -83,12 +83,19 @@ export default function RoutineCard({
         <Stack
           sx={{
             width: '180px',
-            height: '70px',
+            height: '80px',
             display: 'flex',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            mr: 2
           }}
         >
-          <Typography fontSize={'18px'} fontWeight={'bold'}>
+          <Typography
+            fontSize={'18px'}
+            fontWeight={'bold'}
+            sx={{
+              overflow: 'hidden'
+            }}
+          >
             {routineTitle}
           </Typography>
           <RoutineDate routineDays={routineDays} />

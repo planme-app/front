@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -7,7 +7,8 @@ import {
   routineList,
   RoutineType,
   timerState,
-  routineEditState
+  routineEditState,
+  EditType
 } from 'stores/routineStore';
 import { Stack } from '@mui/material';
 import { usePutRoutine } from 'controllers/application/PutRoutine';
@@ -24,6 +25,7 @@ export default function Do({ routineId }: { routineId: string }) {
   const router = useRouter();
   const [routine, setRoutine] = useState<RoutineType>();
   const [routines, setRoutines] = useRecoilState(routineList);
+  const [editSlideState, setEditSlideState] = useRecoilState(routineEditState);
   const running = useRecoilValue(timerState);
   const routineEditOpen = useRecoilValue(routineEditState);
   const foundRoutine = routines.find(
@@ -75,24 +77,36 @@ export default function Do({ routineId }: { routineId: string }) {
     }
   }, [routines, routine, foundRoutine, router, routineId, setRoutines]);
 
-  useEffect(() => {
-    const handlePopState = async () => {
-      if (routine && routine.progress) {
-        const type = routine.type;
-        const progress = routine.progress;
-        try {
-          await putRoutine(routineId, type, progress);
-        } catch (error) {
-          console.error('Routine 업데이트 실패: ');
-        }
+  const handlePopState = useCallback(async () => {
+    if (routine && routine.progress) {
+      const type = routine.type;
+      const progress = routine.progress;
+      try {
+        await putRoutine(routineId, type, progress);
+      } catch (error) {
+        console.error('Routine 업데이트 실패: ');
       }
-      sessionStorage.removeItem('routine');
-    };
+    }
+    if (editSlideState.editSlide) {
+      setEditSlideState((prev: EditType) => {
+        return { ...prev, editSlide: false };
+      });
+    }
+    sessionStorage.removeItem('routine');
+  }, [
+    routine,
+    routineId,
+    editSlideState.editSlide,
+    putRoutine,
+    setEditSlideState
+  ]);
+
+  useEffect(() => {
     window.addEventListener('popstate', handlePopState);
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [routine, putRoutine, routineId]);
+  }, [handlePopState]);
 
   useEffect(() => {
     const saveRoutinesSession = () => {

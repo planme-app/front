@@ -42,7 +42,7 @@ export default function RoutineDetailBoolButton({
         type="startStop"
         display="flex"
         borderRadius="10px"
-        backgroundColor="#556cd6"
+        backgroundColor="#E9801C"
         mt={15}
         px={3}
         height="35px"

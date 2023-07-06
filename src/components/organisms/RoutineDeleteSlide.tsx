@@ -1,13 +1,26 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 import { routineEditState } from 'stores/routineStore';
+// import { putRoutineUpdate } from 'controllers/services/api';
 import { Box, Button, Typography, Stack } from '@mui/material';
 
 export default function RoutineDeleteSlide({ open }: { open: boolean }) {
+  const router = useRouter();
   const setRoutineDeleteSlide = useSetRecoilState(routineEditState);
 
   const cancleSlide = () => {
     setRoutineDeleteSlide({ editSlide: false, deleteSlide: false });
+  };
+
+  const removeRoutine = async () => {
+    try {
+      router.push('/routine');
+      setRoutineDeleteSlide({ editSlide: false, deleteSlide: false });
+      // await putRoutineUpdate();
+    } catch (error) {
+      console.error('Routine 업데이트 실패: ');
+    }
   };
   return (
     <>
@@ -67,6 +80,7 @@ export default function RoutineDeleteSlide({ open }: { open: boolean }) {
             취소
           </Button>
           <Button
+            onClick={removeRoutine}
             sx={{
               width: '120px',
               height: '40px',

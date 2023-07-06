@@ -26,7 +26,11 @@ export default function DetailTitle({ title }: { title?: string }) {
           fontSize: '25px',
           fontWeight: '700',
           color: 'black',
-          mt: 1.5
+          mt: 1.5,
+          maxWidth: '230px',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap'
         }}
       >
         {title}
