@@ -5,13 +5,15 @@ export interface ModalAtomProps {
   open: boolean;
   handleClose: (isOpen: boolean) => void;
   children: ReactElement;
+  id?: string;
 }
 
 export default function ModalAtom(props: ModalAtomProps) {
-  const { open, handleClose, children } = props;
+  const { open, handleClose, children, id } = props;
 
   return (
     <Modal
+      id={id}
       open={open}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"

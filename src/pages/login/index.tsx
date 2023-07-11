@@ -66,6 +66,7 @@ export default function Login() {
         }
       } else {
         setMessage('이메일 또는 비밀번호를 형식에 맞게 입력해주세요');
+        setModalOpen(true);
       }
     } catch (error) {
       console.error(error);
@@ -177,6 +178,7 @@ export default function Login() {
         </Button>
 
         <Button
+          id="login-button"
           variant="contained"
           size="large"
           onClick={handleLogin}
@@ -192,6 +194,7 @@ export default function Login() {
         </Button>
 
         <Button
+          id="signup-button"
           variant="contained"
           size="large"
           onClick={moveSignup}
@@ -247,7 +250,7 @@ export default function Login() {
         </Button>
       </LoginBody>
 
-      <ModalAtom open={modalOpen} handleClose={handleClose}>
+      <ModalAtom id="login-modal" open={modalOpen} handleClose={handleClose}>
         <AlertMessage title={'error'} message={message} />
       </ModalAtom>
     </>
