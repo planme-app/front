@@ -46,7 +46,13 @@ export default function Profile() {
           <p>{userName}</p>
         </Box>
       </Stack>
-      <Button variant="contained" color="error" onClick={logout} size="large">
+      <Button
+        id="logout-button"
+        variant="contained"
+        color="error"
+        onClick={logout}
+        size="large"
+      >
         로그아웃
       </Button>
       <BottomBar state={2} />

@@ -42,6 +42,7 @@ export default function BottomBar({ state }: State) {
           onClick={goTemplate}
         />
         <BottomNavigationAction
+          id="profile-button"
           label="Profile"
           icon={<AccountCircleIcon />}
           onClick={goProfile}
