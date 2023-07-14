@@ -47,7 +47,7 @@ export default function RoutineTemplatePage() {
         >
           습관 선택
         </Typography>
-        <Button variant="contained" onClick={goTemplateAdd}>
+        <Button id="add-user" variant="contained" onClick={goTemplateAdd}>
           사용자 추가
         </Button>
         {Object.keys(routineTemplate).map((theme) => (

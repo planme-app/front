@@ -65,6 +65,7 @@ export default function Main({ initialRoutines }: MainProps) {
                   routineDays={list.days_of_week}
                   cardProgress={list.progress}
                   cardGoal={list.goal}
+                  dataCy="routine-card"
                 />
               );
             })

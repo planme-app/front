@@ -46,11 +46,18 @@ export default function Do({ routineId }: { routineId: string }) {
             />
           )
         };
-      default:
+      case 'time':
         return {
           buttonStyle: (
-            <RoutineDetailTimeButton routineId={routineId} running={running} />
+            <RoutineDetailCountButton
+              routineId={routineId}
+              goal={typeof routine.goal === 'number' ? routine.goal : 100}
+            />
           )
+        };
+      default:
+        return {
+          buttonStyle: null
         };
     }
   }, [running, routine, routineId]);
@@ -66,9 +73,11 @@ export default function Do({ routineId }: { routineId: string }) {
       const routineFromSession = JSON.parse(sessionRoutine).find(
         (list: RoutineType) => list.routine_instance_id === routineId
       );
-      if (routine?.progress !== routineFromSession.progress) {
+      if (routine !== routineFromSession) {
         setRoutine(routineFromSession);
         setRoutines([routineFromSession]);
+      } else if (!routineFromSession) {
+        console.error('잘못된 routine 값입니다.');
       }
     } else {
       router.push('/routine');
@@ -116,7 +125,7 @@ export default function Do({ routineId }: { routineId: string }) {
         <Stack minHeight={'74vh'} direction="column" alignItems="center">
           <RoutinePercent
             size={300}
-            type={routine ? routine.type : 'time'}
+            type={routine ? routine.type : ''}
             progress={routine ? routine.progress : 0}
             goal={routine ? routine.goal : 100}
             routineId={routine?.routine_instance_id}

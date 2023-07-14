@@ -79,6 +79,11 @@ export default function Header({ page, title, routineId }: HeaderProps) {
 
   const pageType = useMemo(() => {
     switch (page) {
+      case 'header':
+        return {
+          title: <Days />,
+          icon: <ArrowForwardIosIcon color="action" />
+        };
       case 'detail':
         return {
           title: <DetailTitle title={title} />,
@@ -88,7 +93,7 @@ export default function Header({ page, title, routineId }: HeaderProps) {
         return { title: 'routineTemplateAdd', icon: undefined };
       default:
         return {
-          title: <Days />,
+          title: <DetailTitle title={''} />,
           icon: <ArrowForwardIosIcon color="action" />
         };
     }

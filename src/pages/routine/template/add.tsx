@@ -107,6 +107,7 @@ export default function RoutineTemplateAddPage() {
           사용자 정의
         </Typography>
         <RoutineTemplateAddText
+          dataCy="routine-title-input"
           type={'text'}
           title={'습관 이름'}
           placeholder={'습관 이름 입력'}
@@ -119,6 +120,7 @@ export default function RoutineTemplateAddPage() {
           setSelectedType={setSelectedType}
         />
         <RoutineTemplateAddText
+          dataCy="routine-goal-input"
           type={'number'}
           title={`목표 (${goalType})`}
           placeholder={goalPlaceholder}
@@ -130,7 +132,12 @@ export default function RoutineTemplateAddPage() {
           week={week}
           setWeek={setWeek}
         />
-        <Button variant="contained" size="large" onClick={saveTemplate}>
+        <Button
+          id="add-routine-button"
+          variant="contained"
+          size="large"
+          onClick={saveTemplate}
+        >
           저장
         </Button>
       </MainBody>

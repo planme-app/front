@@ -36,6 +36,7 @@ export default function BottomBar({ state }: State) {
           onClick={goRoutine}
         />
         <BottomNavigationAction
+          id="add-routine-button"
           label="Add"
           icon={<AddBoxIcon />}
           onClick={goTemplate}

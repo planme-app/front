@@ -35,13 +35,14 @@ export interface RoutineTemplateAddTextProps {
   title: string;
   placeholder: string;
   value: string | number;
+  dataCy?: string;
   setValue: (value: string) => void;
 }
 
 export default function RoutineTemplateAddText(
   props: RoutineTemplateAddTextProps
 ) {
-  const { type, title, placeholder, value, setValue } = props;
+  const { type, title, placeholder, value, dataCy, setValue } = props;
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (type === 'number') {
       const numValue = e.target.value;
@@ -68,6 +69,7 @@ export default function RoutineTemplateAddText(
       </Typography>
       <FormControl>
         <BootstrapInput
+          id={dataCy}
           placeholder={placeholder}
           value={value}
           onChange={handleName}

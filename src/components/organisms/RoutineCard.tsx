@@ -13,6 +13,7 @@ interface RoutineInfo {
   routineDays?: string[];
   cardProgress?: number | boolean;
   cardGoal?: number | boolean;
+  dataCy?: string;
 }
 
 export default function RoutineCard({
@@ -20,7 +21,8 @@ export default function RoutineCard({
   routineTitle,
   routineDays,
   cardProgress,
-  cardGoal
+  cardGoal,
+  dataCy
 }: RoutineInfo) {
   const value = Math.floor((Number(cardProgress) / Number(cardGoal)) * 100);
   const day = useRecoilValue(routineDate);
@@ -63,6 +65,7 @@ export default function RoutineCard({
 
   return (
     <Link
+      id={dataCy}
       href={isDisabled ? '#' : `routine/detail/${routineId}`}
       style={linkStyle}
       onClick={handleClick}

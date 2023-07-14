@@ -45,6 +45,7 @@ export default function RoutineTemplateAddWeek(
         {week.map((content, index) => {
           return (
             <CircularButton
+              id={`day-button-${index}`}
               key={dayOfWeek[index]}
               variant={content ? 'contained' : 'outlined'}
               onClick={() => handleWeek(index)}
