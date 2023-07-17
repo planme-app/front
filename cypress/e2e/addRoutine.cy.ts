@@ -1,7 +1,7 @@
 describe('AddRoutine', () => {
   beforeEach(() => {
     // cy.setCookie('Authorization', 'test_authorization_code');
-    cy.visit('/routine/template/add').wait(300);
+    cy.visit('/login').wait(300);
   });
   describe('루틴 추가 하기', () => {
     it('루틴 이름,타입,목표,빈도(날짜) 기입 후 추가 버튼 클릭으로 루틴 추가하기', () => {

@@ -4,6 +4,13 @@ Cypress.Commands.add('getDataCy', (selector, ...args) => {
   return cy.get(`[data-cy=${selector}]`, ...args);
 });
 
+Cypress.Commands.add('login', (email: string, password: string) => {
+  cy.visit('/login').wait(300);
+  cy.get('#outlined-adornment-ID').type(email);
+  cy.get('#outlined-adornment-password').type(password);
+  cy.get('#login-button').click();
+});
+
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
