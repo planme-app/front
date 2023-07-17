@@ -1,14 +1,12 @@
 describe('AddRoutine', () => {
   beforeEach(() => {
-    // cy.setCookie('Authorization', 'test_authorization_code');
     cy.visit('/login').wait(300);
   });
+
   describe('루틴 추가 하기', () => {
     it('루틴 이름,타입,목표,빈도(날짜) 기입 후 추가 버튼 클릭으로 루틴 추가하기', () => {
       //When: 로그인 후 ,루틴 정보를 입력한다.
-      cy.get('#outlined-adornment-ID').type('123@naver.com');
-      cy.get('#outlined-adornment-password').type('@@yr1004');
-      cy.get('#login-button').click();
+      cy.login('test@naver.com', 'test1234!');
 
       cy.get('#add-routine-button').click();
 

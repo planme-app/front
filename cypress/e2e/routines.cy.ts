@@ -6,9 +6,7 @@ describe('Routines', () => {
   describe('루틴 클릭시 해당 루틴 동작 페이지로 이동', () => {
     it('루틴 카드 클릭시 동작페이지로 이동', () => {
       //When: 로그인 후 ,루틴 카드를 등록 후 클릭한다.
-      cy.get('#outlined-adornment-ID').type('123@naver.com');
-      cy.get('#outlined-adornment-password').type('@@yr1004');
-      cy.get('#login-button').click();
+      cy.login('test@naver.com', 'test1234!');
 
       //   cy.get('#add-routine-button').click();
 

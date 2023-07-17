@@ -18,9 +18,7 @@ describe('Login', () => {
 
   it('로그인 성공 시 루틴 페이지로 이동', () => {
     //When: 사용자가 ID(E-MAIl), 비밀번호를 입력한다.
-    cy.get('#outlined-adornment-ID').type('123@naver.com');
-    cy.get('#outlined-adornment-password').type('@@yr1004');
-    cy.get('#login-button').click();
+    cy.login('test@naver.com', 'test1234!');
 
     //Then: 자신의 루틴 페이지로 이동한다.
     cy.visit('/routine').wait(300);
